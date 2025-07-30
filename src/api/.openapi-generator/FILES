@@ -6,10 +6,12 @@ common.ts
 configuration.ts
 docs/AuthApi.md
 docs/ChecksApi.md
+docs/ModelCheckResponse.md
 docs/ModelLoginRequest.md
-docs/ModelOrder.md
 docs/ModelOrderCreate.md
+docs/ModelOrderOut.md
 docs/ModelRegisterRequest.md
+docs/ModelRoleStatic.md
 docs/ModelUser.md
 docs/ModelUserUpdate.md
 docs/OrdersApi.md

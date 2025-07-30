@@ -1,6 +1,7 @@
-import React, { createContext, useState, useEffect} from 'react';
+import { createContext, useState, useEffect} from 'react';
 import { checksApi } from '../../utils/ApiFactory';
 import type { AuthContextType, AuthContextProps } from './type';
+import { ModelRoleStatic } from '../../api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -9,6 +10,7 @@ export { AuthContext };
 export const AuthProvider = ({children} : AuthContextProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [role, setRole] = useState<ModelRoleStatic>(ModelRoleStatic.DISP)
 
     useEffect (() => {
         const verifyAuth = async () => {
@@ -16,6 +18,12 @@ export const AuthProvider = ({children} : AuthContextProps) => {
                 const response = await checksApi.secureCheckGet();
                 if (response.status === 200) { // Предполагаем, что 200 OK означает успешную проверку
                     setIsAuthenticated(true);
+                    if (response.data.role) {
+                        setRole(response.data.role)
+                    }
+                    else {
+                        throw new Error("не удалось получить роль пользователя");
+                    }
                 } else {
                     setIsAuthenticated(false);
                 }
@@ -34,7 +42,7 @@ export const AuthProvider = ({children} : AuthContextProps) => {
     const logout = () => setIsAuthenticated(false);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, isLoading, role, login, logout }}>
             {children}
         </AuthContext.Provider>
     )

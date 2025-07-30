@@ -216,7 +216,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Order"
+                                "$ref": "#/definitions/model.OrderOut"
                             }
                         }
                     },
@@ -398,10 +398,7 @@
                     "200": {
                         "description": "Токен валиден",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/model.CheckResponse"
                         }
                     },
                     "401": {
@@ -516,6 +513,26 @@
         }
     },
     "definitions": {
+        "model.CheckResponse": {
+            "description": "DTO для передачи роли на фронт",
+            "type": "object",
+            "properties": {
+                "role": {
+                    "description": "Role текущего пользователя",
+                    "enum": [
+                        "driver",
+                        "disp",
+                        "admin",
+                        "mainAdmin"
+                    ],
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.RoleStatic"
+                        }
+                    ]
+                }
+            }
+        },
         "model.LoginRequest": {
             "description": "DTO для передачи данных авторизации",
             "type": "object",
@@ -527,60 +544,6 @@
                 "password": {
                     "type": "string",
                     "example": "qwerty123"
-                }
-            }
-        },
-        "model.Order": {
-            "description": "Модель заявки",
-            "type": "object",
-            "properties": {
-                "cargo_description": {
-                    "type": "string"
-                },
-                "cargo_name": {
-                    "type": "string"
-                },
-                "cargo_type_id": {
-                    "type": "integer"
-                },
-                "cargo_weight": {
-                    "type": "number"
-                },
-                "completion_time": {
-                    "type": "string"
-                },
-                "create_order_time": {
-                    "type": "string"
-                },
-                "depart_loc": {
-                    "type": "integer"
-                },
-                "driver_rate": {
-                    "type": "integer"
-                },
-                "goal_loc": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "is_postponed": {
-                    "type": "boolean"
-                },
-                "is_urgent": {
-                    "type": "boolean"
-                },
-                "order_status_id": {
-                    "type": "integer"
-                },
-                "photo_id": {
-                    "type": "string"
-                },
-                "pickup_time": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
                 }
             }
         },
@@ -611,6 +574,48 @@
                 }
             }
         },
+        "model.OrderOut": {
+            "description": "DTO для передачи информации о заявке",
+            "type": "object",
+            "properties": {
+                "cargo_description": {
+                    "type": "string"
+                },
+                "cargo_name": {
+                    "type": "string"
+                },
+                "cargo_type_id": {
+                    "type": "integer"
+                },
+                "cargo_weight": {
+                    "type": "number"
+                },
+                "depart_loc": {
+                    "type": "integer"
+                },
+                "dispatcher_id": {
+                    "type": "integer"
+                },
+                "driver_id": {
+                    "type": "integer"
+                },
+                "goal_loc": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "order_status_id": {
+                    "type": "integer"
+                },
+                "photo_id": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
         "model.RegisterRequest": {
             "description": "DTO для передачи данных регистрации",
             "type": "object",
@@ -636,6 +641,21 @@
                     "example": "uuid-role-id"
                 }
             }
+        },
+        "model.RoleStatic": {
+            "type": "string",
+            "enum": [
+                "driver",
+                "disp",
+                "admin",
+                "mainAdmin"
+            ],
+            "x-enum-varnames": [
+                "DRIVER",
+                "DISP",
+                "ADMIN",
+                "MAIN_ADMIN"
+            ]
         },
         "model.User": {
             "description": "Модель пользователя",

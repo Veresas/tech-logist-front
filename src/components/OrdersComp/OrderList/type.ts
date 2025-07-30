@@ -1,7 +1,7 @@
-import type { ModelOrder } from '../../../api' 
-import type { OrderCardAction } from '../type'
+import type { ModelOrderOut } from '../../../api' 
+import type { OrderCardClickHandler } from '../type'
 
 export interface OrderListProps {
-    orders: ModelOrder[];
-    handelAction: (orderId : string, action : OrderCardAction) => void;
+    orders: ModelOrderOut[];
+    handelAction: OrderCardClickHandler;
 }

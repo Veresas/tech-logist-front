@@ -7,7 +7,7 @@ All URIs are relative to *http://localhost:8080/api*
 |[**secureCheckGet**](#securecheckget) | **GET** /secure/check | Проверка авторизации|
 
 # **secureCheckGet**
-> { [key: string]: string; } secureCheckGet()
+> ModelCheckResponse secureCheckGet()
 
 Проверка актуальности авторизации перед доступом к защищённым страницам
 
@@ -31,7 +31,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**{ [key: string]: string; }**
+**ModelCheckResponse**
 
 ### Authorization
 

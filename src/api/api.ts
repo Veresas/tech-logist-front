@@ -24,6 +24,21 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
 /**
+ * DTO для передачи роли на фронт
+ * @export
+ * @interface ModelCheckResponse
+ */
+export interface ModelCheckResponse {
+    /**
+     * Role текущего пользователя
+     * @type {ModelRoleStatic}
+     * @memberof ModelCheckResponse
+     */
+    'role'?: ModelRoleStatic;
+}
+
+
+/**
  * DTO для передачи данных авторизации
  * @export
  * @interface ModelLoginRequest
@@ -41,109 +56,6 @@ export interface ModelLoginRequest {
      * @memberof ModelLoginRequest
      */
     'password'?: string;
-}
-/**
- * Модель заявки
- * @export
- * @interface ModelOrder
- */
-export interface ModelOrder {
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'cargo_description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'cargo_name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'cargo_type_id'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'cargo_weight'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'completion_time'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'create_order_time'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'depart_loc'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'driver_rate'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'goal_loc'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'id'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ModelOrder
-     */
-    'is_postponed'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ModelOrder
-     */
-    'is_urgent'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrder
-     */
-    'order_status_id'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'photo_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'pickup_time'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrder
-     */
-    'time'?: string;
 }
 /**
  * DTO для создания заявки
@@ -195,6 +107,85 @@ export interface ModelOrderCreate {
     'photo_id'?: string;
 }
 /**
+ * DTO для передачи информации о заявке
+ * @export
+ * @interface ModelOrderOut
+ */
+export interface ModelOrderOut {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrderOut
+     */
+    'cargo_description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrderOut
+     */
+    'cargo_name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'cargo_type_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'cargo_weight'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'depart_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'dispatcher_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'driver_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'goal_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrderOut
+     */
+    'order_status_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrderOut
+     */
+    'photo_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrderOut
+     */
+    'time'?: string;
+}
+/**
  * DTO для передачи данных регистрации
  * @export
  * @interface ModelRegisterRequest
@@ -231,6 +222,22 @@ export interface ModelRegisterRequest {
      */
     'role_id'?: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ModelRoleStatic = {
+    DRIVER: 'driver',
+    DISP: 'disp',
+    ADMIN: 'admin',
+    MAIN_ADMIN: 'mainAdmin'
+} as const;
+
+export type ModelRoleStatic = typeof ModelRoleStatic[keyof typeof ModelRoleStatic];
+
+
 /**
  * Модель пользователя
  * @export
@@ -601,7 +608,7 @@ export const ChecksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureCheckGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+        async secureCheckGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.secureCheckGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChecksApi.secureCheckGet']?.[localVarOperationServerIndex]?.url;
@@ -623,7 +630,7 @@ export const ChecksApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureCheckGet(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+        secureCheckGet(options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
             return localVarFp.secureCheckGet(options).then((request) => request(axios, basePath));
         },
     };
@@ -874,7 +881,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersActualGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelOrder>>> {
+        async ordersActualGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelOrderOut>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersActualGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersActualGet']?.[localVarOperationServerIndex]?.url;
@@ -961,7 +968,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersActualGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ModelOrder>> {
+        ordersActualGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ModelOrderOut>> {
             return localVarFp.ordersActualGet(options).then((request) => request(axios, basePath));
         },
         /**

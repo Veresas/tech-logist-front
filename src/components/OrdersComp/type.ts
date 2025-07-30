@@ -8,3 +8,5 @@ export const OCActionList = {
 ;
 
 export type OrderCardAction = typeof OCActionList[keyof typeof OCActionList];
+
+export type OrderCardClickHandler = (orderId: string, action: OrderCardAction) => void;

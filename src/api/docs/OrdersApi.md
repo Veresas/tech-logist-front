@@ -12,7 +12,7 @@ All URIs are relative to *http://localhost:8080/api*
 |[**ordersPost**](#orderspost) | **POST** /orders | Создать заявку|
 
 # **ordersActualGet**
-> Array<ModelOrder> ordersActualGet()
+> Array<ModelOrderOut> ordersActualGet()
 
 Получить все актуальные заявки
 
@@ -36,7 +36,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**Array<ModelOrder>**
+**Array<ModelOrderOut>**
 
 ### Authorization
 
