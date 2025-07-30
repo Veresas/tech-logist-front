@@ -19,10 +19,9 @@ customAxiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log('Какаято ошибка: ', error.response.data);
+    console.log('Какая - то ошибка: ', error.response.data);
     if (error.response?.status === 401) {
-      console.warn('Unauthorized – redirecting');
-      // например, редирект на /login
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

@@ -5,6 +5,7 @@ base.ts
 common.ts
 configuration.ts
 docs/AuthApi.md
+docs/ChecksApi.md
 docs/ModelLoginRequest.md
 docs/ModelOrder.md
 docs/ModelOrderCreate.md
