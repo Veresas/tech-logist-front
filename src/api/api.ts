@@ -126,10 +126,10 @@ export interface ModelOrderOut {
     'cargo_name'?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ModelOrderOut
      */
-    'cargo_type_id'?: number;
+    'cargo_type_name'?: string;
     /**
      * 
      * @type {number}
@@ -144,16 +144,16 @@ export interface ModelOrderOut {
     'depart_loc'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ModelOrderOut
      */
-    'dispatcher_id'?: number;
+    'dispatcher_name'?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ModelOrderOut
      */
-    'driver_id'?: number;
+    'driver_name'?: string;
     /**
      * 
      * @type {number}
@@ -168,10 +168,10 @@ export interface ModelOrderOut {
     'id'?: number;
     /**
      * 
-     * @type {number}
+     * @type {ModelOrderOutStatus}
      * @memberof ModelOrderOut
      */
-    'order_status_id'?: number;
+    'order_status_name'?: ModelOrderOutStatus;
     /**
      * 
      * @type {string}
@@ -185,6 +185,24 @@ export interface ModelOrderOut {
      */
     'time'?: string;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ModelOrderOutStatus = {
+    NEW: 'Новый',
+    ACCEPT: 'Принят',
+    COMPLETE: 'Выполнен',
+    CANCEL: 'Отменен'
+} as const;
+
+export type ModelOrderOutStatus = typeof ModelOrderOutStatus[keyof typeof ModelOrderOutStatus];
+
+
 /**
  * DTO для передачи данных регистрации
  * @export

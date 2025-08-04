@@ -584,8 +584,8 @@
                 "cargo_name": {
                     "type": "string"
                 },
-                "cargo_type_id": {
-                    "type": "integer"
+                "cargo_type_name": {
+                    "type": "string"
                 },
                 "cargo_weight": {
                     "type": "number"
@@ -593,11 +593,11 @@
                 "depart_loc": {
                     "type": "integer"
                 },
-                "dispatcher_id": {
-                    "type": "integer"
+                "dispatcher_name": {
+                    "type": "string"
                 },
-                "driver_id": {
-                    "type": "integer"
+                "driver_name": {
+                    "type": "string"
                 },
                 "goal_loc": {
                     "type": "integer"
@@ -605,8 +605,8 @@
                 "id": {
                     "type": "integer"
                 },
-                "order_status_id": {
-                    "type": "integer"
+                "order_status_name": {
+                    "$ref": "#/definitions/model.OrderOutStatus"
                 },
                 "photo_id": {
                     "type": "string"
@@ -615,6 +615,21 @@
                     "type": "string"
                 }
             }
+        },
+        "model.OrderOutStatus": {
+            "type": "string",
+            "enum": [
+                "Новый",
+                "Принят",
+                "Выполнен",
+                "Отменен"
+            ],
+            "x-enum-varnames": [
+                "NEW",
+                "ACCEPT",
+                "COMPLETE",
+                "CANCEL"
+            ]
         },
         "model.RegisterRequest": {
             "description": "DTO для передачи данных регистрации",
