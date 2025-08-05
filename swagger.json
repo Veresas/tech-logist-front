@@ -232,6 +232,38 @@
                 }
             }
         },
+        "/orders/actual/private": {
+            "get": {
+                "description": "Получить все актуальные заявки пользователя",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Получить все актуальные заявки пользователя",
+                "responses": {
+                    "200": {
+                        "description": "Список заявок",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.OrderOut"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/orders/{id}/accept": {
             "post": {
                 "description": "Принять заявку по ID",

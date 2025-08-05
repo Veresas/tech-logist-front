@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost:8080/api*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**ordersActualGet**](#ordersactualget) | **GET** /orders/actual | Получить все актуальные заявки|
+|[**ordersActualPrivateGet**](#ordersactualprivateget) | **GET** /orders/actual/private | Получить все актуальные заявки пользователя|
 |[**ordersIdAcceptPost**](#ordersidacceptpost) | **POST** /orders/{id}/accept | Принять заявку|
 |[**ordersIdCancelPost**](#ordersidcancelpost) | **POST** /orders/{id}/cancel | Отменить заявку|
 |[**ordersIdCompletePost**](#ordersidcompletepost) | **POST** /orders/{id}/complete | Завершить заявку|
@@ -28,6 +29,51 @@ const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
 const { status, data } = await apiInstance.ordersActualGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**Array<ModelOrderOut>**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Список заявок |  -  |
+|**500** | Внутренняя ошибка |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ordersActualPrivateGet**
+> Array<ModelOrderOut> ordersActualPrivateGet()
+
+Получить все актуальные заявки пользователя
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+const { status, data } = await apiInstance.ordersActualPrivateGet();
 ```
 
 ### Parameters

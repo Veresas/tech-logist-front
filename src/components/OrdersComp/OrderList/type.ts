@@ -3,7 +3,7 @@ import type { OrderCardClickHandler, OrderCardClickPhotoHandler } from '../type'
 
 export interface OrderListProps {
     orders: ModelOrderOut[];
-    handelAction: OrderCardClickHandler;
-    handelPhoto: OrderCardClickPhotoHandler;
+    handleAction: OrderCardClickHandler;
+    handlePhoto: OrderCardClickPhotoHandler;
     isPrivate: boolean;
 }

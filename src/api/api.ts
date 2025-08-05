@@ -712,6 +712,36 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Получить все актуальные заявки пользователя
+         * @summary Получить все актуальные заявки пользователя
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ordersActualPrivateGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/orders/actual/private`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Принять заявку по ID
          * @summary Принять заявку
          * @param {string} id ID заявки
@@ -906,6 +936,18 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Получить все актуальные заявки пользователя
+         * @summary Получить все актуальные заявки пользователя
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ordersActualPrivateGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelOrderOut>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersActualPrivateGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersActualPrivateGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Принять заявку по ID
          * @summary Принять заявку
          * @param {string} id ID заявки
@@ -990,6 +1032,15 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.ordersActualGet(options).then((request) => request(axios, basePath));
         },
         /**
+         * Получить все актуальные заявки пользователя
+         * @summary Получить все актуальные заявки пользователя
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ordersActualPrivateGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ModelOrderOut>> {
+            return localVarFp.ordersActualPrivateGet(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Принять заявку по ID
          * @summary Принять заявку
          * @param {string} id ID заявки
@@ -1058,6 +1109,17 @@ export class OrdersApi extends BaseAPI {
      */
     public ordersActualGet(options?: RawAxiosRequestConfig) {
         return OrdersApiFp(this.configuration).ordersActualGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Получить все актуальные заявки пользователя
+     * @summary Получить все актуальные заявки пользователя
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrdersApi
+     */
+    public ordersActualPrivateGet(options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).ordersActualPrivateGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
