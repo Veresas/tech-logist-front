@@ -1,7 +1,7 @@
 import './App.css'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage } from './pages';
+import { LoginPage, MainPage, PrivatePage } from './pages';
 import { AuthWrapper } from "./wrappers"
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
 
           {/* Защищенные маршруты */}
           <Route element={<AuthWrapper />}>
-          
-          
+            <Route path='/' element={<MainPage />}/>
+            <Route path='/cab' element={<PrivatePage />}/>
           </Route>
         </Routes>
         <Route path="*" element={<div>404 Not Found</div>} />
@@ -25,4 +25,3 @@ function App() {
 }
 
 export default App
-//          <Route path='/' element={<MainPage />} />
