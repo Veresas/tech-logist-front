@@ -235,11 +235,19 @@ export interface ModelRegisterRequest {
     'phone'?: string;
     /**
      * 
+     * @type {ModelRoleStatic}
+     * @memberof ModelRegisterRequest
+     */
+    'role'?: ModelRoleStatic;
+    /**
+     * 
      * @type {string}
      * @memberof ModelRegisterRequest
      */
-    'role_id'?: string;
+    'role_password'?: string;
 }
+
+
 /**
  * 
  * @export

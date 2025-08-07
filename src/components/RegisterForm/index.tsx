@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { type ModelRegisterRequest } from '../../api/api';
-import styles from './registerForm.module.css';
+import  { type ModelRegisterRequest,  ModelRoleStatic } from '../../api/api';
+import styles from './RegisterFrom.module.css';
 import type { RegisterFormProps } from './type';
 
 const validatePhone = (value: string | undefined) => {
@@ -33,12 +33,16 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<ModelRegisterRequest >();
+  } = useForm<ModelRegisterRequest >({
+    mode: 'onBlur', // Проверка полей при фокусе
+  });
 
   const [passwordFocused, setPasswordFocused] = useState(false);
   const passwordValue = watch('password');
 
+  // TODO: Добавить уведомлене об успехе и неудаче и перевод на страницу входа
   const handleFormSubmit: SubmitHandler<ModelRegisterRequest> = (data) => {
+    data.role = data.role as ModelRoleStatic;
     onSubmit(data)
   };
 
@@ -65,7 +69,7 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
         {errors.login && <div className={styles.error}>{errors.login.message as string}</div>}
       </div>
       <div className={styles.inputGroup}>
-        <label htmlFor="password" className={styles.label}>Пароль</label>
+        <label htmlFor="password" className={styles.label}>Пароль для аккаунта</label>
         <input
           {...register("password", { required: true, validate: validatePassword })}
           id="password"
@@ -101,15 +105,31 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
         {errors.phone && <div className={styles.error}>{errors.phone.message as string}</div>}
       </div>
       <div className={styles.inputGroup}>
-        <label htmlFor="role_id" className={styles.label}>Роль</label>
+        <label htmlFor="role" className={styles.label}>Роль</label>
+        <select
+          {...register("role", { required: true })}
+          id="role"
+          className={styles.input}
+          defaultValue=""
+        >
+          <option value="" disabled>Выберите роль</option>
+          <option value={ModelRoleStatic.DRIVER}>Водитель</option>
+          <option value={ModelRoleStatic.DISP}>Диспетчер</option>
+          <option value={ModelRoleStatic.ADMIN}>Администратор</option>
+        </select>
+        {errors.role && <div className={styles.error}>{errors.role.message as string}</div>}
+      </div>
+      <div className={styles.inputGroup}>
+        <label htmlFor="role_password" className={styles.label}>Пароль для роли</label>
         <input
-          {...register("role_id", { required: 'Роль обязательна' })}
-          id="role_id"
-          type="text"
+          {...register("role_password", { required: true })}
+          id="role_password"
+          type="password"
           className={styles.input}
         />
-        {errors.role_id && <div className={styles.error}>{errors.role_id.message as string}</div>}
+        {errors.role_password && <div className={styles.error}>{errors.role_password.message as string}</div>}
       </div>
+
       <button
         type="submit"
         className={styles.submitButton}

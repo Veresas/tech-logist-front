@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **login** | **string** |  | [optional] [default to undefined]
 **password** | **string** |  | [optional] [default to undefined]
 **phone** | **string** |  | [optional] [default to undefined]
-**role_id** | **string** |  | [optional] [default to undefined]
+**role** | [**ModelRoleStatic**](ModelRoleStatic.md) |  | [optional] [default to undefined]
+**role_password** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -22,7 +23,8 @@ const instance: ModelRegisterRequest = {
     login,
     password,
     phone,
-    role_id,
+    role,
+    role_password,
 };
 ```
 

@@ -1,6 +1,6 @@
 # UsersApi
 
-All URIs are relative to *http://localhost:8080/api*
+All URIs are relative to *http://localhost:8400/api*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|

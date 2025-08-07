@@ -9,7 +9,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:8400",
     "basePath": "/api",
     "paths": {
         "/auth/login": {
@@ -683,9 +683,17 @@
                     "type": "string",
                     "example": "+79998887766"
                 },
-                "role_id": {
+                "role": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.RoleStatic"
+                        }
+                    ],
+                    "example": "driver"
+                },
+                "role_password": {
                     "type": "string",
-                    "example": "uuid-role-id"
+                    "example": "qwerty123"
                 }
             }
         },

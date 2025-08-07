@@ -6,6 +6,14 @@ export const customAxiosInstance = axios.create({
   baseURL: BASE_PATH,
 });
 
+customAxiosInstance.interceptors.request.use(
+  (config) => {
+    config.withCredentials = true;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 customAxiosInstance.interceptors.response.use(
   (response) => {
     const redirectUri = response.headers['x-redirect-uri']
@@ -21,6 +29,7 @@ customAxiosInstance.interceptors.response.use(
   (error) => {
     console.log('Какая - то ошибка: ', error.response.data);
     if (error.response?.status === 401) {
+      console.log('[Interceptor] Redirecting to login');
       window.location.href = '/login';
     }
     return Promise.reject(error);
