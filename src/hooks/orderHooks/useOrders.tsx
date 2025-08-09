@@ -4,7 +4,7 @@ import type { ModelOrderOut } from "../../api"
 type FetchFn = () => Promise<{ data: ModelOrderOut[] }>
 
 export function useOrders(fetchFn: FetchFn) {
-  const [orders, setOrders] = useState<ModelOrderOut[] | undefined>(undefined)
+  const [orders, setOrders] = useState<ModelOrderOut[] | undefined>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
 

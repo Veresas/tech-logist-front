@@ -145,7 +145,214 @@
                 }
             }
         },
-        "/orders": {
+        "/secure/check": {
+            "get": {
+                "description": "Проверка актуальности авторизации перед доступом к защищённым страницам",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "checks"
+                ],
+                "summary": "Проверка авторизации",
+                "responses": {
+                    "200": {
+                        "description": "Токен валиден",
+                        "schema": {
+                            "$ref": "#/definitions/model.CheckResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка авторизации",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/accept/:id": {
+            "put": {
+                "description": "Принять заявку по ID",
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Принять заявку",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказ принят",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/actual": {
+            "get": {
+                "description": "Получить все актуальные заявки",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Получить все актуальные заявки",
+                "responses": {
+                    "200": {
+                        "description": "Список заявок",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.OrderOut"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/actual/private": {
+            "get": {
+                "description": "Получить все актуальные заявки пользователя",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Получить все актуальные заявки пользователя",
+                "responses": {
+                    "200": {
+                        "description": "Список заявок",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.OrderOut"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/cancel/:id": {
+            "put": {
+                "description": "Отменяет заявку по ID",
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Отменить заявку",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказ отменён",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/complete/:id": {
+            "put": {
+                "description": "Завершает заявку по ID",
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Завершить заявку",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заказ завершён",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/order/create": {
             "post": {
                 "description": "Создаёт новую заявку",
                 "consumes": [
@@ -200,186 +407,8 @@
                 }
             }
         },
-        "/orders/actual": {
-            "get": {
-                "description": "Получить все актуальные заявки",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Получить все актуальные заявки",
-                "responses": {
-                    "200": {
-                        "description": "Список заявок",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.OrderOut"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/orders/actual/private": {
-            "get": {
-                "description": "Получить все актуальные заявки пользователя",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Получить все актуальные заявки пользователя",
-                "responses": {
-                    "200": {
-                        "description": "Список заявок",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.OrderOut"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/orders/{id}/accept": {
-            "post": {
-                "description": "Принять заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Принять заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ принят",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/orders/{id}/cancel": {
-            "post": {
-                "description": "Отменяет заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Отменить заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ отменён",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/orders/{id}/complete": {
-            "post": {
-                "description": "Завершает заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Завершить заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ завершён",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/orders/{id}/reject": {
-            "post": {
+        "/secure/order/reject/:id": {
+            "put": {
                 "description": "Снять заявку с водителя по ID",
                 "tags": [
                     "orders"
@@ -406,35 +435,6 @@
                     },
                     "500": {
                         "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/check": {
-            "get": {
-                "description": "Проверка актуальности авторизации перед доступом к защищённым страницам",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "checks"
-                ],
-                "summary": "Проверка авторизации",
-                "responses": {
-                    "200": {
-                        "description": "Токен валиден",
-                        "schema": {
-                            "$ref": "#/definitions/model.CheckResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Ошибка авторизации",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
