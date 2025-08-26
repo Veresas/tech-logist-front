@@ -1,9 +1,10 @@
 // hooks/useOrders.ts
+import { ordersApi } from '../../utils/ApiFactory'
 import { useEffect, useState } from 'react'
 import type { ModelOrderOut } from "../../api"
-type FetchFn = () => Promise<{ data: ModelOrderOut[] }>
 
-export function useOrders(fetchFn: FetchFn) {
+
+export function useOrders(isPrivate: boolean) {
   const [orders, setOrders] = useState<ModelOrderOut[] | undefined>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -13,8 +14,8 @@ export function useOrders(fetchFn: FetchFn) {
       try {
         setIsLoading(true)
         setError(undefined)
-        const res = await fetchFn()
-        setOrders(res.data)
+        const res = await ordersApi.apiOrdersActualGet(isPrivate)
+        setOrders(res.data.orders || [])
       } catch (err) {
         console.error(err)
         setError("Ошибка загрузки заказов: " + (err as Error).message)
@@ -24,7 +25,7 @@ export function useOrders(fetchFn: FetchFn) {
     }
 
     fetchOrders()
-  }, [fetchFn])
+  }, [isPrivate])
 
   return { orders, isLoading, error }
 }

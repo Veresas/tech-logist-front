@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
-import  { type ModelRegisterRequest,  ModelRoleStatic } from '../../api/api';
+import  { type ModelRegisterRequest,  ModelRoleEnum } from '../../api/api';
 import styles from './RegisterFrom.module.css';
 import type { RegisterFormProps } from './type';
 
@@ -42,7 +42,7 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
 
   // TODO: Добавить уведомлене об успехе и неудаче и перевод на страницу входа
   const handleFormSubmit: SubmitHandler<ModelRegisterRequest> = (data) => {
-    data.role = data.role as ModelRoleStatic;
+    data.role = data.role as ModelRoleEnum;
     onSubmit(data)
   };
 
@@ -113,9 +113,9 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
           defaultValue=""
         >
           <option value="" disabled>Выберите роль</option>
-          <option value={ModelRoleStatic.DRIVER}>Водитель</option>
-          <option value={ModelRoleStatic.DISP}>Диспетчер</option>
-          <option value={ModelRoleStatic.ADMIN}>Администратор</option>
+          <option value={ModelRoleEnum.DRIVER}>Водитель</option>
+          <option value={ModelRoleEnum.DISP}>Диспетчер</option>
+          <option value={ModelRoleEnum.ADMIN}>Администратор</option>
         </select>
         {errors.role && <div className={styles.error}>{errors.role.message as string}</div>}
       </div>

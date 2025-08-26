@@ -1,7 +1,6 @@
 import { customAxiosInstance } from "../CustomAxios";
-import { AuthApi, OrdersApi, UsersApi, ChecksApi} from '../../api';
+import { IdentityApi, OrdersApi, CheckApi } from '../../api';
 
-export const authApi = new AuthApi(undefined, undefined, customAxiosInstance)
+export const identityApi = new IdentityApi(undefined, undefined, customAxiosInstance)
 export const ordersApi = new OrdersApi(undefined, undefined, customAxiosInstance)
-export const usersApi = new UsersApi(undefined, undefined, customAxiosInstance)
-export const checksApi = new ChecksApi(undefined, undefined, customAxiosInstance)
+export const checkApi = new CheckApi(undefined, undefined, customAxiosInstance)

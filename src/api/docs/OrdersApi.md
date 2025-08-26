@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost:8400/api*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**secureOrderAcceptIdPut**](#secureorderacceptidput) | **PUT** /secure/order/accept/:id | Принять заявку|
-|[**secureOrderActualGet**](#secureorderactualget) | **GET** /secure/order/actual | Получить все актуальные заявки|
-|[**secureOrderActualPrivateGet**](#secureorderactualprivateget) | **GET** /secure/order/actual/private | Получить все актуальные заявки пользователя|
-|[**secureOrderCancelIdPut**](#secureordercancelidput) | **PUT** /secure/order/cancel/:id | Отменить заявку|
-|[**secureOrderCompleteIdPut**](#secureordercompleteidput) | **PUT** /secure/order/complete/:id | Завершить заявку|
-|[**secureOrderCreatePost**](#secureordercreatepost) | **POST** /secure/order/create | Создать заявку|
-|[**secureOrderRejectIdPut**](#secureorderrejectidput) | **PUT** /secure/order/reject/:id | Снять заявку с водителя|
+|[**apiOrdersActualGet**](#apiordersactualget) | **GET** /api/orders/actual | Получить все актуальные заявки|
+|[**apiOrdersIdAcceptPatch**](#apiordersidacceptpatch) | **PATCH** /api/orders/{id}/accept | Принять заявку|
+|[**apiOrdersIdCancelPatch**](#apiordersidcancelpatch) | **PATCH** /api/orders/{id}/cancel | Отменить заявку|
+|[**apiOrdersIdCompletePatch**](#apiordersidcompletepatch) | **PATCH** /api/orders/{id}/complete | Завершить заявку|
+|[**apiOrdersIdGet**](#apiordersidget) | **GET** /api/orders/{id} | Получить заявку по ID|
+|[**apiOrdersIdRejectPatch**](#apiordersidrejectpatch) | **PATCH** /api/orders/{id}/reject | Отклонить заявку|
+|[**apiOrdersPost**](#apiorderspost) | **POST** /api/orders | Создать новую заявку|
 
-# **secureOrderAcceptIdPut**
-> { [key: string]: string; } secureOrderAcceptIdPut()
+# **apiOrdersActualGet**
+> ModelOrdersResponse apiOrdersActualGet()
 
-Принять заявку по ID
+Возвращает список всех актуальных заявок
 
 ### Example
 
@@ -28,10 +28,10 @@ import {
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-let id: string; //ID заявки (default to undefined)
+let isPrivate: boolean; //Приватные заявки (optional) (default to false)
 
-const { status, data } = await apiInstance.secureOrderAcceptIdPut(
-    id
+const { status, data } = await apiInstance.apiOrdersActualGet(
+    isPrivate
 );
 ```
 
@@ -39,57 +39,12 @@ const { status, data } = await apiInstance.secureOrderAcceptIdPut(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **id** | [**string**] | ID заявки | defaults to undefined|
+| **isPrivate** | [**boolean**] | Приватные заявки | (optional) defaults to false|
 
 
 ### Return type
 
-**{ [key: string]: string; }**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | Заказ принят |  -  |
-|**500** | Внутренняя ошибка |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **secureOrderActualGet**
-> Array<ModelOrderOut> secureOrderActualGet()
-
-Получить все актуальные заявки
-
-### Example
-
-```typescript
-import {
-    OrdersApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new OrdersApi(configuration);
-
-const { status, data } = await apiInstance.secureOrderActualGet();
-```
-
-### Parameters
-This endpoint does not have any parameters.
-
-
-### Return type
-
-**Array<ModelOrderOut>**
+**ModelOrdersResponse**
 
 ### Authorization
 
@@ -104,15 +59,15 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Список заявок |  -  |
-|**500** | Внутренняя ошибка |  -  |
+|**200** | Список актуальных заявок |  -  |
+|**500** | Ошибка получения заявок |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **secureOrderActualPrivateGet**
-> Array<ModelOrderOut> secureOrderActualPrivateGet()
+# **apiOrdersIdAcceptPatch**
+> { [key: string]: any; } apiOrdersIdAcceptPatch()
 
-Получить все актуальные заявки пользователя
+Принимает заявку водителем
 
 ### Example
 
@@ -125,16 +80,23 @@ import {
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-const { status, data } = await apiInstance.secureOrderActualPrivateGet();
+let id: number; //ID заявки (default to undefined)
+
+const { status, data } = await apiInstance.apiOrdersIdAcceptPatch(
+    id
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | ID заявки | defaults to undefined|
 
 
 ### Return type
 
-**Array<ModelOrderOut>**
+**{ [key: string]: any; }**
 
 ### Authorization
 
@@ -149,15 +111,17 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Список заявок |  -  |
-|**500** | Внутренняя ошибка |  -  |
+|**200** | Заявка успешно принята |  -  |
+|**400** | Неверный формат ID |  -  |
+|**404** | Заявка не найдена |  -  |
+|**500** | Ошибка принятия заявки |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **secureOrderCancelIdPut**
-> { [key: string]: string; } secureOrderCancelIdPut()
+# **apiOrdersIdCancelPatch**
+> { [key: string]: any; } apiOrdersIdCancelPatch()
 
-Отменяет заявку по ID
+Отменяет заявку
 
 ### Example
 
@@ -170,9 +134,9 @@ import {
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-let id: string; //ID заявки (default to undefined)
+let id: number; //ID заявки (default to undefined)
 
-const { status, data } = await apiInstance.secureOrderCancelIdPut(
+const { status, data } = await apiInstance.apiOrdersIdCancelPatch(
     id
 );
 ```
@@ -181,12 +145,12 @@ const { status, data } = await apiInstance.secureOrderCancelIdPut(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **id** | [**string**] | ID заявки | defaults to undefined|
+| **id** | [**number**] | ID заявки | defaults to undefined|
 
 
 ### Return type
 
-**{ [key: string]: string; }**
+**{ [key: string]: any; }**
 
 ### Authorization
 
@@ -195,21 +159,23 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Заказ отменён |  -  |
-|**500** | Внутренняя ошибка |  -  |
+|**200** | Заявка успешно отменена |  -  |
+|**400** | Неверный формат ID |  -  |
+|**404** | Заявка не найдена |  -  |
+|**500** | Ошибка отмены заявки |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **secureOrderCompleteIdPut**
-> { [key: string]: string; } secureOrderCompleteIdPut()
+# **apiOrdersIdCompletePatch**
+> { [key: string]: any; } apiOrdersIdCompletePatch()
 
-Завершает заявку по ID
+Завершает заявку
 
 ### Example
 
@@ -222,9 +188,9 @@ import {
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-let id: string; //ID заявки (default to undefined)
+let id: number; //ID заявки (default to undefined)
 
-const { status, data } = await apiInstance.secureOrderCompleteIdPut(
+const { status, data } = await apiInstance.apiOrdersIdCompletePatch(
     id
 );
 ```
@@ -233,12 +199,12 @@ const { status, data } = await apiInstance.secureOrderCompleteIdPut(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **id** | [**string**] | ID заявки | defaults to undefined|
+| **id** | [**number**] | ID заявки | defaults to undefined|
 
 
 ### Return type
 
-**{ [key: string]: string; }**
+**{ [key: string]: any; }**
 
 ### Authorization
 
@@ -247,21 +213,131 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Заказ завершён |  -  |
-|**500** | Внутренняя ошибка |  -  |
+|**200** | Заявка успешно завершена |  -  |
+|**400** | Неверный формат ID |  -  |
+|**404** | Заявка не найдена |  -  |
+|**500** | Ошибка завершения заявки |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **secureOrderCreatePost**
-> { [key: string]: string; } secureOrderCreatePost(order)
+# **apiOrdersIdGet**
+> ModelOrder apiOrdersIdGet()
 
-Создаёт новую заявку
+Возвращает информацию о заявке по её ID
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+let id: number; //ID заявки (default to undefined)
+
+const { status, data } = await apiInstance.apiOrdersIdGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | ID заявки | defaults to undefined|
+
+
+### Return type
+
+**ModelOrder**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Информация о заявке |  -  |
+|**400** | Неверный формат ID |  -  |
+|**404** | Заявка не найдена |  -  |
+|**500** | Ошибка получения заявки |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiOrdersIdRejectPatch**
+> { [key: string]: any; } apiOrdersIdRejectPatch()
+
+Отклоняет заявку водителем
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+let id: number; //ID заявки (default to undefined)
+
+const { status, data } = await apiInstance.apiOrdersIdRejectPatch(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | ID заявки | defaults to undefined|
+
+
+### Return type
+
+**{ [key: string]: any; }**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Заявка успешно отклонена |  -  |
+|**400** | Неверный формат ID |  -  |
+|**404** | Заявка не найдена |  -  |
+|**500** | Ошибка отклонения заявки |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiOrdersPost**
+> { [key: string]: any; } apiOrdersPost(order)
+
+Создает новую заявку в системе
 
 ### Example
 
@@ -275,9 +351,9 @@ import {
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-let order: ModelOrderCreate; //Данные заявки
+let order: ModelOrderCreate; //Данные для создания заявки
 
-const { status, data } = await apiInstance.secureOrderCreatePost(
+const { status, data } = await apiInstance.apiOrdersPost(
     order
 );
 ```
@@ -286,12 +362,12 @@ const { status, data } = await apiInstance.secureOrderCreatePost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **order** | **ModelOrderCreate**| Данные заявки | |
+| **order** | **ModelOrderCreate**| Данные для создания заявки | |
 
 
 ### Return type
 
-**{ [key: string]: string; }**
+**{ [key: string]: any; }**
 
 ### Authorization
 
@@ -306,61 +382,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Заказ создан |  -  |
-|**400** | Ошибка валидации |  -  |
-|**500** | Внутренняя ошибка |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **secureOrderRejectIdPut**
-> { [key: string]: string; } secureOrderRejectIdPut()
-
-Снять заявку с водителя по ID
-
-### Example
-
-```typescript
-import {
-    OrdersApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new OrdersApi(configuration);
-
-let id: string; //ID заявки (default to undefined)
-
-const { status, data } = await apiInstance.secureOrderRejectIdPut(
-    id
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **id** | [**string**] | ID заявки | defaults to undefined|
-
-
-### Return type
-
-**{ [key: string]: string; }**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | Заказ снят |  -  |
-|**500** | Внутренняя ошибка |  -  |
+|**201** | Заявка успешно создана |  -  |
+|**400** | Неверные данные заявки |  -  |
+|**500** | Ошибка создания заявки |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

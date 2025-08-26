@@ -30,11 +30,11 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
  */
 export interface ModelCheckResponse {
     /**
-     * Role текущего пользователя
-     * @type {ModelRoleStatic}
+     * 
+     * @type {ModelRoleEnum}
      * @memberof ModelCheckResponse
      */
-    'role'?: ModelRoleStatic;
+    'role'?: ModelRoleEnum;
 }
 
 
@@ -56,6 +56,109 @@ export interface ModelLoginRequest {
      * @memberof ModelLoginRequest
      */
     'password'?: string;
+}
+/**
+ * Модель заявки
+ * @export
+ * @interface ModelOrder
+ */
+export interface ModelOrder {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'cargo_description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'cargo_name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'cargo_type_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'cargo_weight'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'completion_time'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'create_order_time'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'depart_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'driver_rate'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'goal_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ModelOrder
+     */
+    'is_postponed'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ModelOrder
+     */
+    'is_urgent'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrder
+     */
+    'order_status_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'photo_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'pickup_time'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrder
+     */
+    'time'?: string;
 }
 /**
  * DTO для создания заявки
@@ -105,6 +208,12 @@ export interface ModelOrderCreate {
      * @memberof ModelOrderCreate
      */
     'photo_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOrderCreate
+     */
+    'time'?: string;
 }
 /**
  * DTO для передачи информации о заявке
@@ -138,10 +247,10 @@ export interface ModelOrderOut {
     'cargo_weight'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ModelOrderOut
      */
-    'depart_loc'?: number;
+    'depart_loc_name'?: string;
     /**
      * 
      * @type {string}
@@ -156,10 +265,10 @@ export interface ModelOrderOut {
     'driver_name'?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ModelOrderOut
      */
-    'goal_loc'?: number;
+    'goal_loc_name'?: string;
     /**
      * 
      * @type {number}
@@ -168,10 +277,10 @@ export interface ModelOrderOut {
     'id'?: number;
     /**
      * 
-     * @type {ModelOrderOutStatus}
+     * @type {ModelOrderStatusEnum}
      * @memberof ModelOrderOut
      */
-    'order_status_name'?: ModelOrderOutStatus;
+    'order_status_name'?: ModelOrderStatusEnum;
     /**
      * 
      * @type {string}
@@ -188,21 +297,41 @@ export interface ModelOrderOut {
 
 
 /**
- * 
+ * Статус заказа
  * @export
  * @enum {string}
  */
 
-export const ModelOrderOutStatus = {
+export const ModelOrderStatusEnum = {
     NEW: 'Новый',
     ACCEPT: 'Принят',
     COMPLETE: 'Выполнен',
-    CANCEL: 'Отменен'
+    CANCEL: 'Отменен',
+    UNKNOWN: 'Неизвестно'
 } as const;
 
-export type ModelOrderOutStatus = typeof ModelOrderOutStatus[keyof typeof ModelOrderOutStatus];
+export type ModelOrderStatusEnum = typeof ModelOrderStatusEnum[keyof typeof ModelOrderStatusEnum];
 
 
+/**
+ * Ответ со списком заявок
+ * @export
+ * @interface ModelOrdersResponse
+ */
+export interface ModelOrdersResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelOrdersResponse
+     */
+    'count'?: number;
+    /**
+     * 
+     * @type {Array<ModelOrderOut>}
+     * @memberof ModelOrdersResponse
+     */
+    'orders'?: Array<ModelOrderOut>;
+}
 /**
  * DTO для передачи данных регистрации
  * @export
@@ -235,10 +364,10 @@ export interface ModelRegisterRequest {
     'phone'?: string;
     /**
      * 
-     * @type {ModelRoleStatic}
+     * @type {ModelRoleEnum}
      * @memberof ModelRegisterRequest
      */
-    'role'?: ModelRoleStatic;
+    'role'?: ModelRoleEnum;
     /**
      * 
      * @type {string}
@@ -249,61 +378,67 @@ export interface ModelRegisterRequest {
 
 
 /**
- * 
+ * Роль пользователя в системе
  * @export
  * @enum {string}
  */
 
-export const ModelRoleStatic = {
+export const ModelRoleEnum = {
     DRIVER: 'driver',
     DISP: 'disp',
     ADMIN: 'admin',
     MAIN_ADMIN: 'mainAdmin'
 } as const;
 
-export type ModelRoleStatic = typeof ModelRoleStatic[keyof typeof ModelRoleStatic];
+export type ModelRoleEnum = typeof ModelRoleEnum[keyof typeof ModelRoleEnum];
 
 
 /**
- * Модель пользователя
+ * 
  * @export
- * @interface ModelUser
+ * @interface ModelTLIdentetyModelUser
  */
-export interface ModelUser {
+export interface ModelTLIdentetyModelUser {
     /**
      * 
      * @type {string}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'fio'?: string;
     /**
      * 
+     * @type {number}
+     * @memberof ModelTLIdentetyModelUser
+     */
+    'internal_id'?: number;
+    /**
+     * 
      * @type {boolean}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'is_denied'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'password'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'phone'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUser
+     * @memberof ModelTLIdentetyModelUser
      */
     'public_id'?: string;
 }
@@ -340,262 +475,19 @@ export interface ModelUserUpdate {
 }
 
 /**
- * AuthApi - axios parameter creator
+ * CheckApi - axios parameter creator
  * @export
  */
-export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
+export const CheckApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Авторизация пользователя по логину и паролю
-         * @summary Авторизация
-         * @param {ModelLoginRequest} loginRequest Данные для авторизации
+         * Проверка подключения к сервису
+         * @summary Проверка подключения к сервису
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLoginPost: async (loginRequest: ModelLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'loginRequest' is not null or undefined
-            assertParamExists('authLoginPost', 'loginRequest', loginRequest)
-            const localVarPath = `/auth/login`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Удаляет HttpOnly cookie с токеном доступа и завершает сессию пользователя
-         * @summary Выход из аккаунта
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authLogoutPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auth/logout`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Регистрация нового пользователя
-         * @summary Регистрация
-         * @param {ModelRegisterRequest} registerRequest Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authRegisterPost: async (registerRequest: ModelRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'registerRequest' is not null or undefined
-            assertParamExists('authRegisterPost', 'registerRequest', registerRequest)
-            const localVarPath = `/auth/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * AuthApi - functional programming interface
- * @export
- */
-export const AuthApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Авторизация пользователя по логину и паролю
-         * @summary Авторизация
-         * @param {ModelLoginRequest} loginRequest Данные для авторизации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async authLoginPost(loginRequest: ModelLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authLoginPost(loginRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.authLoginPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Удаляет HttpOnly cookie с токеном доступа и завершает сессию пользователя
-         * @summary Выход из аккаунта
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async authLogoutPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authLogoutPost(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.authLogoutPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Регистрация нового пользователя
-         * @summary Регистрация
-         * @param {ModelRegisterRequest} registerRequest Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async authRegisterPost(registerRequest: ModelRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authRegisterPost(registerRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.authRegisterPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * AuthApi - factory interface
- * @export
- */
-export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AuthApiFp(configuration)
-    return {
-        /**
-         * Авторизация пользователя по логину и паролю
-         * @summary Авторизация
-         * @param {ModelLoginRequest} loginRequest Данные для авторизации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authLoginPost(loginRequest: ModelLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.authLoginPost(loginRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Удаляет HttpOnly cookie с токеном доступа и завершает сессию пользователя
-         * @summary Выход из аккаунта
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authLogoutPost(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.authLogoutPost(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Регистрация нового пользователя
-         * @summary Регистрация
-         * @param {ModelRegisterRequest} registerRequest Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authRegisterPost(registerRequest: ModelRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.authRegisterPost(registerRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * AuthApi - object-oriented interface
- * @export
- * @class AuthApi
- * @extends {BaseAPI}
- */
-export class AuthApi extends BaseAPI {
-    /**
-     * Авторизация пользователя по логину и паролю
-     * @summary Авторизация
-     * @param {ModelLoginRequest} loginRequest Данные для авторизации
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public authLoginPost(loginRequest: ModelLoginRequest, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authLoginPost(loginRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Удаляет HttpOnly cookie с токеном доступа и завершает сессию пользователя
-     * @summary Выход из аккаунта
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public authLogoutPost(options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authLogoutPost(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Регистрация нового пользователя
-     * @summary Регистрация
-     * @param {ModelRegisterRequest} registerRequest Данные для регистрации
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public authRegisterPost(registerRequest: ModelRegisterRequest, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authRegisterPost(registerRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * ChecksApi - axios parameter creator
- * @export
- */
-export const ChecksApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Проверка актуальности авторизации перед доступом к защищённым страницам
-         * @summary Проверка авторизации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        secureCheckGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/secure/check`;
+        apiCheckGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -622,62 +514,390 @@ export const ChecksApiAxiosParamCreator = function (configuration?: Configuratio
 };
 
 /**
- * ChecksApi - functional programming interface
+ * CheckApi - functional programming interface
  * @export
  */
-export const ChecksApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ChecksApiAxiosParamCreator(configuration)
+export const CheckApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CheckApiAxiosParamCreator(configuration)
     return {
         /**
-         * Проверка актуальности авторизации перед доступом к защищённым страницам
-         * @summary Проверка авторизации
+         * Проверка подключения к сервису
+         * @summary Проверка подключения к сервису
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureCheckGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureCheckGet(options);
+        async apiCheckGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCheckGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChecksApi.secureCheckGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CheckApi.apiCheckGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * ChecksApi - factory interface
+ * CheckApi - factory interface
  * @export
  */
-export const ChecksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ChecksApiFp(configuration)
+export const CheckApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CheckApiFp(configuration)
     return {
         /**
-         * Проверка актуальности авторизации перед доступом к защищённым страницам
-         * @summary Проверка авторизации
+         * Проверка подключения к сервису
+         * @summary Проверка подключения к сервису
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureCheckGet(options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
-            return localVarFp.secureCheckGet(options).then((request) => request(axios, basePath));
+        apiCheckGet(options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
+            return localVarFp.apiCheckGet(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ChecksApi - object-oriented interface
+ * CheckApi - object-oriented interface
  * @export
- * @class ChecksApi
+ * @class CheckApi
  * @extends {BaseAPI}
  */
-export class ChecksApi extends BaseAPI {
+export class CheckApi extends BaseAPI {
     /**
-     * Проверка актуальности авторизации перед доступом к защищённым страницам
-     * @summary Проверка авторизации
+     * Проверка подключения к сервису
+     * @summary Проверка подключения к сервису
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChecksApi
+     * @memberof CheckApi
      */
-    public secureCheckGet(options?: RawAxiosRequestConfig) {
-        return ChecksApiFp(this.configuration).secureCheckGet(options).then((request) => request(this.axios, this.basePath));
+    public apiCheckGet(options?: RawAxiosRequestConfig) {
+        return CheckApiFp(this.configuration).apiCheckGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * IdentityApi - axios parameter creator
+ * @export
+ */
+export const IdentityApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Возвращает информацию о пользователе по его ID (int или UUID)
+         * @summary Получить пользователя по ID
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiIdentUsersIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiIdentUsersIdGet', 'id', id)
+            const localVarPath = `/api/ident/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Обновляет информацию о пользователе по его ID (int или UUID)
+         * @summary Обновить данные пользователя
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiIdentUsersIdPatch: async (id: string, user: ModelUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiIdentUsersIdPatch', 'id', id)
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('apiIdentUsersIdPatch', 'user', user)
+            const localVarPath = `/api/ident/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Входит в систему
+         * @summary Входит в систему
+         * @param {ModelLoginRequest} user Данные для входа
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPublicAuthLoginPost: async (user: ModelLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('apiPublicAuthLoginPost', 'user', user)
+            const localVarPath = `/api/public/auth/login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPublicAuthRegisterPost: async (user: ModelRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('apiPublicAuthRegisterPost', 'user', user)
+            const localVarPath = `/api/public/auth/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * IdentityApi - functional programming interface
+ * @export
+ */
+export const IdentityApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = IdentityApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Возвращает информацию о пользователе по его ID (int или UUID)
+         * @summary Получить пользователя по ID
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiIdentUsersIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelTLIdentetyModelUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiIdentUsersIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.apiIdentUsersIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Обновляет информацию о пользователе по его ID (int или UUID)
+         * @summary Обновить данные пользователя
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiIdentUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiIdentUsersIdPatch(id, user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.apiIdentUsersIdPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Входит в систему
+         * @summary Входит в систему
+         * @param {ModelLoginRequest} user Данные для входа
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPublicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPublicAuthLoginPost(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.apiPublicAuthLoginPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPublicAuthRegisterPost(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.apiPublicAuthRegisterPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * IdentityApi - factory interface
+ * @export
+ */
+export const IdentityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = IdentityApiFp(configuration)
+    return {
+        /**
+         * Возвращает информацию о пользователе по его ID (int или UUID)
+         * @summary Получить пользователя по ID
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiIdentUsersIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ModelTLIdentetyModelUser> {
+            return localVarFp.apiIdentUsersIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Обновляет информацию о пользователе по его ID (int или UUID)
+         * @summary Обновить данные пользователя
+         * @param {string} id ID пользователя (число или UUID)
+         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiIdentUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiIdentUsersIdPatch(id, user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Входит в систему
+         * @summary Входит в систему
+         * @param {ModelLoginRequest} user Данные для входа
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPublicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiPublicAuthLoginPost(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiPublicAuthRegisterPost(user, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * IdentityApi - object-oriented interface
+ * @export
+ * @class IdentityApi
+ * @extends {BaseAPI}
+ */
+export class IdentityApi extends BaseAPI {
+    /**
+     * Возвращает информацию о пользователе по его ID (int или UUID)
+     * @summary Получить пользователя по ID
+     * @param {string} id ID пользователя (число или UUID)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public apiIdentUsersIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).apiIdentUsersIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Обновляет информацию о пользователе по его ID (int или UUID)
+     * @summary Обновить данные пользователя
+     * @param {string} id ID пользователя (число или UUID)
+     * @param {ModelUserUpdate} user Данные для обновления
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public apiIdentUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).apiIdentUsersIdPatch(id, user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Входит в систему
+     * @summary Входит в систему
+     * @param {ModelLoginRequest} user Данные для входа
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public apiPublicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).apiPublicAuthLoginPost(user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Создает нового пользователя в системе
+     * @summary Зарегистрировать нового пользователя
+     * @param {ModelRegisterRequest} user Данные для регистрации
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).apiPublicAuthRegisterPost(user, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -690,47 +910,14 @@ export class ChecksApi extends BaseAPI {
 export const OrdersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Принять заявку по ID
-         * @summary Принять заявку
-         * @param {string} id ID заявки
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        secureOrderAcceptIdPut: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('secureOrderAcceptIdPut', 'id', id)
-            const localVarPath = `/secure/order/accept/:id`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Получить все актуальные заявки
+         * Возвращает список всех актуальных заявок
          * @summary Получить все актуальные заявки
+         * @param {boolean} [isPrivate] Приватные заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderActualGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/secure/order/actual`;
+        apiOrdersActualGet: async (isPrivate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/orders/actual`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -739,6 +926,44 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (isPrivate !== undefined) {
+                localVarQueryParameter['isPrivate'] = isPrivate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Принимает заявку водителем
+         * @summary Принять заявку
+         * @param {number} id ID заявки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOrdersIdAcceptPatch: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiOrdersIdAcceptPatch', 'id', id)
+            const localVarPath = `/api/orders/{id}/accept`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -754,46 +979,16 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Получить все актуальные заявки пользователя
-         * @summary Получить все актуальные заявки пользователя
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        secureOrderActualPrivateGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/secure/order/actual/private`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Отменяет заявку по ID
+         * Отменяет заявку
          * @summary Отменить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCancelIdPut: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiOrdersIdCancelPatch: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('secureOrderCancelIdPut', 'id', id)
-            const localVarPath = `/secure/order/cancel/:id`
+            assertParamExists('apiOrdersIdCancelPatch', 'id', id)
+            const localVarPath = `/api/orders/{id}/cancel`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -802,7 +997,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -818,16 +1013,16 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Завершает заявку по ID
+         * Завершает заявку
          * @summary Завершить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCompleteIdPut: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiOrdersIdCompletePatch: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('secureOrderCompleteIdPut', 'id', id)
-            const localVarPath = `/secure/order/complete/:id`
+            assertParamExists('apiOrdersIdCompletePatch', 'id', id)
+            const localVarPath = `/api/orders/{id}/complete`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -836,7 +1031,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -852,16 +1047,84 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Создаёт новую заявку
-         * @summary Создать заявку
-         * @param {ModelOrderCreate} order Данные заявки
+         * Возвращает информацию о заявке по её ID
+         * @summary Получить заявку по ID
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCreatePost: async (order: ModelOrderCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiOrdersIdGet: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiOrdersIdGet', 'id', id)
+            const localVarPath = `/api/orders/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Отклоняет заявку водителем
+         * @summary Отклонить заявку
+         * @param {number} id ID заявки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOrdersIdRejectPatch: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiOrdersIdRejectPatch', 'id', id)
+            const localVarPath = `/api/orders/{id}/reject`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Создает новую заявку в системе
+         * @summary Создать новую заявку
+         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOrdersPost: async (order: ModelOrderCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'order' is not null or undefined
-            assertParamExists('secureOrderCreatePost', 'order', order)
-            const localVarPath = `/secure/order/create`;
+            assertParamExists('apiOrdersPost', 'order', order)
+            const localVarPath = `/api/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -887,40 +1150,6 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Снять заявку с водителя по ID
-         * @summary Снять заявку с водителя
-         * @param {string} id ID заявки
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        secureOrderRejectIdPut: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('secureOrderRejectIdPut', 'id', id)
-            const localVarPath = `/secure/order/reject/:id`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -932,92 +1161,94 @@ export const OrdersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OrdersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Принять заявку по ID
-         * @summary Принять заявку
-         * @param {string} id ID заявки
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async secureOrderAcceptIdPut(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderAcceptIdPut(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderAcceptIdPut']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Получить все актуальные заявки
+         * Возвращает список всех актуальных заявок
          * @summary Получить все актуальные заявки
+         * @param {boolean} [isPrivate] Приватные заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderActualGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelOrderOut>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderActualGet(options);
+        async apiOrdersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrdersResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersActualGet(isPrivate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderActualGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersActualGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Получить все актуальные заявки пользователя
-         * @summary Получить все актуальные заявки пользователя
+         * Принимает заявку водителем
+         * @summary Принять заявку
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderActualPrivateGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelOrderOut>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderActualPrivateGet(options);
+        async apiOrdersIdAcceptPatch(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersIdAcceptPatch(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderActualPrivateGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersIdAcceptPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Отменяет заявку по ID
+         * Отменяет заявку
          * @summary Отменить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderCancelIdPut(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderCancelIdPut(id, options);
+        async apiOrdersIdCancelPatch(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersIdCancelPatch(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderCancelIdPut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersIdCancelPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Завершает заявку по ID
+         * Завершает заявку
          * @summary Завершить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderCompleteIdPut(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderCompleteIdPut(id, options);
+        async apiOrdersIdCompletePatch(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersIdCompletePatch(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderCompleteIdPut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersIdCompletePatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Создаёт новую заявку
-         * @summary Создать заявку
-         * @param {ModelOrderCreate} order Данные заявки
+         * Возвращает информацию о заявке по её ID
+         * @summary Получить заявку по ID
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderCreatePost(order, options);
+        async apiOrdersIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrder>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderCreatePost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Снять заявку с водителя по ID
-         * @summary Снять заявку с водителя
-         * @param {string} id ID заявки
+         * Отклоняет заявку водителем
+         * @summary Отклонить заявку
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async secureOrderRejectIdPut(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.secureOrderRejectIdPut(id, options);
+        async apiOrdersIdRejectPatch(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersIdRejectPatch(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrdersApi.secureOrderRejectIdPut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersIdRejectPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Создает новую заявку в системе
+         * @summary Создать новую заявку
+         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiOrdersPost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOrdersPost(order, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.apiOrdersPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1031,72 +1262,74 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = OrdersApiFp(configuration)
     return {
         /**
-         * Принять заявку по ID
-         * @summary Принять заявку
-         * @param {string} id ID заявки
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        secureOrderAcceptIdPut(id: string, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.secureOrderAcceptIdPut(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Получить все актуальные заявки
+         * Возвращает список всех актуальных заявок
          * @summary Получить все актуальные заявки
+         * @param {boolean} [isPrivate] Приватные заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderActualGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ModelOrderOut>> {
-            return localVarFp.secureOrderActualGet(options).then((request) => request(axios, basePath));
+        apiOrdersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrdersResponse> {
+            return localVarFp.apiOrdersActualGet(isPrivate, options).then((request) => request(axios, basePath));
         },
         /**
-         * Получить все актуальные заявки пользователя
-         * @summary Получить все актуальные заявки пользователя
+         * Принимает заявку водителем
+         * @summary Принять заявку
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderActualPrivateGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ModelOrderOut>> {
-            return localVarFp.secureOrderActualPrivateGet(options).then((request) => request(axios, basePath));
+        apiOrdersIdAcceptPatch(id: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiOrdersIdAcceptPatch(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Отменяет заявку по ID
+         * Отменяет заявку
          * @summary Отменить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCancelIdPut(id: string, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.secureOrderCancelIdPut(id, options).then((request) => request(axios, basePath));
+        apiOrdersIdCancelPatch(id: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiOrdersIdCancelPatch(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Завершает заявку по ID
+         * Завершает заявку
          * @summary Завершить заявку
-         * @param {string} id ID заявки
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCompleteIdPut(id: string, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.secureOrderCompleteIdPut(id, options).then((request) => request(axios, basePath));
+        apiOrdersIdCompletePatch(id: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiOrdersIdCompletePatch(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Создаёт новую заявку
-         * @summary Создать заявку
-         * @param {ModelOrderCreate} order Данные заявки
+         * Возвращает информацию о заявке по её ID
+         * @summary Получить заявку по ID
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.secureOrderCreatePost(order, options).then((request) => request(axios, basePath));
+        apiOrdersIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrder> {
+            return localVarFp.apiOrdersIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Снять заявку с водителя по ID
-         * @summary Снять заявку с водителя
-         * @param {string} id ID заявки
+         * Отклоняет заявку водителем
+         * @summary Отклонить заявку
+         * @param {number} id ID заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        secureOrderRejectIdPut(id: string, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.secureOrderRejectIdPut(id, options).then((request) => request(axios, basePath));
+        apiOrdersIdRejectPatch(id: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiOrdersIdRejectPatch(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Создает новую заявку в системе
+         * @summary Создать новую заявку
+         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOrdersPost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiOrdersPost(order, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1109,271 +1342,87 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
  */
 export class OrdersApi extends BaseAPI {
     /**
-     * Принять заявку по ID
-     * @summary Принять заявку
-     * @param {string} id ID заявки
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public secureOrderAcceptIdPut(id: string, options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderAcceptIdPut(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Получить все актуальные заявки
+     * Возвращает список всех актуальных заявок
      * @summary Получить все актуальные заявки
+     * @param {boolean} [isPrivate] Приватные заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderActualGet(options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderActualGet(options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersActualGet(isPrivate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Получить все актуальные заявки пользователя
-     * @summary Получить все актуальные заявки пользователя
+     * Принимает заявку водителем
+     * @summary Принять заявку
+     * @param {number} id ID заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderActualPrivateGet(options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderActualPrivateGet(options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersIdAcceptPatch(id: number, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersIdAcceptPatch(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Отменяет заявку по ID
+     * Отменяет заявку
      * @summary Отменить заявку
-     * @param {string} id ID заявки
+     * @param {number} id ID заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderCancelIdPut(id: string, options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderCancelIdPut(id, options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersIdCancelPatch(id: number, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersIdCancelPatch(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Завершает заявку по ID
+     * Завершает заявку
      * @summary Завершить заявку
-     * @param {string} id ID заявки
+     * @param {number} id ID заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderCompleteIdPut(id: string, options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderCompleteIdPut(id, options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersIdCompletePatch(id: number, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersIdCompletePatch(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Создаёт новую заявку
-     * @summary Создать заявку
-     * @param {ModelOrderCreate} order Данные заявки
+     * Возвращает информацию о заявке по её ID
+     * @summary Получить заявку по ID
+     * @param {number} id ID заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderCreatePost(order, options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersIdGet(id: number, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Снять заявку с водителя по ID
-     * @summary Снять заявку с водителя
-     * @param {string} id ID заявки
+     * Отклоняет заявку водителем
+     * @summary Отклонить заявку
+     * @param {number} id ID заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public secureOrderRejectIdPut(id: string, options?: RawAxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).secureOrderRejectIdPut(id, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * UsersApi - axios parameter creator
- * @export
- */
-export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Получить пользователя по ID
-         * @summary Получить пользователя
-         * @param {string} id ID пользователя
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('usersIdGet', 'id', id)
-            const localVarPath = `/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Обновить пользователя по ID
-         * @summary Обновить пользователя
-         * @param {string} id ID пользователя
-         * @param {ModelUserUpdate} user Данные пользователя для обновления
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersIdPut: async (id: string, user: ModelUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('usersIdPut', 'id', id)
-            // verify required parameter 'user' is not null or undefined
-            assertParamExists('usersIdPut', 'user', user)
-            const localVarPath = `/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * UsersApi - functional programming interface
- * @export
- */
-export const UsersApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Получить пользователя по ID
-         * @summary Получить пользователя
-         * @param {string} id ID пользователя
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async usersIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersIdGet(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Обновить пользователя по ID
-         * @summary Обновить пользователя
-         * @param {string} id ID пользователя
-         * @param {ModelUserUpdate} user Данные пользователя для обновления
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async usersIdPut(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersIdPut(id, user, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersIdPut']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * UsersApi - factory interface
- * @export
- */
-export const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = UsersApiFp(configuration)
-    return {
-        /**
-         * Получить пользователя по ID
-         * @summary Получить пользователя
-         * @param {string} id ID пользователя
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ModelUser> {
-            return localVarFp.usersIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Обновить пользователя по ID
-         * @summary Обновить пользователя
-         * @param {string} id ID пользователя
-         * @param {ModelUserUpdate} user Данные пользователя для обновления
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usersIdPut(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.usersIdPut(id, user, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * UsersApi - object-oriented interface
- * @export
- * @class UsersApi
- * @extends {BaseAPI}
- */
-export class UsersApi extends BaseAPI {
-    /**
-     * Получить пользователя по ID
-     * @summary Получить пользователя
-     * @param {string} id ID пользователя
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public usersIdGet(id: string, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).usersIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersIdRejectPatch(id: number, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersIdRejectPatch(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Обновить пользователя по ID
-     * @summary Обновить пользователя
-     * @param {string} id ID пользователя
-     * @param {ModelUserUpdate} user Данные пользователя для обновления
+     * Создает новую заявку в системе
+     * @summary Создать новую заявку
+     * @param {ModelOrderCreate} order Данные для создания заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UsersApi
+     * @memberof OrdersApi
      */
-    public usersIdPut(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).usersIdPut(id, user, options).then((request) => request(this.axios, this.basePath));
+    public apiOrdersPost(order: ModelOrderCreate, options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).apiOrdersPost(order, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

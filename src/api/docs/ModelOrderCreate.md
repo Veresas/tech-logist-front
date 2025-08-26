@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **depart_loc** | **number** |  | [optional] [default to undefined]
 **goal_loc** | **number** |  | [optional] [default to undefined]
 **photo_id** | **string** |  | [optional] [default to undefined]
+**time** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -27,6 +28,7 @@ const instance: ModelOrderCreate = {
     depart_loc,
     goal_loc,
     photo_id,
+    time,
 };
 ```
 

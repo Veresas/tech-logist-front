@@ -12,349 +12,44 @@
     "host": "localhost:8400",
     "basePath": "/api",
     "paths": {
-        "/auth/login": {
-            "post": {
-                "description": "Авторизация пользователя по логину и паролю",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Авторизация",
-                "parameters": [
-                    {
-                        "description": "Данные для авторизации",
-                        "name": "loginRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Токен доступа",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Ошибка авторизации",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/logout": {
-            "post": {
-                "description": "Удаляет HttpOnly cookie с токеном доступа и завершает сессию пользователя",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Выход из аккаунта",
-                "responses": {
-                    "200": {
-                        "description": "Выход выполнен успешно",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/register": {
-            "post": {
-                "description": "Регистрация нового пользователя",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Регистрация",
-                "parameters": [
-                    {
-                        "description": "Данные для регистрации",
-                        "name": "registerRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.RegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Пользователь успешно создан",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/check": {
+        "/api/check": {
             "get": {
-                "description": "Проверка актуальности авторизации перед доступом к защищённым страницам",
+                "description": "Проверка подключения к сервису",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "checks"
+                    "Check"
                 ],
-                "summary": "Проверка авторизации",
+                "summary": "Проверка подключения к сервису",
                 "responses": {
                     "200": {
-                        "description": "Токен валиден",
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.CheckResponse"
                         }
                     },
                     "401": {
-                        "description": "Ошибка авторизации",
+                        "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/accept/:id": {
-            "put": {
-                "description": "Принять заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Принять заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ принят",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Внутренняя ошибка",
+                        "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/secure/order/actual": {
+        "/api/ident/users/{id}": {
             "get": {
-                "description": "Получить все актуальные заявки",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Получить все актуальные заявки",
-                "responses": {
-                    "200": {
-                        "description": "Список заявок",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.OrderOut"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/actual/private": {
-            "get": {
-                "description": "Получить все актуальные заявки пользователя",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Получить все актуальные заявки пользователя",
-                "responses": {
-                    "200": {
-                        "description": "Список заявок",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.OrderOut"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/cancel/:id": {
-            "put": {
-                "description": "Отменяет заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Отменить заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ отменён",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/complete/:id": {
-            "put": {
-                "description": "Завершает заявку по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Завершить заявку",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ завершён",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/create": {
-            "post": {
-                "description": "Создаёт новую заявку",
+                "description": "Возвращает информацию о пользователе по его ID (int или UUID)",
                 "consumes": [
                     "application/json"
                 ],
@@ -362,128 +57,43 @@
                     "application/json"
                 ],
                 "tags": [
-                    "orders"
+                    "Identity"
                 ],
-                "summary": "Создать заявку",
+                "summary": "Получить пользователя по ID",
                 "parameters": [
                     {
-                        "description": "Данные заявки",
-                        "name": "order",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.OrderCreate"
-                        }
+                        "type": "string",
+                        "description": "ID пользователя (число или UUID)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Заказ создан",
+                        "description": "Информация о пользователе",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/model.TL_identety_ModelUser"
                         }
                     },
                     "400": {
-                        "description": "Ошибка валидации",
+                        "description": "Неверный формат ID",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
-                    "500": {
-                        "description": "Внутренняя ошибка",
+                    "404": {
+                        "description": "Пользователь не найден",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/secure/order/reject/:id": {
-            "put": {
-                "description": "Снять заявку с водителя по ID",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Снять заявку с водителя",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID заявки",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Заказ снят",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "description": "Получить пользователя по ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Получить пользователя",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID пользователя",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Пользователь",
-                        "schema": {
-                            "$ref": "#/definitions/model.User"
-                        }
-                    },
-                    "500": {
-                        "description": "Внутренняя ошибка",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     }
                 }
             },
-            "put": {
-                "description": "Обновить пользователя по ID",
+            "patch": {
+                "description": "Обновляет информацию о пользователе по его ID (int или UUID)",
                 "consumes": [
                     "application/json"
                 ],
@@ -491,19 +101,19 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "Identity"
                 ],
-                "summary": "Обновить пользователя",
+                "summary": "Обновить данные пользователя",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID пользователя",
+                        "description": "ID пользователя (число или UUID)",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Данные пользователя для обновления",
+                        "description": "Данные для обновления",
                         "name": "user",
                         "in": "body",
                         "required": true,
@@ -514,30 +124,486 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Пользователь успешно обновлён",
+                        "description": "Пользователь успешно обновлен",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Ошибка валидации",
+                        "description": "Неверный формат ID",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Внутренняя ошибка",
+                        "description": "Ошибка обновления пользователя",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders": {
+            "post": {
+                "description": "Создает новую заявку в системе",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Создать новую заявку",
+                "parameters": [
+                    {
+                        "description": "Данные для создания заявки",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.OrderCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Заявка успешно создана",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные данные заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка создания заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/actual": {
+            "get": {
+                "description": "Возвращает список всех актуальных заявок",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Получить все актуальные заявки",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Приватные заявки",
+                        "name": "isPrivate",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список актуальных заявок",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrdersResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения заявок",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}": {
+            "get": {
+                "description": "Возвращает информацию о заявке по её ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Получить заявку по ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о заявке",
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Заявка не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}/accept": {
+            "patch": {
+                "description": "Принимает заявку водителем",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Принять заявку",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка успешно принята",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Заявка не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка принятия заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}/cancel": {
+            "patch": {
+                "description": "Отменяет заявку",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Отменить заявку",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка успешно отменена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Заявка не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка отмены заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}/complete": {
+            "patch": {
+                "description": "Завершает заявку",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Завершить заявку",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка успешно завершена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Заявка не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка завершения заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}/reject": {
+            "patch": {
+                "description": "Отклоняет заявку водителем",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Отклонить заявку",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка успешно отклонена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Заявка не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка отклонения заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/public/auth/login": {
+            "post": {
+                "description": "Входит в систему",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Входит в систему",
+                "parameters": [
+                    {
+                        "description": "Данные для входа",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно введен",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные данные пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка входа в систему",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/public/auth/register": {
+            "post": {
+                "description": "Создает нового пользователя в системе",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Зарегистрировать нового пользователя",
+                "parameters": [
+                    {
+                        "description": "Данные для регистрации",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно создан",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные данные пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка создания пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     }
                 }
@@ -550,7 +616,6 @@
             "type": "object",
             "properties": {
                 "role": {
-                    "description": "Role текущего пользователя",
                     "enum": [
                         "driver",
                         "disp",
@@ -559,7 +624,7 @@
                     ],
                     "allOf": [
                         {
-                            "$ref": "#/definitions/model.RoleStatic"
+                            "$ref": "#/definitions/model.RoleEnum"
                         }
                     ]
                 }
@@ -576,6 +641,60 @@
                 "password": {
                     "type": "string",
                     "example": "qwerty123"
+                }
+            }
+        },
+        "model.Order": {
+            "description": "Модель заявки",
+            "type": "object",
+            "properties": {
+                "cargo_description": {
+                    "type": "string"
+                },
+                "cargo_name": {
+                    "type": "string"
+                },
+                "cargo_type_id": {
+                    "type": "integer"
+                },
+                "cargo_weight": {
+                    "type": "number"
+                },
+                "completion_time": {
+                    "type": "string"
+                },
+                "create_order_time": {
+                    "type": "string"
+                },
+                "depart_loc": {
+                    "type": "integer"
+                },
+                "driver_rate": {
+                    "type": "integer"
+                },
+                "goal_loc": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_postponed": {
+                    "type": "boolean"
+                },
+                "is_urgent": {
+                    "type": "boolean"
+                },
+                "order_status_id": {
+                    "type": "integer"
+                },
+                "photo_id": {
+                    "type": "string"
+                },
+                "pickup_time": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
                 }
             }
         },
@@ -603,6 +722,9 @@
                 },
                 "photo_id": {
                     "type": "string"
+                },
+                "time": {
+                    "type": "string"
                 }
             }
         },
@@ -622,8 +744,8 @@
                 "cargo_weight": {
                     "type": "number"
                 },
-                "depart_loc": {
-                    "type": "integer"
+                "depart_loc_name": {
+                    "type": "string"
                 },
                 "dispatcher_name": {
                     "type": "string"
@@ -631,14 +753,14 @@
                 "driver_name": {
                     "type": "string"
                 },
-                "goal_loc": {
-                    "type": "integer"
+                "goal_loc_name": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "order_status_name": {
-                    "$ref": "#/definitions/model.OrderOutStatus"
+                    "$ref": "#/definitions/model.OrderStatusEnum"
                 },
                 "photo_id": {
                     "type": "string"
@@ -648,20 +770,38 @@
                 }
             }
         },
-        "model.OrderOutStatus": {
+        "model.OrderStatusEnum": {
+            "description": "Статус заказа",
             "type": "string",
             "enum": [
                 "Новый",
                 "Принят",
                 "Выполнен",
-                "Отменен"
+                "Отменен",
+                "Неизвестно"
             ],
             "x-enum-varnames": [
                 "NEW",
                 "ACCEPT",
                 "COMPLETE",
-                "CANCEL"
+                "CANCEL",
+                "UNKNOWN"
             ]
+        },
+        "model.OrdersResponse": {
+            "description": "Ответ со списком заявок",
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "orders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.OrderOut"
+                    }
+                }
+            }
         },
         "model.RegisterRequest": {
             "description": "DTO для передачи данных регистрации",
@@ -686,7 +826,7 @@
                 "role": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/model.RoleStatic"
+                            "$ref": "#/definitions/model.RoleEnum"
                         }
                     ],
                     "example": "driver"
@@ -697,7 +837,8 @@
                 }
             }
         },
-        "model.RoleStatic": {
+        "model.RoleEnum": {
+            "description": "Роль пользователя в системе",
             "type": "string",
             "enum": [
                 "driver",
@@ -712,12 +853,14 @@
                 "MAIN_ADMIN"
             ]
         },
-        "model.User": {
-            "description": "Модель пользователя",
+        "model.TL_identety_ModelUser": {
             "type": "object",
             "properties": {
                 "fio": {
                     "type": "string"
+                },
+                "internal_id": {
+                    "type": "integer"
                 },
                 "is_denied": {
                     "type": "boolean"

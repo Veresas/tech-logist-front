@@ -1,4 +1,3 @@
-import React from 'react'
 import type { OrderListProps } from './type'
 import { OrderCard } from '../OrderCard'
 

@@ -1,7 +1,7 @@
 import { createContext, useState} from 'react';
-import { checksApi } from '../../utils/ApiFactory';
+import { checkApi } from '../../utils/ApiFactory';
 import type { AuthContextType, AuthContextProps } from './type';
-import { ModelRoleStatic } from '../../api';
+import { ModelRoleEnum } from '../../api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -10,12 +10,12 @@ export { AuthContext };
 export const AuthProvider = ({children} : AuthContextProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [role, setRole] = useState<ModelRoleStatic>(ModelRoleStatic.DISP)
+    const [role, setRole] = useState<ModelRoleEnum>(ModelRoleEnum.DISP)
     
     const verifyAuth = async () => {
         try {
             console.log('[AuthProvider] Verifying authentication');
-            const response = await checksApi.secureCheckGet();
+            const response = await checkApi.apiCheckGet();
             if (response.status === 200) { // Предполагаем, что 200 OK означает успешную проверку
                 setIsAuthenticated(true);
                 if (response.data.role) {

@@ -6,7 +6,7 @@ DTO для передачи роли на фронт
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**role** | [**ModelRoleStatic**](ModelRoleStatic.md) | Role текущего пользователя | [optional] [default to undefined]
+**role** | [**ModelRoleEnum**](ModelRoleEnum.md) |  | [optional] [default to undefined]
 
 ## Example
 

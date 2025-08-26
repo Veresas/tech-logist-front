@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { RegisterForm, LoginForm } from '../../components';
-import { authApi} from '../../utils/ApiFactory'
+import { identityApi} from '../../utils/ApiFactory'
 import { type ModelLoginRequest, type ModelRegisterRequest } from '../../api'
 
 export const LoginPage = () => {
@@ -8,7 +8,7 @@ export const LoginPage = () => {
 
     const handleLogin = async (data: ModelLoginRequest) => {
         try {
-            await authApi.authLoginPost(data);
+            await identityApi.apiPublicAuthLoginPost(data);
         } catch (error) {
             console.error(error);
         }
@@ -16,7 +16,7 @@ export const LoginPage = () => {
 
     const handleRegister = async (data: ModelRegisterRequest) => {
         try {
-            await authApi.authRegisterPost(data);
+            await identityApi.apiPublicAuthRegisterPost(data);
         } catch (error) {
             console.error(error);
         }

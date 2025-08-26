@@ -3,7 +3,7 @@ import type { OrderCardClickHandler, OrderCardClickPhotoHandler } from '../../co
 import type { OrderCardAction } from '../../components/OrdersComp/type'
 
 export const useOrderCardHandlers = () => {
-  const handleSendRequest: OrderCardClickHandler = async (orderId: string, action: OrderCardAction ) => {
+  const handleSendRequest: OrderCardClickHandler = async (orderId: number, action: OrderCardAction ) => {
     try {
       await action(orderId)
     } catch (err) {
