@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginPage, MainPage, PrivatePage, BufferPage } from './pages';
 import { AuthWrapper } from "./wrappers"
 import {  } from './pages/BufferPages';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
     </BrowserRouter>
-
+    <ToastContainer />
   </>
   )
 }

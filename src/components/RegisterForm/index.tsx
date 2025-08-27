@@ -48,68 +48,59 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
+      <h2 className={styles.formTitle}>Регистрация</h2>
+      
       <div className={styles.inputGroup}>
-        <label htmlFor="fio" className={styles.label}>ФИО</label>
         <input
           {...register("fio", { required: true, validate: validateFio })}
           id="fio"
           type="text"
           className={styles.input}
+          placeholder="Фамилия Имя Отчество"
         />
         {errors.fio && <div className={styles.error}>{errors.fio.message as string}</div>}
       </div>
+      
       <div className={styles.inputGroup}>
-        <label htmlFor="login" className={styles.label}>Логин</label>
-        <input
-          {...register("login", { required: 'Логин обязателен' })}
-          id="login"
-          type="text"
-          className={styles.input}
-        />
-        {errors.login && <div className={styles.error}>{errors.login.message as string}</div>}
-      </div>
-      <div className={styles.inputGroup}>
-        <label htmlFor="password" className={styles.label}>Пароль для аккаунта</label>
-        <input
-          {...register("password", { required: true, validate: validatePassword })}
-          id="password"
-          type="password"
-          className={styles.input}
-          onFocus={() => setPasswordFocused(true)}
-          onBlur={() => setPasswordFocused(false)}
-        />
-        {(passwordFocused || passwordValue) && (
-          <div className={styles.passwordHint}>
-            Требования к паролю:
-            <ul>
-              <li>Минимум 8 символов</li>
-              <li>Хотя бы одна заглавная буква</li>
-              <li>Хотя бы одна строчная буква</li>
-              <li>Хотя бы одна цифра</li>
-              <li>Хотя бы один спецсимвол</li>
-            </ul>
-          </div>
-        )}
-        {errors.password && <div className={styles.error}>{errors.password.message as string}</div>}
-      </div>
-      <div className={styles.inputGroup}>
-        <label htmlFor="phone" className={styles.label}>Телефон</label>
         <input
           {...register("phone", { required: true, validate: validatePhone })}
           id="phone"
           type="text"
           className={styles.input}
-          placeholder="+79999999999"
+          placeholder="Телефон"
           pattern="^\+7\d{10}$"
         />
         {errors.phone && <div className={styles.error}>{errors.phone.message as string}</div>}
       </div>
+      
       <div className={styles.inputGroup}>
-        <label htmlFor="role" className={styles.label}>Роль</label>
+        <input
+          {...register("password", { required: true, validate: validatePassword })}
+          id="password"
+          type="password"
+          className={styles.input}
+          placeholder="Пароль"
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
+        />
+        <div className={`${styles.passwordHint} ${(passwordFocused || passwordValue) ? styles.show : ''}`}>
+          Требования к паролю:
+          <ul>
+            <li>Минимум 8 символов</li>
+            <li>Хотя бы одна заглавная буква</li>
+            <li>Хотя бы одна строчная буква</li>
+            <li>Хотя бы одна цифра</li>
+            <li>Хотя бы один спецсимвол</li>
+          </ul>
+        </div>
+        {errors.password && <div className={styles.error}>{errors.password.message as string}</div>}
+      </div>
+      
+      <div className={styles.inputGroup}>
         <select
           {...register("role", { required: true })}
           id="role"
-          className={styles.input}
+          className={`${styles.input} ${styles.select}`}
           defaultValue=""
         >
           <option value="" disabled>Выберите роль</option>
@@ -119,13 +110,14 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
         </select>
         {errors.role && <div className={styles.error}>{errors.role.message as string}</div>}
       </div>
+      
       <div className={styles.inputGroup}>
-        <label htmlFor="role_password" className={styles.label}>Пароль для роли</label>
         <input
           {...register("role_password", { required: true })}
           id="role_password"
           type="password"
           className={styles.input}
+          placeholder="Пароль для роли"
         />
         {errors.role_password && <div className={styles.error}>{errors.role_password.message as string}</div>}
       </div>
