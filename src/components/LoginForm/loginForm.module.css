@@ -9,6 +9,13 @@
   max-width: 400px;
   margin: 0 auto;
   width: 50vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form.dark {
+  background-color: #1f2937;
+  color: #f9fafb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .formTitle {
@@ -17,6 +24,11 @@
   font-weight: 700;
   color: #111827;
   margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.dark .formTitle {
+  color: #f9fafb;
 }
 
 .inputGroup {
@@ -31,7 +43,8 @@
   padding: 0.75rem;
   background-color: #fafafa;
   font-size: 0.875rem;
-  transition: border-color 0.2s, background-color 0.2s;
+  transition: border-color 0.2s, background-color 0.2s, color 0.3s ease;
+  color: #374151;
 }
 
 .input:focus {
@@ -42,6 +55,21 @@
 
 .input::placeholder {
   color: #6b7280;
+}
+
+.dark .input {
+  border-color: #4b5563;
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .input:focus {
+  border-color: #3b82f6;
+  background-color: #4b5563;
+}
+
+.dark .input::placeholder {
+  color: #9ca3af;
 }
 
 .passwordContainer {
@@ -68,6 +96,14 @@
   color: #374151;
 }
 
+.dark .eyeButton {
+  color: #9ca3af;
+}
+
+.dark .eyeButton:hover {
+  color: #f9fafb;
+}
+
 .forgotPassword {
   display: flex;
   justify-content: flex-end;
@@ -83,6 +119,14 @@
 .forgotPasswordLink:hover {
   color: #374151;
   text-decoration: underline;
+}
+
+.dark .forgotPasswordLink {
+  color: #9ca3af;
+}
+
+.dark .forgotPasswordLink:hover {
+  color: #f9fafb;
 }
 
 .loginButton {
@@ -105,6 +149,19 @@
   background-color: #374151;
 }
 
+.dark .loginButton {
+  background-color: #4b5563;
+  color: #ffffff;
+}
+
+.dark .loginButton:hover {
+  background-color: #6b7280;
+}
+
+.dark .loginButton:active {
+  background-color: #374151;
+}
+
 .registerButton {
   background-color: #e5e7eb;
   color: #6b7280;
@@ -124,4 +181,18 @@
 
 .registerButton:active {
   background-color: #9ca3af;
+}
+
+.dark .registerButton {
+  background-color: #374151;
+  color: #9ca3af;
+}
+
+.dark .registerButton:hover {
+  background-color: #4b5563;
+  color: #f9fafb;
+}
+
+.dark .registerButton:active {
+  background-color: #6b7280;
 } 

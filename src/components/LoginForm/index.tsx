@@ -1,27 +1,26 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type ModelLoginRequest  } from '../../api/api';
 import styles from './loginForm.module.css';
-import type { LoginFormProps } from './type'
-
+import type { LoginFormProps } from './type';
+import { ThemeContext } from '../../context/ThemeContext';
+import { ThemeList } from '../../context/ThemeContext/types';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
+    const themeContext = useContext(ThemeContext);
+    const isDarkTheme = themeContext?.theme === ThemeList.DARK;
+    const [showPassword, setShowPassword] = useState(false);
     const {
         register,
         handleSubmit,
       } = useForm<ModelLoginRequest >();
     
-    const [showPassword, setShowPassword] = useState(false);
-    
     const handleFormSubmit: SubmitHandler<ModelLoginRequest> = (data) => {
         onSubmit(data)
       };
     
-    const handleTogglePassword = () => {
-        setShowPassword(!showPassword);
-    };
-    
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
+        <form onSubmit={handleSubmit(handleFormSubmit)} className={`${styles.form} ${isDarkTheme ? styles.dark : ''}`}>
             <h2 className={styles.formTitle}>Вход в профиль</h2>
             
             <div className={styles.inputGroup}>
@@ -45,10 +44,11 @@ export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
                     />
                     <button
                         type="button"
+                        onClick={() => setShowPassword(!showPassword)}
                         className={styles.eyeButton}
-                        onClick={handleTogglePassword}
                         aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
                     >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
                 </div>
             </div>
