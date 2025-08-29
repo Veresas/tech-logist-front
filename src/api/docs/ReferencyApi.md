@@ -1,28 +1,28 @@
-# CheckApi
+# ReferencyApi
 
 All URIs are relative to *http://localhost:8400/api*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**checkGet**](#checkget) | **GET** /check | Проверка подключения к сервису|
+|[**refDropdownListInfoGet**](#refdropdownlistinfoget) | **GET** /ref/dropdown-list-info | Возвращает список типов грузов и связей подразделений и зданий|
 
-# **checkGet**
-> ModelCheckResponse checkGet()
+# **refDropdownListInfoGet**
+> ModelDropDownListInfoResponse refDropdownListInfoGet()
 
-Проверка подключения к сервису
+Возвращает список типов грузов и связей подразделений и зданий
 
 ### Example
 
 ```typescript
 import {
-    CheckApi,
+    ReferencyApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CheckApi(configuration);
+const apiInstance = new ReferencyApi(configuration);
 
-const { status, data } = await apiInstance.checkGet();
+const { status, data } = await apiInstance.refDropdownListInfoGet();
 ```
 
 ### Parameters
@@ -31,7 +31,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**ModelCheckResponse**
+**ModelDropDownListInfoResponse**
 
 ### Authorization
 
@@ -47,8 +47,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
-|**401** | Unauthorized |  -  |
-|**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

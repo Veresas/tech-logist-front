@@ -14,7 +14,7 @@ export function useOrders(isPrivate: boolean) {
       try {
         setIsLoading(true)
         setError(undefined)
-        const res = await ordersApi.apiOrdersActualGet(isPrivate)
+        const res = await ordersApi.ordersActualGet(isPrivate)
         setOrders(res.data.orders || [])
       } catch (err) {
         console.error(err)

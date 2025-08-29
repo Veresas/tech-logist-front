@@ -1,9 +1,9 @@
 import { ordersApi } from "../../utils/ApiFactory";
 export const OCActionList = {
-    TAKE: (id: number) => ordersApi.apiOrdersIdAcceptPatch(id, {}),
-    REJECT: (id: number) => ordersApi.apiOrdersIdRejectPatch(id, {}),
-    COMPLITE: (id: number) => ordersApi.apiOrdersIdCompletePatch(id, {}),
-    CANCEL: (id: number) => ordersApi.apiOrdersIdCancelPatch(id, {})
+    TAKE: (id: number) => ordersApi.ordersIdAcceptPatch(id, {}),
+    REJECT: (id: number) => ordersApi.ordersIdRejectPatch(id, {}),
+    COMPLITE: (id: number) => ordersApi.ordersIdCompletePatch(id, {}),
+    CANCEL: (id: number) => ordersApi.ordersIdCancelPatch(id, {})
 } as const;
 
 

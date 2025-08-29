@@ -12,7 +12,56 @@
     "host": "localhost:8400",
     "basePath": "/api",
     "paths": {
-        "/api/check": {
+        "/api/public/auth/register": {
+            "post": {
+                "description": "Создает нового пользователя в системе",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Зарегистрировать нового пользователя",
+                "parameters": [
+                    {
+                        "description": "Данные для регистрации",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно создан",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные данные пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка создания пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/check": {
             "get": {
                 "description": "Проверка подключения к сервису",
                 "consumes": [
@@ -47,7 +96,7 @@
                 }
             }
         },
-        "/api/ident/users/{id}": {
+        "/ident/users/{id}": {
             "get": {
                 "description": "Возвращает информацию о пользователе по его ID (int или UUID)",
                 "consumes": [
@@ -154,7 +203,46 @@
                 }
             }
         },
-        "/api/orders": {
+        "/orders/actual": {
+            "get": {
+                "description": "Возвращает список всех актуальных заявок",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Получить все актуальные заявки",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Приватные заявки",
+                        "name": "isPrivate",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список актуальных заявок",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrdersResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения заявок",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/create": {
             "post": {
                 "description": "Создает новую заявку в системе",
                 "consumes": [
@@ -203,9 +291,107 @@
                 }
             }
         },
-        "/api/orders/actual": {
+        "/orders/photo/upload": {
+            "post": {
+                "description": "Загружает фотографию в систему",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Загрузить фотографию",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Фотография",
+                        "name": "photo",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Фотография успешно загружена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат файла",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка загрузки фотографии",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/photo/{id}": {
             "get": {
-                "description": "Возвращает список всех актуальных заявок",
+                "description": "Отдает файл фотографии по UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "image/*"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Получить файл фотографии",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UUID фотографии",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Файл фотографии",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат UUID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Фотография не найдена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения файла",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Удаляет фотографию из системы",
                 "consumes": [
                     "application/json"
                 ],
@@ -215,25 +401,33 @@
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Получить все актуальные заявки",
+                "summary": "Удалить фотографию",
                 "parameters": [
                     {
-                        "type": "boolean",
-                        "default": false,
-                        "description": "Приватные заявки",
-                        "name": "isPrivate",
-                        "in": "query"
+                        "type": "string",
+                        "description": "UUID фотографии",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Список актуальных заявок",
+                        "description": "Фотография успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/model.OrdersResponse"
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат UUID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Ошибка получения заявок",
+                        "description": "Ошибка удаления фотографии",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
@@ -242,7 +436,7 @@
                 }
             }
         },
-        "/api/orders/{id}": {
+        "/orders/{id}": {
             "get": {
                 "description": "Возвращает информацию о заявке по её ID",
                 "consumes": [
@@ -295,7 +489,7 @@
                 }
             }
         },
-        "/api/orders/{id}/accept": {
+        "/orders/{id}/accept": {
             "patch": {
                 "description": "Принимает заявку водителем",
                 "consumes": [
@@ -349,7 +543,7 @@
                 }
             }
         },
-        "/api/orders/{id}/cancel": {
+        "/orders/{id}/cancel": {
             "patch": {
                 "description": "Отменяет заявку",
                 "consumes": [
@@ -403,7 +597,7 @@
                 }
             }
         },
-        "/api/orders/{id}/complete": {
+        "/orders/{id}/complete": {
             "patch": {
                 "description": "Завершает заявку",
                 "consumes": [
@@ -457,7 +651,7 @@
                 }
             }
         },
-        "/api/orders/{id}/reject": {
+        "/orders/{id}/reject": {
             "patch": {
                 "description": "Отклоняет заявку водителем",
                 "consumes": [
@@ -511,7 +705,7 @@
                 }
             }
         },
-        "/api/public/auth/login": {
+        "/public/auth/login": {
             "post": {
                 "description": "Входит в систему",
                 "consumes": [
@@ -560,9 +754,9 @@
                 }
             }
         },
-        "/api/public/auth/register": {
-            "post": {
-                "description": "Создает нового пользователя в системе",
+        "/ref/dropdown-list-info": {
+            "get": {
+                "description": "Возвращает список типов грузов и связей подразделений и зданий",
                 "consumes": [
                     "application/json"
                 ],
@@ -570,40 +764,14 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Identity"
+                    "Referency"
                 ],
-                "summary": "Зарегистрировать нового пользователя",
-                "parameters": [
-                    {
-                        "description": "Данные для регистрации",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.RegisterRequest"
-                        }
-                    }
-                ],
+                "summary": "Возвращает список типов грузов и связей подразделений и зданий",
                 "responses": {
-                    "201": {
-                        "description": "Пользователь успешно создан",
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Неверные данные пользователя",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка создания пользователя",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/model.DropDownListInfoResponse"
                         }
                     }
                 }
@@ -611,6 +779,13 @@
         }
     },
     "definitions": {
+        "model.CargoTypeMap": {
+            "description": "Мапа типов грузов",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
         "model.CheckResponse": {
             "description": "DTO для передачи роли на фронт",
             "type": "object",
@@ -627,6 +802,25 @@
                             "$ref": "#/definitions/model.RoleEnum"
                         }
                     ]
+                }
+            }
+        },
+        "model.DepartmentBuildingMap": {
+            "description": "Мапа связей подразделений и зданий",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "model.DropDownListInfoResponse": {
+            "description": "DTO для передачи списка типов грузов и связей подразделений и зданий",
+            "type": "object",
+            "properties": {
+                "cargo_types": {
+                    "$ref": "#/definitions/model.CargoTypeMap"
+                },
+                "dep_builds": {
+                    "$ref": "#/definitions/model.DepartmentBuildingMap"
                 }
             }
         },

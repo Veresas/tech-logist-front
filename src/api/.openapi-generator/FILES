@@ -7,6 +7,7 @@ configuration.ts
 docs/CheckApi.md
 docs/IdentityApi.md
 docs/ModelCheckResponse.md
+docs/ModelDropDownListInfoResponse.md
 docs/ModelLoginRequest.md
 docs/ModelOrder.md
 docs/ModelOrderCreate.md
@@ -18,5 +19,6 @@ docs/ModelRoleEnum.md
 docs/ModelTLIdentetyModelUser.md
 docs/ModelUserUpdate.md
 docs/OrdersApi.md
+docs/ReferencyApi.md
 git_push.sh
 index.ts

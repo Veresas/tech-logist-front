@@ -6,10 +6,12 @@ import type { LoginFormProps } from './type';
 import { ThemeContext } from '../../context/ThemeContext';
 import { ThemeList } from '../../context/ThemeContext/types';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
     const themeContext = useContext(ThemeContext);
     const isDarkTheme = themeContext?.theme === ThemeList.DARK;
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -17,6 +19,7 @@ export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
     
     const handleFormSubmit: SubmitHandler<ModelLoginRequest> = (data) => {
         onSubmit(data)
+        navigate('/');
       };
     
     return (

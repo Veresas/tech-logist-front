@@ -2,11 +2,25 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
-import { type ModelOrderCreate } from '../../api/api';
+import type { ModelOrderCreate, ModelDropDownListInfoResponse } from '../../api/api';
 import styles from './OrderCreateForm.module.css';
-import type { OrderCreateFormProps, TimeSlot, Location, CargoType } from './types';
+import type { OrderCreateFormProps, TimeSlot } from './types';
 import { ThemeContext } from '../../context/ThemeContext';
 import { ThemeList } from '../../context/ThemeContext/types';
+import { ordersApi, referencyApi } from '../../utils/ApiFactory';
+
+// Ключ для localStorage
+const DRAFT_STORAGE_KEY = 'order_draft';
+
+// Интерфейс для черновика
+interface OrderDraft {
+  formData: Partial<ModelOrderCreate>;
+  isUrgent: boolean;
+  selectedDate: 'today' | 'tomorrow';
+  selectedTime: string;
+  photoPreview?: string;
+  photoId?: string;
+}
 
 // Генерация временных слотов (каждые 15 минут)
 const generateTimeSlots = (): TimeSlot[] => {
@@ -20,30 +34,22 @@ const generateTimeSlots = (): TimeSlot[] => {
   return slots;
 };
 
-// Моковые данные для демонстрации
-const mockLocations: Location[] = [
-  { id: 1, name: 'Москва, ул. Тверская, 1' },
-  { id: 2, name: 'Санкт-Петербург, Невский пр., 1' },
-  { id: 3, name: 'Казань, ул. Баумана, 1' },
-];
+// Преобразование данных с сервера в формат для react-select
+const transformLocationOptions = (depBuilds: ModelDropDownListInfoResponse['dep_builds']) => {
+  if (!depBuilds) return [];
+  return Object.entries(depBuilds).map(([id, name]) => ({
+    value: parseInt(id),
+    label: name
+  }));
+};
 
-const mockCargoTypes: CargoType[] = [
-  { id: 1, name: 'Товары народного потребления' },
-  { id: 2, name: 'Строительные материалы' },
-  { id: 3, name: 'Продукты питания' },
-  { id: 4, name: 'Электроника' },
-];
-
-// Преобразование в формат для react-select
-const locationOptions = mockLocations.map(location => ({
-  value: location.id,
-  label: location.name
-}));
-
-const cargoTypeOptions = mockCargoTypes.map(type => ({
-  value: type.id,
-  label: type.name
-}));
+const transformCargoTypeOptions = (cargoTypes: ModelDropDownListInfoResponse['cargo_types']) => {
+  if (!cargoTypes) return [];
+  return Object.entries(cargoTypes).map(([id, name]) => ({
+    value: parseInt(id),
+    label: name
+  }));
+};
 
 export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateFormProps) => {
   const themeContext = useContext(ThemeContext);
@@ -52,29 +58,91 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
+  // Функция сохранения черновика
+  const saveDraft = (formData: Partial<ModelOrderCreate>) => {
+    const draft: OrderDraft = {
+      formData,
+      isUrgent,
+      selectedDate,
+      selectedTime,
+      photoPreview: photoPreview || undefined,
+      photoId: photoId || undefined,
+    };
+    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+  };
+
+  // Функция загрузки черновика
+  const loadDraft = (): OrderDraft | null => {
+    const draft = localStorage.getItem(DRAFT_STORAGE_KEY);
+    return draft ? JSON.parse(draft) : null;
+  };
+
+  // Функция очистки черновика
+  const clearDraft = () => {
+    localStorage.removeItem(DRAFT_STORAGE_KEY);
+  };
+
+  // Загружаем черновик при открытии формы
+  const draft = loadDraft();
+  const initialFormData = draft?.formData || initialData || {
+    cargo_name: '',
+    cargo_description: '',
+  };
+
   const {
     register,
     handleSubmit,
     control,
+    watch,
+    reset,
     formState: { errors },
   } = useForm<ModelOrderCreate>({
-    defaultValues: initialData || {
-      cargo_name: 'Название заказа длинное. Возможно, даже настолько',
-      cargo_description: 'Описание Описание Описание Описание Описание Описание Описание Описание',
-    },
+    defaultValues: initialFormData,
   });
 
-  const [isUrgent, setIsUrgent] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<'today' | 'tomorrow'>('today');
-  const [selectedTime, setSelectedTime] = useState<string>('00:00');
+  const [isUrgent, setIsUrgent] = useState(draft?.isUrgent || false);
+  const [selectedDate, setSelectedDate] = useState<'today' | 'tomorrow'>(draft?.selectedDate || 'today');
+  const [selectedTime, setSelectedTime] = useState<string>(draft?.selectedTime || '00:00');
   const [timeSlots] = useState<TimeSlot[]>(generateTimeSlots());
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string>('');
+  const [photoPreview, setPhotoPreview] = useState<string>(draft?.photoPreview || '');
   const [isUploading, setIsUploading] = useState(false);
-  const [photoId, setPhotoId] = useState<string>('');
+  const [photoId, setPhotoId] = useState<string>(draft?.photoId || '');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
+  const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
+  // Следим за изменениями формы и сохраняем черновик
+  const formValues = watch();
+  
+  // Получаем список типов грузов и связей подразделений и зданий
+  useEffect(() => {
+    const getDropDownListInfo = async () => {
+      try {
+        const res = await referencyApi.refDropdownListInfoGet();
+        setLocationOptions(res.data.dep_builds);
+        setCargoTypeOptions(res.data.cargo_types);
+      } catch (error) {
+        console.error('Ошибка получения списка типов грузов и связей подразделений и зданий:', error);
+      }
+    };
+    getDropDownListInfo();
+  }, []);
 
-  const handleFormSubmit: SubmitHandler<ModelOrderCreate> = (data) => {
+  // Сохраняем черновик при изменении состояния
+  useEffect(() => {
+    saveDraft(formValues);
+  }, [isUrgent, selectedDate, selectedTime, photoPreview, photoId]);
+
+  // Сохраняем черновик при изменении полей формы (с задержкой)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      saveDraft(formValues);
+    }, 500); // Задержка 500мс
+
+    return () => clearTimeout(timeoutId);
+  }, [formValues]);
+
+  // Обработчик отправки формы
+  const handleFormSubmit: SubmitHandler<ModelOrderCreate> = async (data) => {
     // Проверяем, не идет ли загрузка фото
     if (isUploading) {
       alert('Дождитесь завершения загрузки фото');
@@ -84,11 +152,24 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
     // Добавляем флаг срочности, время и ID фото к данным
     const orderData = {
       ...data,
+      cargo_weight: data.cargo_weight ? parseFloat(data.cargo_weight.toString()) : undefined, // Преобразуем в число
       time: `${selectedDate === 'today' ? new Date().toISOString().split('T')[0] : 
-        new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T${selectedTime}:00`,
+        new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T${selectedTime}:00+03:00`,
       photo_id: photoId || undefined,
     };
-    onSubmit(orderData);
+    
+    try {
+      // Отправляем заказ на сервер
+      const orderCreateResponse = await ordersApi.ordersCreatePost(orderData);
+      console.log('Заказ успешно создан:', orderCreateResponse.data);
+      
+      // Очищаем черновик после успешной отправки
+      clearDraft();
+      onSubmit(orderData);
+    } catch (error) {
+      console.error('Ошибка создания заказа:', error);
+      alert('Ошибка создания заказа. Попробуйте еще раз.');
+    }
   };
 
   const handleToggleUrgent = () => {
@@ -105,14 +186,6 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
     return allowedTypes.includes(file.type);
   };
 
-  // Загрузка файла на сервер (заглушка)
-  const uploadFileToServer = async (file: File): Promise<string> => {
-    console.log(file);
-    console.log(photoFile);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    return `photo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  };
-
   // Обработка выбранного файла
   const handleFileSelect = async (file: File) => {
     if (!validateFileFormat(file)) {
@@ -120,7 +193,6 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
       return;
     }
 
-    setPhotoFile(file);
     setIsUploading(true);
 
     try {
@@ -132,9 +204,16 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
       reader.readAsDataURL(file);
 
       // Загружаем на сервер
-      const uploadedPhotoId = await uploadFileToServer(file);
-      setPhotoId(uploadedPhotoId);
-      console.log('Фото загружено, ID:', uploadedPhotoId);
+      const uploadedPhotoId = await ordersApi.ordersPhotoUploadPost(file, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setPhotoId(uploadedPhotoId.data.photo_id);
+      console.log('Фото загружено, ID:', uploadedPhotoId.data.photo_id);
+      
+      // Сохраняем черновик после получения ID фото
+      saveDraft(formValues);
     } catch (error) {
       console.error('Ошибка загрузки фото:', error);
       alert('Ошибка загрузки фото');
@@ -184,6 +263,34 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
     } else {
       alert('Пожалуйста, перетащите изображение');
     }
+  };
+
+  // Обработчик очистки формы
+  const handleClearForm = () => {
+    // Сбрасываем состояние
+    setIsUrgent(false);
+    setSelectedDate('today');
+    setSelectedTime('00:00');
+    setPhotoPreview('');
+    setPhotoId('');
+    
+    // Очищаем черновик
+    clearDraft();
+    
+    // Сбрасываем форму к начальным значениям через react-hook-form
+    reset({
+      cargo_name: '',
+      cargo_description: '',
+      depart_loc: undefined,
+      goal_loc: undefined,
+      cargo_weight: undefined,
+      cargo_type_id: undefined,
+    });
+  };
+
+  // Обработчик потери фокуса для сохранения черновика
+  const handleBlur = () => {
+    saveDraft(formValues);
   };
 
   // Управление фокусом и доступность
@@ -261,13 +368,23 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
       >
         <div className={styles.modalHeader}>
           <h2 id="modal-title" className={styles.modalTitle}>Редактировать заказ</h2>
-          <button 
-            className={styles.closeButton} 
-            onClick={onClose}
-            aria-label="Закрыть модальное окно"
-          >
-            ×
-          </button>
+          <div className={styles.headerButtons}>
+            <button 
+              type="button"
+              className={styles.clearButton} 
+              onClick={handleClearForm}
+              aria-label="Очистить форму"
+            >
+              Очистить
+            </button>
+            <button 
+              className={styles.closeButton} 
+              onClick={onClose}
+              aria-label="Закрыть модальное окно"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         <div className={styles.modalContent}>
@@ -281,7 +398,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
             <span className={styles.toggleLabel}>Срочный заказ</span>
           </div>
 
-                      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
               {/* Название и описание в отдельных секциях */}
               <div className={styles.inputGroup}>
                 <label className={styles.label}>Название</label>
@@ -289,6 +406,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                   {...register("cargo_name", { required: "Название обязательно" })}
                   type="text"
                   className={styles.input}
+                  onBlur={handleBlur}
                 />
                 {errors.cargo_name && <div className={styles.error}>{errors.cargo_name.message}</div>}
               </div>
@@ -298,6 +416,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                 <textarea
                   {...register("cargo_description")}
                   className={`${styles.input} ${styles.textarea}`}
+                  onBlur={handleBlur}
                 />
               </div>
               
@@ -313,9 +432,10 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                         rules={{ required: "Точка отправления обязательна" }}
                         render={({ field }) => (
                           <Select
-                            value={locationOptions.find(option => option.value === field.value)}
+                            value={transformLocationOptions(locationOptions).find(option => option.value === field.value)}
                             onChange={(option) => field.onChange(option?.value)}
-                            options={locationOptions}
+                            onBlur={handleBlur}
+                            options={transformLocationOptions(locationOptions)}
                             placeholder="Выберите точку отправления"
                             isClearable
                             isSearchable
@@ -346,9 +466,10 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                         rules={{ required: "Точка доставки обязательна" }}
                         render={({ field }) => (
                           <Select
-                            value={locationOptions.find(option => option.value === field.value)}
+                            value={transformLocationOptions(locationOptions).find(option => option.value === field.value)}
                             onChange={(option) => field.onChange(option?.value)}
-                            options={locationOptions}
+                            onBlur={handleBlur}
+                            options={transformLocationOptions(locationOptions)}
                             placeholder="Выберите точку доставки"
                             isClearable
                             isSearchable
@@ -395,7 +516,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
 
                     <div className={styles.timeGrid}>
                       <div className={styles.timeGridHeader}>
-                        <span>00:00</span>
+                        <span>{selectedTime}</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="m18 15-6-6-6 6"/>
                         </svg>
@@ -430,6 +551,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                       step="0.1"
                       className={styles.input}
                       placeholder="кг"
+                      onBlur={handleBlur}
                     />
                     {errors.cargo_weight && <div className={styles.error}>{errors.cargo_weight.message}</div>}
                   </div>
@@ -442,9 +564,10 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
                       rules={{ required: "Тип груза обязателен" }}
                                              render={({ field }) => (
                          <Select
-                            value={cargoTypeOptions.find(option => option.value === field.value)}
+                            value={transformCargoTypeOptions(cargoTypeOptions).find(option => option.value === field.value)}
                             onChange={(option) => field.onChange(option?.value)}
-                            options={cargoTypeOptions}
+                            onBlur={handleBlur}
+                            options={transformCargoTypeOptions(cargoTypeOptions)}
                             placeholder="Выберите тип груза"
                             isClearable
                             isSearchable

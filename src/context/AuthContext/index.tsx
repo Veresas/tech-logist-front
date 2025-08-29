@@ -15,7 +15,7 @@ export const AuthProvider = ({children} : AuthContextProps) => {
     const verifyAuth = async () => {
         try {
             console.log('[AuthProvider] Verifying authentication');
-            const response = await checkApi.apiCheckGet();
+            const response = await checkApi.checkGet();
             if (response.status === 200) { // Предполагаем, что 200 OK означает успешную проверку
                 setIsAuthenticated(true);
                 if (response.data.role) {

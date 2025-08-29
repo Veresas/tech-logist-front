@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { BASE_PATH } from '../../api/base';
-//const BASE_PATH = import.meta.env.VITE_BASE_PATH;
+//import { BASE_PATH } from '../../api/base';
+const BASE_PATH = import.meta.env.VITE_BASE_PATH;
 
 export const customAxiosInstance = axios.create({
   baseURL: BASE_PATH,
