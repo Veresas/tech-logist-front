@@ -1,0 +1,327 @@
+
+.modalContent {
+  padding: 20px;
+  position: relative;
+}
+
+/* Индикатор срочности */
+.urgentIndicator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  transition: background-color 0.3s ease;
+}
+
+.urgentIndicator[data-urgent="true"] {
+  background-color: #f59e0b;
+}
+
+/* Секция описания */
+.descriptionSection {
+  margin-bottom: 24px;
+  padding-left: 40px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+.descriptionText {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Сетка контента */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+/* Левая колонка */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Секция времени */
+.timeSection {
+  display: flex;
+  justify-content: center;
+}
+
+.timeBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Секция маршрута */
+.routeSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.routeLine {
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background-color: #6b7280;
+}
+
+.locationPoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-left: 24px;
+}
+
+.locationIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.locationText {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.4;
+  flex: 1;
+}
+
+/* Правая колонка */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Секция фотографии */
+.photoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.photoPlaceholder {
+  width: 100%;
+  height: 200px;
+  background-color: #6b7280;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.photoPlaceholder:hover {
+  transform: scale(1.02);
+}
+
+.cargoPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expandIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Информация о грузе */
+.cargoInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cargoDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailLabel {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.detailValue {
+  font-size: 14px;
+  color: #374151;
+  text-align: right;
+  max-width: 60%;
+}
+
+/* Секция контактов */
+.contactsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Кнопки действий */
+.actionButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.actionButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.actionButton:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* Оверлей для развернутой фотографии */
+.photoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.photoContainer {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.expandedPhoto {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.closePhotoButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.closePhotoButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.dark .sectionTitle {
+  color: #f9fafb;
+}
+
+.dark .descriptionText {
+  color: #d1d5db;
+}
+
+.dark .timeBox {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .locationText {
+  color: #f9fafb;
+}
+
+.dark .detailLabel {
+  color: #d1d5db;
+}
+
+.dark .detailValue {
+  color: #f9fafb;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.dark .actionButton {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .actionButton:hover {
+  background-color: #4b5563;
+}
+
+.dark .cancelButton {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .cancelButton:hover {
+  background-color: #4b5563;
+}

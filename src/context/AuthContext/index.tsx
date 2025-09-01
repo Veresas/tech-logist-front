@@ -10,7 +10,7 @@ export { AuthContext };
 export const AuthProvider = ({children} : AuthContextProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [role, setRole] = useState<ModelRoleEnum>(ModelRoleEnum.DISP)
+    const [role, setRole] = useState<ModelRoleEnum>(ModelRoleEnum.DRIVER)
     
     const verifyAuth = async () => {
         try {

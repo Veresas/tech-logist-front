@@ -1,6 +1,6 @@
 //import React, { useEffect, useState } from 'react'
 import { useEffect, useState } from 'react';
-import { OrderCreateForm } from '../../components/OrderCreateForm'
+import { OrderCreateForm } from '../../components/Modals/OrderCreateForm'
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer';
 import type { ModelDropDownListInfoResponse, ModelOrderCreate, ModelOrderUpdate } from '../../api';
 import { ordersApi, referencyApi } from '../../utils/ApiFactory';

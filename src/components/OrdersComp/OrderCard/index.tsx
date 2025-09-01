@@ -7,7 +7,7 @@ import styles from './OrderCard.module.css';
 import { Clock, MapPin, Target } from 'lucide-react';
 
 
-export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCardProps) => {
+export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {
     const { role } = useAuth();
     const { theme } = useTheme();
 
@@ -54,20 +54,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCa
                 </button>
             );
         }
-
-        // Кнопка "Редактировать" - только в приватном списке, не водитель, статус взят
-        if (isPrivate && role !== ModelRoleEnum.DRIVER && order.order_status_name === ModelOrderStatusEnum.ACCEPT && onEdit) {
-            buttons.push(
-                <button
-                    key="edit"
-                    className={`${styles.cardButton} ${styles.cardButtonPrimary}`}
-                    onClick={() => onEdit(order.id || 0)}
-                >
-                    Редактировать
-                </button>
-            );
-        }
-
+        
         // Кнопки "Выполнить" и "Отклонить" - только в приватном списке, роль водитель, статус взят
         if (isPrivate && role === ModelRoleEnum.DRIVER && order.order_status_name === ModelOrderStatusEnum.ACCEPT) {
             buttons.push(

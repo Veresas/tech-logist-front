@@ -8,9 +8,9 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { ThemeList } from '../../context/ThemeContext/types';
 
 // Импортируем модульные компоненты
-import { Modal } from '../ModalComp/Modal';
-import { UrgentToggle } from '../ModalComp/UrgentToggle';
-import { TimeSelector } from '../ModalComp/TimeSelector';
+import { Modal } from '../Modals/ModalComp/Modal';
+import { UrgentToggle } from '../Modals/ModalComp/UrgentToggle';
+import { TimeSelector } from '../Modals/ModalComp/TimeSelector';
 
 // Импортируем хуки
 import { useOrderDraft } from '../../hooks/modalHooks/useOrderDraft';
