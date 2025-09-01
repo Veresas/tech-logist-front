@@ -1,29 +1,24 @@
 import { useState, useContext } from 'react';
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { type ModelLoginRequest  } from '../../api/api';
 import styles from './loginForm.module.css';
 import type { LoginFormProps } from './type';
 import { ThemeContext } from '../../context/ThemeContext';
 import { ThemeList } from '../../context/ThemeContext/types';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+
 export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
     const themeContext = useContext(ThemeContext);
     const isDarkTheme = themeContext?.theme === ThemeList.DARK;
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
       } = useForm<ModelLoginRequest >();
     
-    const handleFormSubmit: SubmitHandler<ModelLoginRequest> = (data) => {
-        onSubmit(data)
-        navigate('/');
-      };
     
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className={`${styles.form} ${isDarkTheme ? styles.dark : ''}`}>
+        <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} ${isDarkTheme ? styles.dark : ''}`}>
             <h2 className={styles.formTitle}>Вход в профиль</h2>
             
             <div className={styles.inputGroup}>
