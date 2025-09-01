@@ -1,23 +1,12 @@
-import { type ModelOrderCreate } from '../../api';
+import { type ModelDropDownListInfoResponse, type ModelOrderCreate, type ModelOrderUpdate } from '../../api';
 
 export interface OrderCreateFormProps {
-  onSubmit: (data: ModelOrderCreate) => void;
+  onSubmitCreateOrder: (data: ModelOrderCreate) => void;
+  onSubmitUpdateOrder: (orderID: number, data: ModelOrderUpdate) => void;
+  locationOptions: ModelDropDownListInfoResponse['dep_builds'];
+  cargoTypeOptions: ModelDropDownListInfoResponse['cargo_types'];
   onClose: () => void;
   initialData?: Partial<ModelOrderCreate>;
   order: ModelOrderCreate | undefined;
-}
-
-export interface TimeSlot {
-  time: string;
-  label: string;
-}
-
-export interface Location {
-  id: number;
-  name: string;
-}
-
-export interface CargoType {
-  id: number;
-  name: string;
+  orderID: number | undefined;
 }

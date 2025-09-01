@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { ModelOrder, ModelOrderCreate } from '../../api';
+import type { ModelOrderCreate } from '../../api';
 
 /**
  * Ключ для сохранения черновика в localStorage
@@ -40,7 +40,7 @@ interface OrderDraft {
  * @returns объект с функциями для работы с черновиками
  */
 export const useOrderDraft = (
-  order: ModelOrder, // Существующий заказ для редактирования
+  order: ModelOrderCreate | undefined, // Существующий заказ для редактирования
   isUrgent: boolean,
   selectedDate: 'today' | 'tomorrow',
   selectedTime: string,
