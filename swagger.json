@@ -462,7 +462,7 @@
                     "200": {
                         "description": "Заявка для обновления",
                         "schema": {
-                            "$ref": "#/definitions/tl_orders_client.ModelOrderForUpdateResponse"
+                            "$ref": "#/definitions/model.OrderForUpdateResponse"
                         }
                     },
                     "400": {
@@ -1025,6 +1025,20 @@
                 }
             }
         },
+        "model.OrderForUpdateResponse": {
+            "description": "DTO для обновления заявки",
+            "type": "object",
+            "properties": {
+                "order_for_update": {
+                    "description": "OrderForUpdate DTO для обновления заявки",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.OrderCreate"
+                        }
+                    ]
+                }
+            }
+        },
         "model.OrderOut": {
             "description": "DTO для передачи информации о заявке",
             "type": "object",
@@ -1230,51 +1244,6 @@
                 },
                 "phone": {
                     "type": "string"
-                }
-            }
-        },
-        "tl_orders_client.ModelOrderCreate": {
-            "type": "object",
-            "properties": {
-                "cargo_description": {
-                    "type": "string"
-                },
-                "cargo_name": {
-                    "type": "string"
-                },
-                "cargo_type_id": {
-                    "type": "integer"
-                },
-                "cargo_weight": {
-                    "type": "number"
-                },
-                "depart_loc": {
-                    "type": "integer"
-                },
-                "goal_loc": {
-                    "type": "integer"
-                },
-                "is_urgent": {
-                    "type": "boolean"
-                },
-                "photo_id": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                }
-            }
-        },
-        "tl_orders_client.ModelOrderForUpdateResponse": {
-            "type": "object",
-            "properties": {
-                "order_for_update": {
-                    "description": "OrderForUpdate DTO для создания заявки",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/tl_orders_client.ModelOrderCreate"
-                        }
-                    ]
                 }
             }
         }

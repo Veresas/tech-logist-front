@@ -11,6 +11,7 @@ docs/ModelDropDownListInfoResponse.md
 docs/ModelLoginRequest.md
 docs/ModelOrder.md
 docs/ModelOrderCreate.md
+docs/ModelOrderForUpdateResponse.md
 docs/ModelOrderOut.md
 docs/ModelOrderStatusEnum.md
 docs/ModelOrderUpdate.md
@@ -21,7 +22,5 @@ docs/ModelTLIdentetyModelUser.md
 docs/ModelUserUpdate.md
 docs/OrdersApi.md
 docs/ReferencyApi.md
-docs/TlOrdersClientModelOrderCreate.md
-docs/TlOrdersClientModelOrderForUpdateResponse.md
 git_push.sh
 index.ts

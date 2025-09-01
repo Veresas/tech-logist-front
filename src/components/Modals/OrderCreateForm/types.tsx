@@ -1,8 +1,8 @@
-import { type ModelDropDownListInfoResponse, type ModelOrderCreate, type ModelOrderUpdate } from '../../api';
+import { type ModelDropDownListInfoResponse, type ModelOrderCreate, type ModelOrderUpdate } from '../../../api';
 
 export interface OrderCreateFormProps {
-  onSubmitCreateOrder: (data: ModelOrderCreate) => void;
-  onSubmitUpdateOrder: (orderID: number, data: ModelOrderUpdate) => void;
+  onSubmitCreateOrder: ((data: ModelOrderCreate) => void) | undefined;
+  onSubmitUpdateOrder: ((orderID: number, data: ModelOrderUpdate) => void) | undefined;
   locationOptions: ModelDropDownListInfoResponse['dep_builds'];
   cargoTypeOptions: ModelDropDownListInfoResponse['cargo_types'];
   onClose: () => void;

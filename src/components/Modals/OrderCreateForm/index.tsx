@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
-import type { ModelOrderCreate, ModelOrderUpdate } from '../../api';
+import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
 import styles from './OrderCreateForm.module.css';
 import type { OrderCreateFormProps } from './types';
-import { ThemeContext } from '../../context/ThemeContext';
-import { ThemeList } from '../../context/ThemeContext/types';
+import { ThemeContext } from '../../../context/ThemeContext';
+import { ThemeList } from '../../../context/ThemeContext/types';
 
 // Импортируем модульные компоненты
-import { Modal } from '../Modals/ModalComp/Modal';
-import { UrgentToggle } from '../Modals/ModalComp/UrgentToggle';
-import { TimeSelector } from '../Modals/ModalComp/TimeSelector';
+import { Modal } from '../ModalComp/Modal';
+import { UrgentToggle } from '../ModalComp/UrgentToggle';
+import { TimeSelector } from '../ModalComp/TimeSelector';
 
 // Импортируем хуки
-import { useOrderDraft } from '../../hooks/modalHooks/useOrderDraft';
-import { usePhotoUpload } from '../../hooks/modalHooks/usePhotoUpload';
+import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
+import { usePhotoUpload } from '../../../hooks/modalHooks/usePhotoUpload';
 
 // Импортируем утилиты
 import { 
@@ -24,7 +24,7 @@ import {
   parseTimeFromAPI,
   getModalTitle,
   formatCargoWeight
-} from '../../utils/orderUtils';
+} from '../../../utils/orderUtils';
 
 export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder, 
   onClose, initialData, 
@@ -191,8 +191,9 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
 
         // Отправляем обновление заказа
         if (orderID) {
-          
+          if (onSubmitUpdateOrder) {
           onSubmitUpdateOrder(orderID, updateData);
+          }
         }
       } else {
         // Создаем новый заказ
@@ -202,10 +203,13 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
           time: formatTimeForAPI(selectedDate, selectedTime),
           photo_id: photoId || undefined,
         };
-        
+
         // Очищаем черновик после успешной отправки
         clearDraft();
-        onSubmitCreateOrder(orderData);
+
+        if (onSubmitCreateOrder) {
+          onSubmitCreateOrder(orderData);
+        }
       }
     } catch (error) {
       console.error('Ошибка обработки заказа:', error);

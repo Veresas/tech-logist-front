@@ -611,7 +611,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ordersUpdateIdGet**
-> TlOrdersClientModelOrderForUpdateResponse ordersUpdateIdGet()
+> ModelOrderForUpdateResponse ordersUpdateIdGet()
 
 Возвращает заявку с данными для обновления
 
@@ -642,7 +642,7 @@ const { status, data } = await apiInstance.ordersUpdateIdGet(
 
 ### Return type
 
-**TlOrdersClientModelOrderForUpdateResponse**
+**ModelOrderForUpdateResponse**
 
 ### Authorization
 

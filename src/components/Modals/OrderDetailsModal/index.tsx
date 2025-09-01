@@ -8,6 +8,7 @@ import { DeleteConfirmationModal } from '../DeleteConfirmationModal';
 import styles from './OrderDetailsModal.module.css';
 import { Clock, X, Expand } from 'lucide-react';
 
+
 export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   order,
   isOpen,
@@ -22,7 +23,6 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   const { theme } = useTheme();
   const [isPhotoExpanded, setIsPhotoExpanded] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-
 
   // Обработчик нажатия ESC
   useEffect(() => {
@@ -90,7 +90,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         <button
           key="edit"
           className={styles.actionButton}
-          onClick={() => onEdit(order.id || 0)}
+          onClick={() => onEdit(order.id || 0, order)}
         >
           Редактировать
         </button>
@@ -272,6 +272,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
       />
+
     </>
   );
 };

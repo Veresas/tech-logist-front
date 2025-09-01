@@ -241,6 +241,19 @@ export interface ModelOrderCreate {
     'time'?: string;
 }
 /**
+ * DTO для обновления заявки
+ * @export
+ * @interface ModelOrderForUpdateResponse
+ */
+export interface ModelOrderForUpdateResponse {
+    /**
+     * OrderForUpdate DTO для обновления заявки
+     * @type {ModelOrderCreate}
+     * @memberof ModelOrderForUpdateResponse
+     */
+    'order_for_update'?: ModelOrderCreate;
+}
+/**
  * DTO для передачи информации о заявке
  * @export
  * @interface ModelOrderOut
@@ -570,80 +583,6 @@ export interface ModelUserUpdate {
      * @memberof ModelUserUpdate
      */
     'phone'?: string;
-}
-/**
- * 
- * @export
- * @interface TlOrdersClientModelOrderCreate
- */
-export interface TlOrdersClientModelOrderCreate {
-    /**
-     * 
-     * @type {string}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'cargo_description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'cargo_name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'cargo_type_id'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'cargo_weight'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'depart_loc'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'goal_loc'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'is_urgent'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'photo_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TlOrdersClientModelOrderCreate
-     */
-    'time'?: string;
-}
-/**
- * 
- * @export
- * @interface TlOrdersClientModelOrderForUpdateResponse
- */
-export interface TlOrdersClientModelOrderForUpdateResponse {
-    /**
-     * OrderForUpdate DTO для создания заявки
-     * @type {TlOrdersClientModelOrderCreate}
-     * @memberof TlOrdersClientModelOrderForUpdateResponse
-     */
-    'order_for_update'?: TlOrdersClientModelOrderCreate;
 }
 
 /**
@@ -1666,7 +1605,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TlOrdersClientModelOrderForUpdateResponse>> {
+        async ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrderForUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersUpdateIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersUpdateIdGet']?.[localVarOperationServerIndex]?.url;
@@ -1800,7 +1739,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<TlOrdersClientModelOrderForUpdateResponse> {
+        ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrderForUpdateResponse> {
             return localVarFp.ordersUpdateIdGet(id, options).then((request) => request(axios, basePath));
         },
     };

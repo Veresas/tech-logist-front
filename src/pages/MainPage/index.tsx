@@ -58,7 +58,7 @@ export const MainPage = () => {
 
     return (
         <div>
-            <OrderListContainer isPrivate={false} ></OrderListContainer>
+            <OrderListContainer isPrivate={false} ordersApi={ordersApi} locationOptions={locationOptions} cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 
         {/* Кнопка для открытия модального окна */}
         <button 
@@ -90,6 +90,8 @@ export const MainPage = () => {
                 cargoTypeOptions={cargoTypeOptions}
             />
         )}
+
+
         </div>
     )
 }
