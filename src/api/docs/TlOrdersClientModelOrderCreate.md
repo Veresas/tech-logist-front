@@ -1,6 +1,5 @@
-# ModelOrderCreate
+# TlOrdersClientModelOrderCreate
 
-DTO для создания заявки
 
 ## Properties
 
@@ -19,9 +18,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { ModelOrderCreate } from './api';
+import { TlOrdersClientModelOrderCreate } from './api';
 
-const instance: ModelOrderCreate = {
+const instance: TlOrdersClientModelOrderCreate = {
     cargo_description,
     cargo_name,
     cargo_type_id,

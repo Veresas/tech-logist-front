@@ -1,9 +1,10 @@
-import { type ModelOrderCreate } from '../../api/api';
+import { type ModelOrderCreate } from '../../api';
 
 export interface OrderCreateFormProps {
   onSubmit: (data: ModelOrderCreate) => void;
   onClose: () => void;
   initialData?: Partial<ModelOrderCreate>;
+  order: ModelOrderCreate | undefined;
 }
 
 export interface TimeSlot {

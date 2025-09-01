@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
-import type { ModelOrderCreate, ModelDropDownListInfoResponse } from '../../api/api';
+import type { ModelOrderCreate, ModelDropDownListInfoResponse, } from '../../api';
 import styles from './OrderCreateForm.module.css';
 import type { OrderCreateFormProps, TimeSlot } from './types';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -51,10 +51,10 @@ const transformCargoTypeOptions = (cargoTypes: ModelDropDownListInfoResponse['ca
   }));
 };
 
-export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateFormProps) => {
+export const OrderCreateForm = ({ onSubmit, onClose, initialData, order }: OrderCreateFormProps) => {
   const themeContext = useContext(ThemeContext);
   const isDarkTheme = themeContext?.theme === ThemeList.DARK;
-  
+  console.log(order);
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
@@ -163,6 +163,7 @@ export const OrderCreateForm = ({ onSubmit, onClose, initialData }: OrderCreateF
       const orderCreateResponse = await ordersApi.ordersCreatePost(orderData);
       console.log('Заказ успешно создан:', orderCreateResponse.data);
       
+      //await ordersApi.ordersIdPatch();
       // Очищаем черновик после успешной отправки
       clearDraft();
       onSubmit(orderData);

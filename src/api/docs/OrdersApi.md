@@ -10,10 +10,12 @@ All URIs are relative to *http://localhost:8400/api*
 |[**ordersIdCancelPatch**](#ordersidcancelpatch) | **PATCH** /orders/{id}/cancel | Отменить заявку|
 |[**ordersIdCompletePatch**](#ordersidcompletepatch) | **PATCH** /orders/{id}/complete | Завершить заявку|
 |[**ordersIdGet**](#ordersidget) | **GET** /orders/{id} | Получить заявку по ID|
+|[**ordersIdPatch**](#ordersidpatch) | **PATCH** /orders/{id} | Обновить заявку|
 |[**ordersIdRejectPatch**](#ordersidrejectpatch) | **PATCH** /orders/{id}/reject | Отклонить заявку|
 |[**ordersPhotoIdDelete**](#ordersphotoiddelete) | **DELETE** /orders/photo/{id} | Удалить фотографию|
 |[**ordersPhotoIdGet**](#ordersphotoidget) | **GET** /orders/photo/{id} | Получить файл фотографии|
 |[**ordersPhotoUploadPost**](#ordersphotouploadpost) | **POST** /orders/photo/upload | Загрузить фотографию|
+|[**ordersUpdateIdGet**](#ordersupdateidget) | **GET** /orders/update/{id} | Получить заявку для обновления|
 
 # **ordersActualGet**
 > ModelOrdersResponse ordersActualGet()
@@ -337,6 +339,63 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **ordersIdPatch**
+> { [key: string]: any; } ordersIdPatch(order)
+
+Обновляет существующую заявку
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration,
+    ModelOrderUpdate
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+let id: number; //ID заявки (default to undefined)
+let order: ModelOrderUpdate; //Данные для обновления заявки
+
+const { status, data } = await apiInstance.ordersIdPatch(
+    id,
+    order
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **order** | **ModelOrderUpdate**| Данные для обновления заявки | |
+| **id** | [**number**] | ID заявки | defaults to undefined|
+
+
+### Return type
+
+**{ [key: string]: any; }**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Заявка успешно обновлена |  -  |
+|**400** | Неверные данные заявки |  -  |
+|**500** | Ошибка обновления заявки |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **ordersIdRejectPatch**
 > { [key: string]: any; } ordersIdRejectPatch()
 
@@ -548,6 +607,59 @@ No authorization required
 |**200** | Фотография успешно загружена |  -  |
 |**400** | Неверный формат файла |  -  |
 |**500** | Ошибка загрузки фотографии |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ordersUpdateIdGet**
+> TlOrdersClientModelOrderForUpdateResponse ordersUpdateIdGet()
+
+Возвращает заявку с данными для обновления
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+let id: number; //ID заявки (default to undefined)
+
+const { status, data } = await apiInstance.ordersUpdateIdGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | ID заявки | defaults to undefined|
+
+
+### Return type
+
+**TlOrdersClientModelOrderForUpdateResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Заявка для обновления |  -  |
+|**400** | Неверный формат ID |  -  |
+|**500** | Ошибка получения заявки |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

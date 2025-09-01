@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **driver_name** | **string** |  | [optional] [default to undefined]
 **goal_loc_name** | **string** |  | [optional] [default to undefined]
 **id** | **number** |  | [optional] [default to undefined]
+**is_urgent** | **boolean** |  | [optional] [default to undefined]
 **order_status_name** | [**ModelOrderStatusEnum**](ModelOrderStatusEnum.md) |  | [optional] [default to undefined]
 **photo_id** | **string** |  | [optional] [default to undefined]
 **time** | **string** |  | [optional] [default to undefined]
@@ -34,6 +35,7 @@ const instance: ModelOrderOut = {
     driver_name,
     goal_loc_name,
     id,
+    is_urgent,
     order_status_name,
     photo_id,
     time,

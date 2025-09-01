@@ -1,6 +1,6 @@
-# ModelOrderCreate
+# ModelOrderUpdate
 
-DTO для создания заявки
+DTO для обновления заявки
 
 ## Properties
 
@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **cargo_weight** | **number** |  | [optional] [default to undefined]
 **depart_loc** | **number** |  | [optional] [default to undefined]
 **goal_loc** | **number** |  | [optional] [default to undefined]
+**id** | **number** |  | [optional] [default to undefined]
 **is_urgent** | **boolean** |  | [optional] [default to undefined]
 **photo_id** | **string** |  | [optional] [default to undefined]
 **time** | **string** |  | [optional] [default to undefined]
@@ -19,15 +20,16 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { ModelOrderCreate } from './api';
+import { ModelOrderUpdate } from './api';
 
-const instance: ModelOrderCreate = {
+const instance: ModelOrderUpdate = {
     cargo_description,
     cargo_name,
     cargo_type_id,
     cargo_weight,
     depart_loc,
     goal_loc,
+    id,
     is_urgent,
     photo_id,
     time,
