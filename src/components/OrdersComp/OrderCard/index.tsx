@@ -1,11 +1,15 @@
 import type { OrderCardProps } from './type';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
+import { useTheme } from '../../../utils/ContextHooks/ThemeContextHooks';
 import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
 import { OCActionList } from '../type';
-import styles from '../../OrderCreateForm/OrderCreateForm.module.css';
+import styles from './OrderCard.module.css';
+import { Clock, MapPin, Target } from 'lucide-react';
+
 
 export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCardProps) => {
     const { role } = useAuth();
+    const { theme } = useTheme();
 
     // Форматирование времени
     const formatTime = (timeString?: string) => {
@@ -90,11 +94,14 @@ export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCa
     };
 
     return (
-        <div className={styles.orderCard}>
+        <div className={`${styles.orderCard} ${theme === 'dark' ? styles.dark : ''}`}>
             {/* Заголовок карточки */}
             <div className={styles.cardHeader}>
                 <span className={styles.orderNumber}>№{order.id?.toString().padStart(4, '0') || '0000'}</span>
-                {order.is_urgent && <div className={styles.urgentIndicator}></div>}
+                <div 
+                    className={styles.urgentIndicator} 
+                    data-urgent={order.is_urgent}
+                ></div>
             </div>
 
             {/* Название заказа */}
@@ -107,10 +114,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCa
                 {/* Время */}
                 <div className={styles.detailRow}>
                     <div className={styles.detailIcon}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12,6 12,12 16,14"/>
-                        </svg>
+                        <Clock size={16} />
                     </div>
                     <span className={styles.detailText}>{formatTime(order.time)}</span>
                 </div>
@@ -120,29 +124,23 @@ export const OrderCard = ({ order, onClick, isPrivate, onEdit, onInfo }: OrderCa
                     {/* Точка отправления */}
                     <div className={styles.detailRow}>
                         <div className={styles.detailIcon}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="12" cy="12" r="3"/>
-                                <path d="M12 1v6m0 6v6"/>
-                                <path d="M1 12h6m6 0h6"/>
-                            </svg>
+                            <MapPin size={16} />
                         </div>
                         <span className={styles.detailText}>{order.depart_loc_name || 'Точка отправления'}</span>
                     </div>
 
                     {/* Соединительная линия */}
                     <div className={styles.routeConnector}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="m18 15-6-6-6 6"/>
+                        <svg width="16" height="50" viewBox="0 0 16 50" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="8" y1="2" x2="8" y2="38"/>
+                            <polyline points="2,36 8,42 14,36"/>
                         </svg>
                     </div>
 
                     {/* Точка назначения */}
                     <div className={styles.detailRow}>
                         <div className={styles.detailIcon}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
+                            <Target size={16} />
                         </div>
                         <span className={styles.detailText}>{order.goal_loc_name || 'Точка назначения'}</span>
                     </div>

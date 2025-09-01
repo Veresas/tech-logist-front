@@ -1,5 +1,5 @@
 //import React, { useEffect, useState } from 'react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OrderCreateForm } from '../../components/OrderCreateForm'
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer';
 import type { ModelDropDownListInfoResponse, ModelOrderCreate, ModelOrderUpdate } from '../../api';
@@ -10,6 +10,11 @@ export const MainPage = () => {
     const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
     
+
+    useEffect(() => {
+        getDropDownListInfo();
+    }, []);
+
     const handleOrderCreate = async (order: ModelOrderCreate) => {
         try {
             await ordersApi.ordersCreatePost(order);
@@ -30,7 +35,7 @@ export const MainPage = () => {
           console.error('Ошибка получения списка типов грузов и связей подразделений и зданий:', error);
         }
       };
-      getDropDownListInfo();
+
 
     const handleOrderUpdate = async (orderID: number, order: ModelOrderUpdate) => {
         try {
