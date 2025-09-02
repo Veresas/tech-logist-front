@@ -248,6 +248,10 @@ export const usePhotoUpload = () => {
     }
   }, []);
 
+  const restorePhotoId = useCallback((photoId: string) => {
+    setPhotoId(photoId);
+  }, []);
+
   return {
     // Состояние
     photoPreview,
@@ -268,6 +272,7 @@ export const usePhotoUpload = () => {
     // Утилиты
     resetPhoto,
     setExistingPhoto,
+    restorePhotoId,
     validateFileFormat,
     validateFileSize,
   };

@@ -1,7 +1,7 @@
 import type { OrderListProps } from './type'
 import { OrderCard } from '../OrderCard'
 
-export const OrderList = ({ orders, handleAction, isPrivate, handleInfo, handleEdit } : OrderListProps) => {
+export const OrderList = ({ orders, handleAction, isPrivate, handleInfo } : OrderListProps) => {
     return (
         <div>
             {orders.map((order) => (
@@ -11,7 +11,6 @@ export const OrderList = ({ orders, handleAction, isPrivate, handleInfo, handleE
                     onClick={handleAction} 
                     isPrivate={isPrivate} 
                     onInfo={handleInfo}
-                    onEdit={handleEdit}
                 />
             ))}
         </div>

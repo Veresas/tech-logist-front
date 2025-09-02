@@ -24,7 +24,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const handleGetPhoto = useCallback(async () => {
         if (selectedOrder?.photo_id) {
             try {
-                const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id)
+                const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id, { responseType: 'blob' })
                 setPhotoUrl(URL.createObjectURL(res.data))
             } catch (error) {
                 console.error('Ошибка получения фотографии:', error)

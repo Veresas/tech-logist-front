@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { OrderCreateForm } from '../../components/Modals/OrderCreateForm'
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer';
-import type { ModelDropDownListInfoResponse, ModelOrderCreate, ModelOrderUpdate } from '../../api';
+import type { ModelDropDownListInfoResponse, ModelOrderCreate } from '../../api';
 import { ordersApi, referencyApi } from '../../utils/ApiFactory';
 
 export const MainPage = () => {
@@ -35,18 +35,6 @@ export const MainPage = () => {
           console.error('Ошибка получения списка типов грузов и связей подразделений и зданий:', error);
         }
       };
-
-
-    const handleOrderUpdate = async (orderID: number, order: ModelOrderUpdate) => {
-        try {
-            await ordersApi.ordersIdPatch(orderID, order);
-            setShowOrderModal(false);
-        } catch (error) {
-            console.error('Ошибка обновления заказа:', error);
-            alert('Ошибка обновления заказа. Попробуйте еще раз.');
-        }
-        setShowOrderModal(false);
-    }
 
     const handleOpenOrderModal = () => {
         setShowOrderModal(true);
@@ -82,7 +70,7 @@ export const MainPage = () => {
         {showOrderModal && (
             <OrderCreateForm 
                 onSubmitCreateOrder={handleOrderCreate} 
-                onSubmitUpdateOrder={handleOrderUpdate}
+                onSubmitUpdateOrder={undefined}
                 onClose={handleCloseOrderModal} 
                 order={undefined}
                 orderID={undefined}

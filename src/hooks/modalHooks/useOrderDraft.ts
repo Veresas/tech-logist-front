@@ -39,15 +39,7 @@ interface OrderDraft {
  * 
  * @returns объект с функциями для работы с черновиками
  */
-export const useOrderDraft = (
-  order: ModelOrderCreate | undefined, // Существующий заказ для редактирования
-  isUrgent: boolean,
-  selectedDate: 'today' | 'tomorrow',
-  selectedTime: string,
-  photoPreview: string,
-  photoId: string,
-  formData: Partial<ModelOrderCreate>
-) => {
+export const useOrderDraft = () => {
   // Состояние загруженного черновика
   const [draft, setDraft] = useState<OrderDraft | null>(null);
 
@@ -57,12 +49,7 @@ export const useOrderDraft = (
    * 
    * @param data - данные формы для сохранения
    */
-  const saveDraft = useCallback((data: Partial<ModelOrderCreate>) => {
-    // Не сохраняем черновик при редактировании существующего заказа
-    if (order) {
-      console.log('Черновик не сохраняется при редактировании заказа');
-      return;
-    }
+  const saveDraft = useCallback((data: Partial<ModelOrderCreate>, isUrgent: boolean, selectedDate: 'today' | 'tomorrow', selectedTime: string, photoId: string) => {
 
     // Формируем объект черновика со всеми текущими данными
     const draftData: OrderDraft = {
@@ -70,7 +57,6 @@ export const useOrderDraft = (
       isUrgent,
       selectedDate,
       selectedTime,
-      photoPreview: photoPreview || undefined,
       photoId: photoId || undefined,
     };
 
@@ -82,7 +68,7 @@ export const useOrderDraft = (
       // Обрабатываем ошибки сохранения (например, превышение лимита localStorage)
       console.error('Ошибка сохранения черновика:', error);
     }
-  }, [order, isUrgent, selectedDate, selectedTime, photoPreview, photoId]);
+  }, []);
 
   /**
    * Функция загрузки черновика из localStorage
@@ -91,11 +77,6 @@ export const useOrderDraft = (
    * @returns объект черновика или null
    */
   const loadDraft = useCallback((): OrderDraft | null => {
-    // Не загружаем черновик при редактировании существующего заказа
-    if (order) {
-      console.log('Черновик не загружается при редактировании заказа');
-      return null;
-    }
 
     try {
       // Пытаемся загрузить черновик из localStorage
@@ -113,7 +94,7 @@ export const useOrderDraft = (
     }
 
     return null;
-  }, [order]);
+  }, []);
 
   /**
    * Функция очистки черновика
@@ -136,7 +117,6 @@ export const useOrderDraft = (
    * @returns true если черновик существует
    */
   const hasDraft = useCallback((): boolean => {
-    if (order) return false; // При редактировании черновик не используется
     
     try {
       const draftData = localStorage.getItem(DRAFT_STORAGE_KEY);
@@ -144,7 +124,7 @@ export const useOrderDraft = (
     } catch {
       return false;
     }
-  }, [order]);
+  }, []);
 
   /**
    * Функция получения времени последнего сохранения черновика
@@ -153,7 +133,6 @@ export const useOrderDraft = (
    * @returns время последнего сохранения или null
    */
   const getDraftTimestamp = useCallback((): Date | null => {
-    if (order) return null; // При редактировании черновик не используется
     
     try {
       const draftData = localStorage.getItem(DRAFT_STORAGE_KEY);
@@ -167,30 +146,25 @@ export const useOrderDraft = (
     }
 
     return null;
-  }, [order]);
+  }, []);
 
   // Загружаем черновик при инициализации хука
   useEffect(() => {
-    if (!order) {
-      const loadedDraft = loadDraft();
-      setDraft(loadedDraft);
-    }
-  }, [order, loadDraft]);
+    const loadedDraft = loadDraft();
+    setDraft(loadedDraft);
+  }, [loadDraft]);
 
+  /*
   // Автоматически сохраняем черновик при изменениях
   useEffect(() => {
-    if (!order) {
-      saveDraft(formData);
-    }
-  }, [order, formData, saveDraft]);
+    saveDraft(formData);
+  }, [formData, saveDraft]);
 
   // Автоматически сохраняем черновик при изменении дополнительных полей
   useEffect(() => {
-    if (!order) {
-      saveDraft(formData);
-    }
-  }, [order, isUrgent, selectedDate, selectedTime, photoPreview, photoId, saveDraft]);
-
+    saveDraft(formData);
+  }, [formData, isUrgent, selectedDate, selectedTime, photoPreview, photoId, saveDraft]);
+*/
   return {
     draft, // Загруженный черновик
     saveDraft, // Функция сохранения

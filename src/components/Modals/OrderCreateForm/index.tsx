@@ -40,12 +40,29 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   const [changedFields, setChangedFields] = useState<Set<string>>(new Set());
   const [originalValues, setOriginalValues] = useState<Partial<ModelOrderCreate>>({});
 
+  // Используем созданные хуки
+  const { draft, clearDraft, saveDraft } = useOrderDraft();
+
+
+  const { 
+    photoPreview, 
+    isUploading, 
+    photoId, 
+    fileInputRef,
+    handlePhotoAreaClick,
+    handleFileInputChange,
+    handleDragOver,
+    handleDragEnter,
+    handleDragLeave,
+    handleDrop,
+    resetPhoto,
+    restorePhotoId
+  } = usePhotoUpload();
   // Определяем начальные данные формы
   let initialFormData: Partial<ModelOrderCreate>;
   let initialIsUrgent: boolean;
   let initialSelectedDate: 'today' | 'tomorrow';
   let initialSelectedTime: string;
-  let initialPhotoPreview: string;
   let initialPhotoId: string;
 
   if (order) {
@@ -64,23 +81,37 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     initialSelectedDate = timeData.selectedDate;
     initialSelectedTime = timeData.selectedTime;
     initialIsUrgent = order.is_urgent || false;
-    initialPhotoPreview = '';
     initialPhotoId = order.photo_id || '';
     
     // Сохраняем оригинальные значения для сравнения
     setOriginalValues(initialFormData);
   } else {
-    // Если создаем новый заказ
-    initialFormData = initialData || {
-      cargo_name: '',
-      cargo_description: '',
-    };
-    initialIsUrgent = false;
-    initialSelectedDate = 'today';
-    initialSelectedTime = '08:00';
-    initialPhotoPreview = '';
-    initialPhotoId = '';
+
+    if (draft) {
+      initialFormData = draft.formData;
+      initialIsUrgent = draft.isUrgent;
+      initialSelectedDate = draft.selectedDate;
+      initialSelectedTime = draft.selectedTime;
+      initialPhotoId = draft.photoId || '';
+    } else {
+      // Если создаем новый заказ
+      initialFormData = initialData || {
+        cargo_name: '',
+        cargo_description: '',
+      };
+      initialIsUrgent = false;
+      initialSelectedDate = 'today';
+      initialSelectedTime = '08:00';
+      initialPhotoId = '';
+    }
   }
+
+  useEffect(() => {
+    if (!order && initialPhotoId) {
+      // Восстанавливаем photoId из черновика или существующего заказа
+      restorePhotoId(initialPhotoId);
+    }
+  }, [order, initialPhotoId, restorePhotoId]);
 
   const {
     register,
@@ -99,26 +130,21 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   
   // Следим за изменениями формы
   const formValues = watch();
-  
-  // Используем созданные хуки
-  const { clearDraft } = useOrderDraft(
-    order || undefined, isUrgent, selectedDate, selectedTime, initialPhotoPreview, initialPhotoId, formValues
-  );
-  
-  const { 
-    photoPreview, 
-    isUploading, 
-    photoId, 
-    fileInputRef,
-    handlePhotoAreaClick,
-    handleFileInputChange,
-    handleDragOver,
-    handleDragEnter,
-    handleDragLeave,
-    handleDrop,
-    resetPhoto
-  } = usePhotoUpload();
 
+  // Восстанавливаем черновик при инициализации
+  useEffect(() => {
+    if (!order && draft) {
+      // Восстанавливаем данные формы
+      reset(draft.formData);
+      
+      // Восстанавливаем дополнительные состояния
+      setIsUrgent(draft.isUrgent);
+      setSelectedDate(draft.selectedDate);
+      setSelectedTime(draft.selectedTime);
+      
+      console.log('Черновик восстановлен:', draft);
+    }
+  }, [order, draft, reset]);
 
   // Отслеживаем изменения полей при редактировании
   useEffect(() => {
@@ -238,6 +264,13 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     });
   };
 
+  // Обработчик потери фокуса для сохранения черновика
+  const handleFieldBlur = () => {
+    if (!order) {
+      saveDraft(formValues, isUrgent, selectedDate, selectedTime, photoId); // Принудительно сохраняем черновик при потере фокуса
+    }
+  };
+
   // Футер модального окна
   const modalFooter = (
     <button
@@ -272,6 +305,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
             {...register("cargo_name", { required: "Название обязательно" })}
             type="text"
             className={styles.input}
+            onBlur={handleFieldBlur}
           />
           {errors.cargo_name && <div className={styles.error}>{errors.cargo_name.message}</div>}
         </div>
@@ -281,6 +315,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
           <textarea
             {...register("cargo_description")}
             className={`${styles.input} ${styles.textarea}`}
+            onBlur={handleFieldBlur}
           />
         </div>
         
@@ -304,6 +339,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       isSearchable
                       className={styles.reactSelect}
                       classNamePrefix="react-select"
+                      onBlur={handleFieldBlur}
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
@@ -336,6 +372,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       isSearchable
                       className={styles.reactSelect}
                       classNamePrefix="react-select"
+                      onBlur={handleFieldBlur}
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
@@ -376,6 +413,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                   step="0.1"
                   className={styles.input}
                   placeholder="кг"
+                  onBlur={handleFieldBlur}
                 />
                 {errors.cargo_weight && <div className={styles.error}>{errors.cargo_weight.message}</div>}
               </div>
@@ -396,6 +434,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       isSearchable
                       className={styles.reactSelect}
                       classNamePrefix="react-select"
+                      onBlur={handleFieldBlur}
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
