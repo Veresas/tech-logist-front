@@ -10,3 +10,11 @@ export interface OrderCreateFormProps {
   order: ModelOrderCreate | undefined;
   orderID: number | undefined;
 }
+
+export interface InitialData {
+  initialFormData: Partial<ModelOrderCreate>;
+  initialIsUrgent: boolean;
+  initialSelectedDate: 'today' | 'tomorrow';
+  initialSelectedTime: string;
+  initialPhotoId: string;
+}

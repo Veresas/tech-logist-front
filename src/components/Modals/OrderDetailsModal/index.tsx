@@ -65,22 +65,23 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       // Для водителя
       if (order.order_status_name === ModelOrderStatusEnum.ACCEPT) {
         buttons.push(
-        
           <button
-            key="complete"
+            key="reject"
             className={styles.actionButton}
-            onClick={() => onComplete(order.id || 0)}
+            style={{ backgroundColor: '#D10A00', color: 'white' }} 
+            onClick={() => onReject(order.id || 0)}
           >
-            Завершить
+            Отклонить
           </button>
         );
         buttons.push(
           <button
-            key="reject"
+            key="complete"
             className={styles.actionButton}
-            onClick={() => onReject(order.id || 0)}
+            style={{ backgroundColor: '#3049CE', color: 'white' }} 
+            onClick={() => onComplete(order.id || 0)}
           >
-            Отклонить
+            Завершить
           </button>
         );
       }
@@ -88,20 +89,22 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       // Для не водителя
       buttons.push(
         <button
-          key="edit"
+          key="delete"
           className={styles.actionButton}
-          onClick={() => onEdit(order.id || 0, order)}
+          style={{ backgroundColor: '#D10A00', color: 'white' }} 
+          onClick={() => setShowDeleteConfirmation(true)}
         >
-          Редактировать
+          Удалить заказ
         </button>
       );
       buttons.push(
         <button
-          key="delete"
+          key="edit"
           className={styles.actionButton}
-          onClick={() => setShowDeleteConfirmation(true)}
+          style={{ backgroundColor: '#3049CE', color: 'white' }}
+          onClick={() => onEdit(order.id || 0, order)}
         >
-          Удалить заказ
+          Редактировать
         </button>
       );
     }
@@ -150,20 +153,35 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
     );
   }
 
+  const getTitelElement = () => {
+    if (order.is_urgent) {
+      return (
+        <div className={styles.urgentIndicator} data-urgent={order.is_urgent}></div>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    }
+  };
+
+
   return (
     <>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        title={order.cargo_name || 'Название заказа'}
+        title={undefined}
+        titelElement={getTitelElement()}
         className={`${styles.orderDetailsModal} ${theme === 'dark' ? styles.dark : ''}`}
       >
         <div className={styles.modalContent}>
-          {/* Индикатор срочности */}
-          <div className={styles.urgentIndicator} data-urgent={order.is_urgent}></div>
 
-          {/* Описание */}
+
+
+          {/* Название и Описание */}
           <div className={styles.descriptionSection}>
+          <h2 className={styles.modalTitle}>{order.cargo_name || 'Название заказа'}</h2>
             <h4 className={styles.sectionTitle}>Описание:</h4>
             <p className={styles.descriptionText}>
               {order.cargo_description || 'Рыбный текст'}
@@ -183,8 +201,6 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
 
               {/* Маршрут */}
               <div className={styles.routeSection}>
-                <div className={styles.routeLine}></div>
-                
                 {/* Точка отправления */}
                 <div className={styles.locationPoint}>
                   <div className={styles.locationIcon}></div>
@@ -192,7 +208,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                     {order.depart_loc_name || ''}
                   </div>
                 </div>
-
+                <div className={styles.routeLine}></div>
                 {/* Точка назначения */}
                 <div className={styles.locationPoint}>
                   <div className={styles.locationIcon}></div>

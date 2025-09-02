@@ -105,6 +105,56 @@ export const parseTimeFromAPI = (timeString: string) => {
 };
 
 /**
+ * Парсинг времени из API ответа (с сохранением UTC)
+ * Извлекает дату и время из строки времени сервера без конвертации в локальное время
+ * 
+ * @param timeString - строка времени с сервера (например: "2025-09-02T16:30:00Z")
+ * @returns объект с датой и временем в UTC
+ */
+export const parseTimeFromAPIUTC = (timeString: string) => {
+  try {
+    console.log('Парсинг UTC времени из API:', timeString);
+    
+    // Извлекаем время напрямую из строки без конвертации
+    const timeMatch = timeString.match(/T(\d{2}):(\d{2}):\d{2}/);
+    if (!timeMatch) {
+      throw new Error('Неверный формат времени');
+    }
+    
+    const hours = timeMatch[1];
+    const minutes = timeMatch[2];
+    const selectedTime = `${hours}:${minutes}`;
+    
+    // Определяем дату из строки
+    const date = new Date(timeString);
+    const now = new Date();
+    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    
+    let selectedDate: 'today' | 'tomorrow';
+    if (date.toDateString() === now.toDateString()) {
+      selectedDate = 'today';
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      selectedDate = 'tomorrow';
+    } else {
+      selectedDate = 'today';
+    }
+    
+    console.log('Результат UTC парсинга:', { selectedDate, selectedTime });
+    
+    return {
+      selectedDate,
+      selectedTime
+    };
+  } catch (error) {
+    console.error('Ошибка UTC парсинга времени:', error);
+    return {
+      selectedDate: 'today' as const,
+      selectedTime: '08:00'
+    };
+  }
+};
+
+/**
  * Валидация веса груза
  * Проверяет, что вес является положительным числом
  * 

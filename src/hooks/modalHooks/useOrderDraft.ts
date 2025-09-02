@@ -152,7 +152,7 @@ export const useOrderDraft = () => {
   useEffect(() => {
     const loadedDraft = loadDraft();
     setDraft(loadedDraft);
-  }, [loadDraft]);
+  }, []); // Убираем loadDraft из зависимостей, так как он стабилен
 
   /*
   // Автоматически сохраняем черновик при изменениях

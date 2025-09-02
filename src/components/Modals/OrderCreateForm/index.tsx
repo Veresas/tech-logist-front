@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
 import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
@@ -21,13 +21,22 @@ import {
   transformLocationOptions, 
   transformCargoTypeOptions, 
   formatTimeForAPI,
-  parseTimeFromAPI,
+  parseTimeFromAPIUTC,
   getModalTitle,
   formatCargoWeight
 } from '../../../utils/orderUtils';
 
+// Интерфейс для начальных данных формы
+interface InitialData {
+  initialFormData: Partial<ModelOrderCreate>;
+  initialIsUrgent: boolean;
+  initialSelectedDate: 'today' | 'tomorrow';
+  initialSelectedTime: string;
+  initialPhotoId: string;
+}
+
 export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder, 
-  onClose, initialData, 
+  onClose, initialData: initialDataProp, 
   order, orderID,
   locationOptions,
   cargoTypeOptions
@@ -37,7 +46,6 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   const isDarkTheme = themeContext?.theme === ThemeList.DARK;
   
   // Состояние для отслеживания измененных полей при редактировании
-  const [changedFields, setChangedFields] = useState<Set<string>>(new Set());
   const [originalValues, setOriginalValues] = useState<Partial<ModelOrderCreate>>({});
 
   // Используем созданные хуки
@@ -58,60 +66,82 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     resetPhoto,
     restorePhotoId
   } = usePhotoUpload();
-  // Определяем начальные данные формы
-  let initialFormData: Partial<ModelOrderCreate>;
-  let initialIsUrgent: boolean;
-  let initialSelectedDate: 'today' | 'tomorrow';
-  let initialSelectedTime: string;
-  let initialPhotoId: string;
-
-  if (order) {
-    // Если редактируем существующий заказ
-    initialFormData = {
-      cargo_name: order.cargo_name || '',
-      cargo_description: order.cargo_description || '',
-      depart_loc: order.depart_loc,
-      goal_loc: order.goal_loc,
-      cargo_weight: order.cargo_weight,
-      cargo_type_id: order.cargo_type_id,
-    };
-    
-    // Парсим время из существующего заказа
-    const timeData = order.time ? parseTimeFromAPI(order.time) : { selectedDate: 'today' as const, selectedTime: '08:00' };
-    initialSelectedDate = timeData.selectedDate;
-    initialSelectedTime = timeData.selectedTime;
-    initialIsUrgent = order.is_urgent || false;
-    initialPhotoId = order.photo_id || '';
-    
-    // Сохраняем оригинальные значения для сравнения
-    setOriginalValues(initialFormData);
-  } else {
-
-    if (draft) {
-      initialFormData = draft.formData;
-      initialIsUrgent = draft.isUrgent;
-      initialSelectedDate = draft.selectedDate;
-      initialSelectedTime = draft.selectedTime;
-      initialPhotoId = draft.photoId || '';
-    } else {
-      // Если создаем новый заказ
-      initialFormData = initialData || {
-        cargo_name: '',
-        cargo_description: '',
+  
+  const {
+    initialFormData,
+    initialIsUrgent,
+    initialSelectedDate,
+    initialSelectedTime,
+    initialPhotoId
+  } : InitialData = useMemo(() => {
+    let initialFormData: Partial<ModelOrderCreate>;
+    let initialIsUrgent: boolean;
+    let initialSelectedDate: 'today' | 'tomorrow';
+    let initialSelectedTime: string;
+    let initialPhotoId: string;
+  
+    if (order) {
+      // Если редактируем существующий заказ
+      initialFormData = {
+        cargo_name: order.cargo_name || '',
+        cargo_description: order.cargo_description || '',
+        depart_loc: order.depart_loc,
+        goal_loc: order.goal_loc,
+        cargo_weight: order.cargo_weight,
+        cargo_type_id: order.cargo_type_id,
       };
-      initialIsUrgent = false;
-      initialSelectedDate = 'today';
-      initialSelectedTime = '08:00';
-      initialPhotoId = '';
+      
+      // Парсим время из существующего заказа
+      const timeData = order.time ? parseTimeFromAPIUTC(order.time) : { selectedDate: 'today' as const, selectedTime: '08:00' };
+      initialSelectedDate = timeData.selectedDate;
+      initialSelectedTime = timeData.selectedTime;
+      initialIsUrgent = order.is_urgent || false;
+      initialPhotoId = order.photo_id || '';
+      
+    } else {
+  
+      if (draft) {
+        initialFormData = draft.formData;
+        initialIsUrgent = draft.isUrgent;
+        initialSelectedDate = draft.selectedDate;
+        initialSelectedTime = draft.selectedTime;
+        initialPhotoId = draft.photoId || '';
+      } else {
+        // Если создаем новый заказ
+        initialFormData = initialDataProp || {
+          cargo_name: '',
+          cargo_description: '',
+        };
+        initialIsUrgent = false;
+        initialSelectedDate = 'today';
+        initialSelectedTime = '08:00';
+        initialPhotoId = '';
+      }
     }
-  }
+  
+    // Возвращаем объект со всеми вычисленными значениями
+    return {
+      initialFormData,
+      initialIsUrgent,
+      initialSelectedDate,
+      initialSelectedTime,
+      initialPhotoId
+    };
+    // Массив зависимостей: пересчитывается, если изменится order, draft или initialData
+  }, [order, draft, initialDataProp]);
+
+  useEffect(() => {
+    if (order) {
+      setOriginalValues(initialFormData);
+    }
+  }, []); 
 
   useEffect(() => {
     if (!order && initialPhotoId) {
       // Восстанавливаем photoId из черновика или существующего заказа
       restorePhotoId(initialPhotoId);
     }
-  }, [order, initialPhotoId, restorePhotoId]);
+  }, []);
 
   const {
     register,
@@ -144,34 +174,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
       
       console.log('Черновик восстановлен:', draft);
     }
-  }, [order, draft, reset]);
-
-  // Отслеживаем изменения полей при редактировании
-  useEffect(() => {
-    if (order) {
-      const newChangedFields = new Set<string>();
-      
-      Object.keys(formValues).forEach(key => {
-        const fieldKey = key as keyof ModelOrderCreate;
-        if (formValues[fieldKey] !== originalValues[fieldKey]) {
-          newChangedFields.add(key);
-        }
-      });
-      
-      // Проверяем дополнительные поля
-      if (isUrgent !== (order.is_urgent || false)) {
-        newChangedFields.add('is_urgent');
-      }
-      if (selectedDate !== initialSelectedDate || selectedTime !== initialSelectedTime) {
-        newChangedFields.add('time');
-      }
-      if (photoId !== (order.photo_id || '')) {
-        newChangedFields.add('photo_id');
-      }
-      
-      setChangedFields(newChangedFields);
-    }
-  }, [formValues, isUrgent, selectedDate, selectedTime, photoId, order, originalValues, initialSelectedDate, initialSelectedTime]);
+  }, []);
 
   // Обработчик отправки формы
   const handleFormSubmit: SubmitHandler<ModelOrderCreate> = async (data) => {
@@ -186,6 +189,27 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
         const updateData: ModelOrderUpdate = {};
         
         updateData.id = orderID;
+
+        const changedFields = new Set<string>();
+      
+        Object.keys(formValues).forEach(key => {
+          const fieldKey = key as keyof ModelOrderCreate;
+          if (formValues[fieldKey] !== originalValues[fieldKey]) {
+            changedFields.add(key);
+          }
+        });
+        
+        // Проверяем дополнительные поля
+        if (isUrgent !== (order.is_urgent || false)) {
+          changedFields.add('is_urgent');
+        }
+        if (selectedDate !== initialSelectedDate || selectedTime !== initialSelectedTime) {
+          changedFields.add('time');
+        }
+        if (photoId !== (order.photo_id || '')) {
+          changedFields.add('photo_id');
+        }
+
         // Добавляем только измененные поля
         if (changedFields.has('cargo_name')) {
           updateData.cargo_name = data.cargo_name;
@@ -288,6 +312,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
       isOpen={true} 
       onClose={onClose} 
       title={getModalTitle(!!order)}
+      titelElement={undefined}
       footer={modalFooter}
       className={isDarkTheme ? styles.dark : ''}
     >

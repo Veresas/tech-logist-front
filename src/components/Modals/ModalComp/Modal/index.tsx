@@ -24,6 +24,7 @@ export const Modal = ({
   isOpen, 
   onClose, 
   title, 
+  titelElement,
   children, 
   footer, 
   className = '' 
@@ -120,6 +121,14 @@ export const Modal = ({
     };
   }, [isOpen, onClose]); // Зависимости useEffect
 
+  const getTitelElement = () => {
+    if (title !== undefined) {
+      return (
+        <h2 id="modal-title" className={styles.modalTitle}>{title}</h2>
+      );
+    }
+    return titelElement;
+  };
   // Если модальное окно не открыто, ничего не рендерим
   if (!isOpen) return null;
 
@@ -147,7 +156,7 @@ export const Modal = ({
       >
         {/* Заголовок модального окна */}
         <div className={styles.modalHeader}>
-          <h2 id="modal-title" className={styles.modalTitle}>{title}</h2>
+          {getTitelElement()}
           {/* Кнопка закрытия */}
           <button 
             className={styles.closeButton} 
