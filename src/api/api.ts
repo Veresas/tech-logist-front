@@ -838,6 +838,36 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Выходит из системы
+         * @summary Выходит из системы
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthLogoutPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/public/auth/logout`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -901,6 +931,18 @@ export const IdentityApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthLoginPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Выходит из системы
+         * @summary Выходит из системы
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publicAuthLogoutPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publicAuthLogoutPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthLogoutPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -951,6 +993,15 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
          */
         publicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.publicAuthLoginPost(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Выходит из системы
+         * @summary Выходит из системы
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthLogoutPost(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.publicAuthLogoutPost(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1009,6 +1060,17 @@ export class IdentityApi extends BaseAPI {
      */
     public publicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).publicAuthLoginPost(user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Выходит из системы
+     * @summary Выходит из системы
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public publicAuthLogoutPost(options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).publicAuthLogoutPost(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

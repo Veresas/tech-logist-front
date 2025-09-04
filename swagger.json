@@ -854,6 +854,30 @@
                 }
             }
         },
+        "/public/auth/logout": {
+            "post": {
+                "description": "Выходит из системы",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Выходит из системы",
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно вышел",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/ref/dropdown-list-info": {
             "get": {
                 "description": "Возвращает список типов грузов и связей подразделений и зданий",

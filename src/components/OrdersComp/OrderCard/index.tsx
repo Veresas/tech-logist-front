@@ -54,28 +54,6 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
                 </button>
             );
         }
-        
-        // Кнопки "Выполнить" и "Отклонить" - только в приватном списке, роль водитель, статус взят
-        if (isPrivate && role === ModelRoleEnum.DRIVER && order.order_status_name === ModelOrderStatusEnum.ACCEPT) {
-            buttons.push(
-                <button
-                    key="complete"
-                    className={`${styles.cardButton} ${styles.cardButtonPrimary}`}
-                    onClick={() => onClick(order.id || 0, OCActionList.COMPLITE)}
-                >
-                    Выполнить
-                </button>
-            );
-            buttons.push(
-                <button
-                    key="reject"
-                    className={styles.cardButton}
-                    onClick={() => onClick(order.id || 0, OCActionList.REJECT)}
-                >
-                    Отклонить
-                </button>
-            );
-        }
 
         return buttons;
     };

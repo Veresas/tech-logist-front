@@ -14,6 +14,7 @@ export const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (
       isOpen={isOpen}
       onClose={onCancel}
       title="Удалить заказ?"
+      titelElement={undefined}
       className={styles.deleteConfirmationModal}
     >
       <div className={styles.deleteModalContent}>

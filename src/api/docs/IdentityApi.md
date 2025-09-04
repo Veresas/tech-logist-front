@@ -8,6 +8,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**identUsersIdGet**](#identusersidget) | **GET** /ident/users/{id} | Получить пользователя по ID|
 |[**identUsersIdPatch**](#identusersidpatch) | **PATCH** /ident/users/{id} | Обновить данные пользователя|
 |[**publicAuthLoginPost**](#publicauthloginpost) | **POST** /public/auth/login | Входит в систему|
+|[**publicAuthLogoutPost**](#publicauthlogoutpost) | **POST** /public/auth/logout | Выходит из системы|
 
 # **apiPublicAuthRegisterPost**
 > { [key: string]: any; } apiPublicAuthRegisterPost(user)
@@ -225,6 +226,50 @@ No authorization required
 |**201** | Пользователь успешно введен |  -  |
 |**400** | Неверные данные пользователя |  -  |
 |**500** | Ошибка входа в систему |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **publicAuthLogoutPost**
+> { [key: string]: any; } publicAuthLogoutPost()
+
+Выходит из системы
+
+### Example
+
+```typescript
+import {
+    IdentityApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new IdentityApi(configuration);
+
+const { status, data } = await apiInstance.publicAuthLogoutPost();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**{ [key: string]: any; }**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Пользователь успешно вышел |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

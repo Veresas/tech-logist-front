@@ -8,6 +8,7 @@ export interface OrderDetailsModalProps {
     onDelete: (orderId: number) => void;
     onComplete: (orderId: number) => void;
     onReject: (orderId: number) => void;
+    onTake: (orderId: number) => void;
     photoUrl: string | null;
   }
   

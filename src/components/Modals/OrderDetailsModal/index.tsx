@@ -17,6 +17,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   onDelete,
   onComplete,
   onReject,
+  onTake,
   photoUrl
 }) => {
   const { role } = useAuth();
@@ -82,6 +83,19 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
             onClick={() => onComplete(order.id || 0)}
           >
             Завершить
+          </button>
+        );
+      }
+
+      if (order.order_status_name === ModelOrderStatusEnum.NEW) {
+        buttons.push(
+          <button
+            key="take"
+            className={styles.actionButton}
+            style={{ backgroundColor: '#3049CE', color: 'white' }} 
+            onClick={() => onTake(order.id || 0)}
+          >
+            Взять заказ
           </button>
         );
       }

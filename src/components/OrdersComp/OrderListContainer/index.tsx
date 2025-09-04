@@ -7,7 +7,7 @@ import type { ModelOrderOut, ModelOrderUpdate, ModelOrderCreate } from "../../..
 import { OrderCreateForm } from "../../Modals/OrderCreateForm"
 
 export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
-    const { orders, isLoading, error } = useOrders(isPrivate)
+    const { orders, isLoading, error, fetchOrders } = useOrders(isPrivate)
     const { handleSendRequest } = useOrderCardHandlers()
     const [selectedOrder, setSelectedOrder] = useState<ModelOrderOut | null>(null)
     const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false)
@@ -51,9 +51,10 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
       setIsModalEditOpen(true)
     }
 
-    const handleUpdateOrder = (orderId: number, order: ModelOrderUpdate) => {
+    const handleUpdateOrder = async (orderId: number, order: ModelOrderUpdate) => {
       try {
-        ordersApi.ordersIdPatch(orderId, order)
+        await ordersApi.ordersIdPatch(orderId, order)
+        fetchOrders()
         handleCloseModalEdit()
         setIsModalEditOpen(false)
       } catch (error) {
@@ -61,21 +62,48 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
       }
     }
 
-    const handleDelete = (orderId: number) => {
-        // TODO: Реализовать удаление заказа
-        console.log('Удаление заказа:', orderId)
+    const handleTake = async (orderId: number) => {
+      try {
+        await ordersApi.ordersIdAcceptPatch(orderId)
+        fetchOrders()
+        handleCloseModalDetails()
+        setIsModalDetailsOpen(false)
+      } catch (error) {
+        console.error('Ошибка взятия заказа:', error)
+      }
     }
 
-    const handleComplete = (orderId: number) => {
-        // TODO: Реализовать завершение заказа
-        console.log('Завершение заказа:', orderId)
-        handleCloseModalDetails()
+    const handleDelete = async (orderId: number) => {
+        try {
+            await ordersApi.ordersIdCancelPatch(orderId)
+            fetchOrders()
+            handleCloseModalDetails()
+            setIsModalDetailsOpen(false)
+        } catch (error) {
+            console.error('Ошибка удаления заказа:', error)
+        }
     }
 
-    const handleReject = (orderId: number) => {
-        // TODO: Реализовать отклонение заказа
-        console.log('Отклонение заказа:', orderId)
-        handleCloseModalDetails()
+    const handleComplete = async (orderId: number) => {
+        try {
+            await ordersApi.ordersIdCompletePatch(orderId)
+            fetchOrders()
+            handleCloseModalDetails()
+            setIsModalDetailsOpen(false)
+        } catch (error) {
+            console.error('Ошибка завершения заказа:', error)
+        }
+    }
+
+    const handleReject = async (orderId: number) => {
+        try {
+            await ordersApi.ordersIdRejectPatch(orderId)
+            fetchOrders()
+            handleCloseModalDetails()
+            setIsModalDetailsOpen(false)
+        } catch (error) {
+            console.error('Ошибка отклонения заказа:', error)
+        }
     }
 
     useEffect(() => {
@@ -106,6 +134,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
             onDelete={handleDelete}
             onComplete={handleComplete}
             onReject={handleReject}
+            onTake={handleTake}
             photoUrl={photoUrl}
           />
         )}

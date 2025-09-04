@@ -252,6 +252,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
           cargo_weight: formatCargoWeight(data.cargo_weight),
           time: formatTimeForAPI(selectedDate, selectedTime),
           photo_id: photoId || undefined,
+          is_urgent: isUrgent,
         };
 
         // Очищаем черновик после успешной отправки

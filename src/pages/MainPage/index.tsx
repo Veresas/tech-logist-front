@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import { OrderCreateForm } from '../../components/Modals/OrderCreateForm'
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer';
 import type { ModelDropDownListInfoResponse, ModelOrderCreate } from '../../api';
-import { ordersApi, referencyApi } from '../../utils/ApiFactory';
+import { identityApi, ordersApi, referencyApi } from '../../utils/ApiFactory';
+import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
+import { useNavigate } from 'react-router-dom';
 
 export const MainPage = () => {
+    const { logout, isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [showOrderModal, setShowOrderModal] = useState(false);
     const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
@@ -14,6 +18,16 @@ export const MainPage = () => {
     useEffect(() => {
         getDropDownListInfo();
     }, []);
+
+    const handleLogout = async() => {
+        try {
+            await identityApi.publicAuthLogoutPost();
+            logout();
+            navigate('/login');
+        } catch (error) {
+            console.error('Ошибка выхода из системы:', error);
+        }
+    }
 
     const handleOrderCreate = async (order: ModelOrderCreate) => {
         try {
@@ -42,6 +56,10 @@ export const MainPage = () => {
 
     const handleCloseOrderModal = () => {
         setShowOrderModal(false);
+    }
+
+    const handelPrivetPage = () => {
+        navigate('/s/cabinet');
     }
 
     return (
@@ -78,6 +96,12 @@ export const MainPage = () => {
                 cargoTypeOptions={cargoTypeOptions}
             />
         )}
+
+        {isAuthenticated && (
+            <button onClick={handleLogout}>Выйти</button>
+        )}
+
+        <button onClick={handelPrivetPage}>Перейти на страницу личного кабинета</button>
 
 
         </div>

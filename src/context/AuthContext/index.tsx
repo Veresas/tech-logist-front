@@ -32,6 +32,7 @@ export const AuthProvider = ({children} : AuthContextProps) => {
             setIsAuthenticated(false);
         } finally {
             setIsLoading(false);
+            console.log('[AuthProvider] role: ', role);
         }
     };
     
