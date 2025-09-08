@@ -6,7 +6,8 @@ import { useTheme } from '../../../utils/ContextHooks/ThemeContextHooks';
 import { Modal } from '../ModalComp/Modal';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal';
 import styles from './OrderDetailsModal.module.css';
-import { Clock, X, Expand } from 'lucide-react';
+import { X, Expand } from 'lucide-react';
+import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../../public"
 
 
 export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
@@ -43,18 +44,18 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
     }
   }, [isOpen, isPhotoExpanded, onClose]);
 
-  // Форматирование времени
-  const formatTime = (timeString?: string) => {
-    if (!timeString) return '';
+  // Форматирование времени (две строки: дата и время)
+  const formatTimeParts = (timeString?: string) => {
+    if (!timeString) return { datePart: '', timePart: '' };
     try {
       const date = new Date(timeString);
       const day = date.getDate();
       const month = date.toLocaleString('ru-RU', { month: 'long' });
       const hours = date.getHours().toString().padStart(2, '0');
       const minutes = date.getMinutes().toString().padStart(2, '0');
-      return `${day} ${month} ${hours}:${minutes}`;
+      return { datePart: `${day} ${month}` , timePart: `${hours}:${minutes}` };
     } catch {
-      return timeString;
+      return { datePart: timeString, timePart: '' };
     }
   };
 
@@ -206,10 +207,13 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
             {/* Левая колонка - время и маршрут */}
             <div className={styles.leftColumn}>
               {/* Время */}
-              <div className={styles.timeSection}>
-                <div className={styles.timeBox}>
-                  <Clock size={16} />
-                  <span>{formatTime(order.time)}</span>
+              <div className={styles.timeSection} style={{ justifyContent: 'flex-start' }}>
+                <div className={styles.timeBox} style={{ alignItems: 'flex-start' }}>
+                  <img src={ICON_TIMER} alt="" />
+                  <div>
+                    <div>{formatTimeParts(order.time).datePart}</div>
+                    <div>{formatTimeParts(order.time).timePart}</div>
+                  </div>
                 </div>
               </div>
 
@@ -217,7 +221,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
               <div className={styles.routeSection}>
                 {/* Точка отправления */}
                 <div className={styles.locationPoint}>
-                  <div className={styles.locationIcon}></div>
+                  <img src={ICON_START_POINT} />
                   <div className={styles.locationText}>
                     {order.depart_loc_name || ''}
                   </div>
@@ -225,7 +229,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                 <div className={styles.routeLine}></div>
                 {/* Точка назначения */}
                 <div className={styles.locationPoint}>
-                  <div className={styles.locationIcon}></div>
+                  <img src={ICON_FINAL_POINT} />
                   <div className={styles.locationText}>
                     {order.goal_loc_name || ''}
                   </div>
@@ -258,31 +262,34 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                 </div>
               </div>
 
-              {/* Информация о грузе */}
-              <div className={styles.cargoInfo}>
-                <div className={styles.cargoDetail}>
-                  <span className={styles.detailLabel}>Тип</span>
-                  <span className={styles.detailValue}>
-                    {order.cargo_type_name || ''}
-                  </span>
-                </div>
-                <div className={styles.cargoDetail}>
-                  <span className={styles.detailLabel}>Вес</span>
-                  <span className={styles.detailValue}>
-                    {`${order.cargo_weight} кг` }
-                  </span>
-                </div>
-              </div>
 
-              {/* Контакты */}
-              <div className={styles.contactsSection}>
-                <h4 className={styles.sectionTitle}>Контакты</h4>
-                <div className={styles.contactInfo}>
-                  <div className={styles.contactDetail}>
-                    <span className={styles.detailValue}>{ role === ModelRoleEnum.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
+              <div className={styles.rightColumnText}>
+                {/* Информация о грузе */}
+                <div className={styles.cargoInfo}>
+                  <div className={styles.cargoDetail}>
+                    <span className={styles.detailLabel}>Тип</span>
+                    <span className={styles.detailValue}>
+                      {order.cargo_type_name || ''}
+                    </span>
                   </div>
-                  <div className={styles.contactDetail}>
-                    <span className={styles.detailValue}>{'Заглушка'}</span>
+                  <div className={styles.cargoDetail}>
+                    <span className={styles.detailLabel}>Вес</span>
+                    <span className={styles.detailValue}>
+                      {`${order.cargo_weight} кг` }
+                    </span>
+                  </div>
+                </div>
+
+                {/* Контакты */}
+                <div className={styles.contactsSection}>
+                  <h4 className={styles.detailLabel}>Контакты</h4>
+                  <div className={styles.contactInfo}>
+                    <div className={styles.contactDetail}>
+                      <span className={styles.detailValue}>{ role === ModelRoleEnum.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
+                    </div>
+                    <div className={styles.contactDetail}>
+                      <span className={styles.detailValue}>{'Заглушка'}</span>
+                    </div>
                   </div>
                 </div>
               </div>

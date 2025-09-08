@@ -4,8 +4,7 @@ import { useTheme } from '../../../utils/ContextHooks/ThemeContextHooks';
 import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
 import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
-import { Clock, MapPin, Target } from 'lucide-react';
-
+import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../../public"
 
 export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {
     const { role } = useAuth();
@@ -79,7 +78,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
                 {/* Время */}
                 <div className={styles.detailRow}>
                     <div className={styles.detailIcon}>
-                        <Clock size={16} />
+                        <img src={ICON_TIMER} alt="" />
                     </div>
                     <span className={styles.detailText}>{formatTime(order.time)}</span>
                 </div>
@@ -89,7 +88,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
                     {/* Точка отправления */}
                     <div className={styles.detailRow}>
                         <div className={styles.detailIcon}>
-                            <MapPin size={16} />
+                            <img src={ICON_START_POINT} />
                         </div>
                         <span className={styles.detailText}>{order.depart_loc_name || 'Точка отправления'}</span>
                     </div>
@@ -97,15 +96,15 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
                     {/* Соединительная линия */}
                     <div className={styles.routeConnector}>
                         <svg width="16" height="50" viewBox="0 0 16 50" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="8" y1="2" x2="8" y2="38"/>
-                            <polyline points="2,36 8,42 14,36"/>
+                            <line color='#A8B5FB' x1="8" y1="2" x2="8" y2="38"/>
+                            <polyline color='#A8B5FB' points="2,36 8,42 14,36"/>
                         </svg>
                     </div>
 
                     {/* Точка назначения */}
                     <div className={styles.detailRow}>
                         <div className={styles.detailIcon}>
-                            <Target size={16} />
+                            <img src={ICON_FINAL_POINT} />
                         </div>
                         <span className={styles.detailText}>{order.goal_loc_name || 'Точка назначения'}</span>
                     </div>

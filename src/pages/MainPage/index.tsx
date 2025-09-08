@@ -1,16 +1,13 @@
 //import React, { useEffect, useState } from 'react'
 import { useEffect, useState } from 'react';
-import { OrderCreateForm, OrderListContainer} from '../../components/'
-import type { ModelDropDownListInfoResponse, ModelOrderCreate } from '../../api';
-import { identityApi, ordersApi, referencyApi } from '../../utils/ApiFactory';
-import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
-import { useNavigate } from 'react-router-dom';
+import { OrderListContainer} from '../../components/'
+import type { ModelDropDownListInfoResponse } from '../../api';
+import { ordersApi, referencyApi } from '../../utils/ApiFactory';
 import styles from './MainPage.module.css';
 
 export const MainPage = () => {
-    const { logout, isAuthenticated } = useAuth();
-    const navigate = useNavigate();
-    const [showOrderModal, setShowOrderModal] = useState(false);
+    //const { logout, isAuthenticated } = useAuth();
+    //const navigate = useNavigate();
     const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
     
@@ -19,6 +16,7 @@ export const MainPage = () => {
         getDropDownListInfo();
     }, []);
 
+    /*
     const handleLogout = async() => {
         try {
             await identityApi.publicAuthLogoutPost();
@@ -27,18 +25,9 @@ export const MainPage = () => {
         } catch (error) {
             console.error('Ошибка выхода из системы:', error);
         }
-    }
+    }*/
 
-    const handleOrderCreate = async (order: ModelOrderCreate) => {
-        try {
-            await ordersApi.ordersCreatePost(order);
-            setShowOrderModal(false);
-        } catch (error) {
-            console.error('Ошибка создания заказа:', error);
-            alert('Ошибка создания заказа. Попробуйте еще раз.');
-        }
-        setShowOrderModal(false);
-    }
+
 
     const getDropDownListInfo = async () => {
         try {
@@ -50,60 +39,11 @@ export const MainPage = () => {
         }
       };
 
-    const handleOpenOrderModal = () => {
-        setShowOrderModal(true);
-    }
-
-    const handleCloseOrderModal = () => {
-        setShowOrderModal(false);
-    }
-
-    const handelPrivetPage = () => {
-        navigate('/s/cabinet');
-    }
-
     return (
         <div className={styles.body}>
             <OrderListContainer isPrivate={false} ordersApi={ordersApi} locationOptions={locationOptions} cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 
-        {/* Кнопка для открытия модального окна */}
-        <button 
-            onClick={handleOpenOrderModal}
-            style={{
-                position: 'fixed',
-                top: '20px',
-                right: '20px',
-                padding: '10px 20px',
-                backgroundColor: '#6b7280',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-             }}
-        >
-             Создать заказ
-        </button>
 
-        {/* Модальное окно */}
-        {showOrderModal && (
-            <OrderCreateForm 
-                onSubmitCreateOrder={handleOrderCreate} 
-                onSubmitUpdateOrder={undefined}
-                onClose={handleCloseOrderModal} 
-                order={undefined}
-                orderID={undefined}
-                locationOptions={locationOptions}
-                cargoTypeOptions={cargoTypeOptions}
-            />
-        )}
-
-        {isAuthenticated && (
-            <button onClick={handleLogout}>Выйти</button>
-        )}
-
-        <button onClick={handelPrivetPage}>Перейти на страницу личного кабинета</button>
-
-
-        </div>
+            </div>
     )
 }

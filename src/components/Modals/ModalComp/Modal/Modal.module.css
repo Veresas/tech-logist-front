@@ -21,7 +21,7 @@
 
 /* Основной контейнер модального окна */
 .modal {
-  background: white; /* Белый фон для светлой темы */
+  background-color: #F9FAFF;
   border-radius: 8px; /* Скругленные углы */
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), /* Основная тень */
               0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Дополнительная тень */

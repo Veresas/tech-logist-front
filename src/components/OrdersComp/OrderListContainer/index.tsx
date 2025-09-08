@@ -13,6 +13,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const [selectedOrder, setSelectedOrder] = useState<ModelOrderOut | null>(null)
     const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false)
     const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
     const [photoUrl, setPhotoUrl] = useState<string | null>(null)
     const [orderForEdit, setOrderForEdit] = useState<ModelOrderCreate | null>(null)
     const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined)
@@ -114,6 +115,17 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         }
     }
 
+    const handleOrderCreate = async (order: ModelOrderCreate) => {
+      try {
+          await ordersApi.ordersCreatePost(order);
+          setIsModalCreateOpen(false);
+      } catch (error) {
+          console.error('Ошибка создания заказа:', error);
+          alert('Ошибка создания заказа. Попробуйте еще раз.');
+      }
+      setIsModalCreateOpen(false);
+  }
+
     useEffect(() => {
       if (selectedOrder?.photo_id) {
         handleGetPhoto()
@@ -121,6 +133,10 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         setPhotoUrl(null)
       }
     }, [selectedOrder])
+
+    const handleCloseOrderModal = () => {
+      setIsModalCreateOpen(false);
+  }
     
     if (isLoading) return <div>Загрузка...</div>
     if (error) return <div>{error}</div>
@@ -133,6 +149,13 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
           setIsUrgent={setIsUrgent}
           setToday={setToday}
         />
+
+        <div className={styles.orderCreateModalContainer}>
+          <button
+            className={styles.orderCreateModal}
+            onClick={() => setIsModalCreateOpen(true)}
+          >Создать заказ +</button>
+        </div>
         
         <OrderList
           orders={filteredOrders!}
@@ -165,6 +188,19 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
             onSubmitUpdateOrder={handleUpdateOrder}
             onClose={handleCloseModalEdit}
           />
+        )}
+
+                {/* Модальное окно */}
+        {isModalCreateOpen && (
+            <OrderCreateForm 
+                onSubmitCreateOrder={handleOrderCreate} 
+                onSubmitUpdateOrder={undefined}
+                onClose={handleCloseOrderModal} 
+                order={undefined}
+                orderID={undefined}
+                locationOptions={locationOptions}
+                cargoTypeOptions={cargoTypeOptions}
+            />
         )}
       </div>
     )
