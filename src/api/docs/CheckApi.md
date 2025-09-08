@@ -22,11 +22,18 @@ import {
 const configuration = new Configuration();
 const apiInstance = new CheckApi(configuration);
 
-const { status, data } = await apiInstance.checkGet();
+let isName: boolean; //Если true — вернуть имя пользователя (optional) (default to undefined)
+
+const { status, data } = await apiInstance.checkGet(
+    isName
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **isName** | [**boolean**] | Если true — вернуть имя пользователя | (optional) defaults to undefined|
 
 
 ### Return type

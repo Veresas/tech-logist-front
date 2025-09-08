@@ -13,3 +13,5 @@ export { TimeSelector } from './Modals/ModalComp/TimeSelector';
 // Компоненты для заказов
 export { OrderList, OrderCard, OrderListContainer } from './OrdersComp';
 export { OrderDetailsModal } from './Modals/OrderDetailsModal';
+
+export { SidebarHeader } from './header';

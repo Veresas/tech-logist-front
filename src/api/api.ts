@@ -31,6 +31,12 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 export interface ModelCheckResponse {
     /**
      * 
+     * @type {string}
+     * @memberof ModelCheckResponse
+     */
+    'name'?: string;
+    /**
+     * 
      * @type {ModelRoleEnum}
      * @memberof ModelCheckResponse
      */
@@ -594,10 +600,11 @@ export const CheckApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Проверка подключения к сервису
          * @summary Проверка подключения к сервису
+         * @param {boolean} [isName] Если true — вернуть имя пользователя
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkGet: async (isName?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -609,6 +616,10 @@ export const CheckApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (isName !== undefined) {
+                localVarQueryParameter['is_name'] = isName;
+            }
 
 
     
@@ -634,11 +645,12 @@ export const CheckApiFp = function(configuration?: Configuration) {
         /**
          * Проверка подключения к сервису
          * @summary Проверка подключения к сервису
+         * @param {boolean} [isName] Если true — вернуть имя пользователя
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkGet(options);
+        async checkGet(isName?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkGet(isName, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CheckApi.checkGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -656,11 +668,12 @@ export const CheckApiFactory = function (configuration?: Configuration, basePath
         /**
          * Проверка подключения к сервису
          * @summary Проверка подключения к сервису
+         * @param {boolean} [isName] Если true — вернуть имя пользователя
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkGet(options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
-            return localVarFp.checkGet(options).then((request) => request(axios, basePath));
+        checkGet(isName?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
+            return localVarFp.checkGet(isName, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -675,12 +688,13 @@ export class CheckApi extends BaseAPI {
     /**
      * Проверка подключения к сервису
      * @summary Проверка подключения к сервису
+     * @param {boolean} [isName] Если true — вернуть имя пользователя
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CheckApi
      */
-    public checkGet(options?: RawAxiosRequestConfig) {
-        return CheckApiFp(this.configuration).checkGet(options).then((request) => request(this.axios, this.basePath));
+    public checkGet(isName?: boolean, options?: RawAxiosRequestConfig) {
+        return CheckApiFp(this.configuration).checkGet(isName, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -6,6 +6,7 @@ DTO для передачи роли на фронт
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**name** | **string** |  | [optional] [default to undefined]
 **role** | [**ModelRoleEnum**](ModelRoleEnum.md) |  | [optional] [default to undefined]
 
 ## Example
@@ -14,6 +15,7 @@ Name | Type | Description | Notes
 import { ModelCheckResponse } from './api';
 
 const instance: ModelCheckResponse = {
+    name,
     role,
 };
 ```

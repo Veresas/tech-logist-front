@@ -74,6 +74,14 @@
                     "Check"
                 ],
                 "summary": "Проверка подключения к сервису",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Если true — вернуть имя пользователя",
+                        "name": "is_name",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -914,6 +922,9 @@
             "description": "DTO для передачи роли на фронт",
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string"
+                },
                 "role": {
                     "enum": [
                         "driver",
