@@ -6,6 +6,7 @@ import type { ModelDropDownListInfoResponse, ModelOrderCreate } from '../../api'
 import { identityApi, ordersApi, referencyApi } from '../../utils/ApiFactory';
 import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
 import { useNavigate } from 'react-router-dom';
+import styles from './MainPage.module.css';
 
 export const MainPage = () => {
     const { logout, isAuthenticated } = useAuth();
@@ -63,7 +64,7 @@ export const MainPage = () => {
     }
 
     return (
-        <div>
+        <div className={styles.body}>
             <OrderListContainer isPrivate={false} ordersApi={ordersApi} locationOptions={locationOptions} cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 
         {/* Кнопка для открытия модального окна */}

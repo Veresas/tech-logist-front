@@ -1,0 +1,30 @@
+.orderList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Адаптивность для разных размеров экрана */
+@media (max-width: 768px) {
+    .orderList {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .orderList {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .orderList {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+    }
+}

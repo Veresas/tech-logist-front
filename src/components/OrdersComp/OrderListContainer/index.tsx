@@ -5,6 +5,7 @@ import { OrderList } from "../../../components/OrdersComp"
 import { OrderDetailsModal } from "../../Modals/OrderDetailsModal"
 import type { ModelOrderOut, ModelOrderUpdate, ModelOrderCreate } from "../../../api"
 import { OrderCreateForm } from "../../Modals/OrderCreateForm"
+import styles from './OrderListContainer.module.css'
 
 export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
     const { orders, isLoading, error, fetchOrders } = useOrders(isPrivate)
@@ -117,7 +118,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     if (isLoading) return <div>Загрузка...</div>
     if (error) return <div>{error}</div>
     return (
-      <>
+      <div className={styles.orderListContainer}>
         <OrderList
           orders={orders!}
           handleAction={handleSendRequest}
@@ -150,6 +151,6 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
             onClose={handleCloseModalEdit}
           />
         )}
-      </>
+      </div>
     )
   }
