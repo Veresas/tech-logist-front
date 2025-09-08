@@ -1,3 +1,6 @@
+.FiltrContainer {
+	height: 15vh;
+}
 .wrapper {
 	display: flex;
 	align-items: center;

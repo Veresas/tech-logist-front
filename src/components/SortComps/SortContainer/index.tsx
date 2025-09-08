@@ -51,7 +51,7 @@ export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} :
     const activeCount = useMemo(() => filterTags.length, [filterTags]);
 
     return (
-        <div>
+        <div className={styles.FiltrContainer}>
             <div className={styles.wrapper}>
                 <div className={styles.left}>
                     <SearchPlace setName={setName} />

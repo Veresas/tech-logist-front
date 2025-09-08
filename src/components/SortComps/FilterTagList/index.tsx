@@ -15,7 +15,7 @@ export const FilterTagList = ({
                     <span className={styles.tagText}>{tag.name}</span>
                     <button 
                         className={styles.closeButton} 
-                        onClick={() => tag.onRemove}
+                        onClick={tag.onRemove}
                         aria-label={`Удалить фильтр ${tag.name}`}
                     >
                         ×
