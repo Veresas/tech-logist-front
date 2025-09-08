@@ -15,3 +15,5 @@ export { OrderList, OrderCard, OrderListContainer } from './OrdersComp';
 export { OrderDetailsModal } from './Modals/OrderDetailsModal';
 
 export { SidebarHeader } from './header';
+
+export { SortContainer } from "./SortComps"

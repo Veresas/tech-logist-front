@@ -1,10 +1,10 @@
 import type {OrderListContainerProps} from "./type"
 import { useState, useEffect, useCallback } from 'react'
-import { useOrders, useOrderCardHandlers } from '../../../hooks'
-import { OrderList } from "../../../components/OrdersComp"
-import { OrderDetailsModal } from "../../Modals/OrderDetailsModal"
+import { useOrders, useOrderCardHandlers, useSearche} from '../../../hooks'
+import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer } from "../../../components"
+
 import type { ModelOrderOut, ModelOrderUpdate, ModelOrderCreate } from "../../../api"
-import { OrderCreateForm } from "../../Modals/OrderCreateForm"
+
 import styles from './OrderListContainer.module.css'
 
 export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
@@ -16,6 +16,13 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const [photoUrl, setPhotoUrl] = useState<string | null>(null)
     const [orderForEdit, setOrderForEdit] = useState<ModelOrderCreate | null>(null)
     const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined)
+
+    const { filteredOrders,
+      today,
+      isUrgent,
+      setName,
+      setIsUrgent,
+      setToday } = useSearche(orders)
 
     const handleInfo = useCallback((order: ModelOrderOut) => {
         setSelectedOrder(order)
@@ -119,8 +126,16 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     if (error) return <div>{error}</div>
     return (
       <div className={styles.orderListContainer}>
+        <SortContainer
+          Today={today}
+          Urgent={isUrgent}
+          setName={setName}
+          setIsUrgent={setIsUrgent}
+          setToday={setToday}
+        />
+        
         <OrderList
-          orders={orders!}
+          orders={filteredOrders!}
           handleAction={handleSendRequest}
           isPrivate={isPrivate}
           handleInfo={handleInfo}

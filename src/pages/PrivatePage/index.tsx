@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer'
 import { ordersApi, referencyApi } from '../../utils/ApiFactory'
 import type { ModelDropDownListInfoResponse } from '../../api';
-
+import styles from "./PrivarePage.module.css"
 export const PrivatePage = () => {
     const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
@@ -21,13 +21,13 @@ export const PrivatePage = () => {
         getDropDownListInfo();
     }, []);
     return (
-        <div>
+        <div className={styles.body}>
             <OrderListContainer 
             isPrivate={true} 
             ordersApi={ordersApi} 
             locationOptions={locationOptions} 
             cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 
-</div>
+        </div>
     )
 }

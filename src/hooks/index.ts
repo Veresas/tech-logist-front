@@ -11,3 +11,5 @@ export { useOrders } from "./orderHooks/useOrders"
 
 // Хук для работы с карточками заказов
 export { useOrderCardHandlers } from "./orderHooks/useOrderCardHandlers"
+
+export {useSearche } from "./orderHooks/useSercheHooks"

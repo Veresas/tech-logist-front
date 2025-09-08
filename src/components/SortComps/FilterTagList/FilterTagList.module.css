@@ -1,0 +1,40 @@
+.activeFilters {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 12px;
+	flex-wrap: wrap;
+}
+
+.filterTag {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 12px;
+	border: 1px solid #b7befc;
+	border-radius: 999px;
+	background: #f7f8ff;
+	color: #3b4ac6;
+	font-size: 14px;
+}
+
+.tagText { white-space: nowrap; }
+
+.closeButton {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: none;
+	background: #ffffff;
+	color: #7a86f6;
+	cursor: pointer;
+}
+
+.clearAllButton {
+	background: transparent;
+	border: none;
+	color: #3b4ac6;
+	cursor: pointer;
+	text-decoration: underline;
+}
+

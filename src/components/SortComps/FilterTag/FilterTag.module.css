@@ -1,0 +1,45 @@
+.filterTag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #e0e7ff;
+    border: 1px solid #9333ea;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #3730a3;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filterTag:hover {
+    background: #c4b5fd;
+    transform: translateY(-1px);
+  }
+  
+  .tagText {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #6b7280;
+    padding: 2px;
+    /*width: 16px;
+    height: 16px;*/
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  
+  .closeButton:hover {
+    color: #991b1b;
+    background: rgba(153, 27, 27, 0.1);
+  }
