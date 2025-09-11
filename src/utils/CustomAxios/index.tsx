@@ -1,6 +1,7 @@
 import axios from 'axios';
 //import { BASE_PATH } from '../../api/base';
-const BASE_PATH = import.meta.env.VITE_BASE_PATH;
+const runtimeBase = `${window.location.protocol}//${window.location.host}/api/`;
+const BASE_PATH = runtimeBase;
 
 export const customAxiosInstance = axios.create({
   baseURL: BASE_PATH,
