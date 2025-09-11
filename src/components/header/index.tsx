@@ -45,8 +45,8 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = () => {
 
   const onProfileClick = () => {
     alert('Личный кабинет не доступен');
-    //
-    //navigate('/s/cabinet');
+
+    navigate('/s/cabinet');
   }
 
   const onAllOrdersClick = () => {
@@ -54,7 +54,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = () => {
   }
 
   const onMyOrdersClick = () => {
-    navigate('/s/cabinet');
+    navigate('/s/private_order');
   }
   
   const onMapClick = () => {
@@ -122,7 +122,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = () => {
 
         <button
           type="button"
-          className={`${styles.navItem} ${isActive('/s/cabinet') ? styles.navItemActive : ''}`}
+          className={`${styles.navItem} ${isActive('/s/private_order') ? styles.navItemActive : ''}`}
           onClick={onMyOrdersClick}
           onKeyDown={handleKeyDown(onMyOrdersClick)}
           aria-label="Мои заказы"
