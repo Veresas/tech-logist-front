@@ -1,4 +1,4 @@
-import React, { useEffect, useRef} from 'react';
+import { useEffect, useRef} from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
 import type { ModalProps } from './types';
