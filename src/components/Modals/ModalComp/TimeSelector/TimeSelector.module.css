@@ -1,0 +1,240 @@
+/* 
+ * Стили для компонента TimeSelector
+ * Выбор времени доставки с табами и сеткой временных слотов
+ */
+
+/* Основная секция выбора времени */
+.timeSection {
+  margin-bottom: 1.5rem; /* Отступ снизу от других элементов */
+}
+
+/* Заголовок секции */
+.label {
+  display: block; /* Блочный элемент для корректного отображения */
+  font-size: 0.875rem; /* Размер шрифта */
+  font-weight: 500; /* Жирность шрифта */
+  color: #374151; /* Цвет текста */
+  margin-bottom: 0.75rem; /* Отступ снизу */
+}
+
+/* Контейнер табов для выбора даты */
+.timeTabs {
+  display: flex; /* Flexbox для горизонтального расположения табов */
+  gap: 0.25rem; /* Отступы между табами */
+  margin-bottom: 1rem; /* Отступ снизу от сетки времени */
+  background-color: #f3f4f6; /* Светло-серый фон для табов */
+  border-radius: 6px; /* Скругленные углы */
+  padding: 0.25rem; /* Внутренние отступы */
+}
+
+/* Отдельный таб */
+.timeTab {
+  flex: 1; /* Равномерное распределение пространства */
+  padding: 0.5rem 1rem; /* Внутренние отступы */
+  background: none; /* Прозрачный фон */
+  border: none; /* Без рамки */
+  border-radius: 4px; /* Скругленные углы */
+  font-size: 0.875rem; /* Размер шрифта */
+  font-weight: 500; /* Жирность шрифта */
+  color: #6b7280; /* Цвет текста для неактивного состояния */
+  cursor: pointer; /* Курсор-указатель при наведении */
+  transition: all 0.2s ease; /* Плавная анимация */
+  text-align: center; /* Центрирование текста */
+}
+
+/* Активное состояние таба */
+.timeTab.active {
+  background-color: white; /* Белый фон для активного таба */
+  color: #111827; /* Темный цвет текста */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Тень для выделения */
+}
+
+/* Состояние наведения для неактивного таба */
+.timeTab:not(.active):hover {
+  background-color: #e5e7eb; /* Светло-серый фон при наведении */
+  color: #374151; /* Темный цвет текста при наведении */
+}
+
+/* Отключенное состояние таба */
+.timeTab:disabled {
+  opacity: 0.5; /* Уменьшенная прозрачность */
+  cursor: not-allowed; /* Курсор "недоступно" */
+}
+
+/* Сетка временных слотов */
+.timeGrid {
+  border: 1px solid #e5e7eb; /* Рамка вокруг сетки */
+  border-radius: 6px; /* Скругленные углы */
+  overflow: hidden; /* Скрываем содержимое, выходящее за границы */
+}
+
+/* Заголовок сетки времени */
+.timeGridHeader {
+  display: flex; /* Flexbox для расположения времени и иконки */
+  align-items: center; /* Вертикальное выравнивание по центру */
+  justify-content: space-between; /* Распределяем элементы по краям */
+  padding: 0.75rem 1rem; /* Внутренние отступы */
+  background-color: #f9fafb; /* Светло-серый фон */
+  border-bottom: 1px solid #e5e7eb; /* Разделительная линия снизу */
+  font-weight: 600; /* Жирность шрифта */
+  color: #111827; /* Цвет текста */
+}
+
+/* Выбранное время в заголовке */
+.selectedTime {
+  font-size: 1rem; /* Размер шрифта */
+}
+
+/* Содержимое сетки - временные слоты */
+.timeGridContent {
+  max-height: 200px; /* Максимальная высота для прокрутки */
+  overflow-y: auto; /* Вертикальная прокрутка при необходимости */
+  display: grid; /* CSS Grid для сетки */
+  grid-template-columns: repeat(4, 1fr); /* 4 колонки равной ширины */
+  gap: 1px; /* Отступы между слотами */
+  background-color: #e5e7eb; /* Цвет разделительных линий */
+}
+
+/* Отдельный временной слот */
+.timeSlot {
+  padding: 0.5rem; /* Внутренние отступы */
+  background-color: white; /* Белый фон */
+  border: none; /* Без рамки */
+  font-size: 0.875rem; /* Размер шрифта */
+  color: #374151; /* Цвет текста */
+  cursor: pointer; /* Курсор-указатель при наведении */
+  transition: all 0.2s ease; /* Плавная анимация */
+  text-align: center; /* Центрирование текста */
+  min-height: 40px; /* Минимальная высота для удобства клика */
+  display: flex; /* Flexbox для центрирования текста */
+  align-items: center; /* Вертикальное центрирование */
+  justify-content: center; /* Горизонтальное центрирование */
+}
+
+/* Выбранный временной слот */
+.timeSlot.selected {
+  background-color: #3b82f6; /* Синий фон для выбранного слота */
+  color: white; /* Белый текст */
+  font-weight: 600; /* Жирность шрифта */
+}
+
+/* Состояние наведения для невыбранного слота */
+.timeSlot:not(.selected):hover {
+  background-color: #f3f4f6; /* Светло-серый фон при наведении */
+  color: #111827; /* Темный цвет текста при наведении */
+}
+
+/* Отключенное состояние временного слота */
+.timeSlot:disabled {
+  opacity: 0.5; /* Уменьшенная прозрачность */
+  cursor: not-allowed; /* Курсор "недоступно" */
+}
+
+/* Состояние фокуса для accessibility */
+.timeTab:focus,
+.timeSlot:focus {
+  outline: 2px solid #3b82f6; /* Синяя рамка при фокусе */
+  outline-offset: 2px; /* Отступ рамки от элемента */
+}
+
+/* Стилизация скроллбара для сетки времени */
+.timeGridContent::-webkit-scrollbar {
+  width: 6px; /* Ширина скроллбара */
+}
+
+.timeGridContent::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Цвет фона скроллбара */
+}
+
+.timeGridContent::-webkit-scrollbar-thumb {
+  background: #c1c1c1; /* Цвет ползунка скроллбара */
+  border-radius: 3px; /* Скругленные углы */
+}
+
+.timeGridContent::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8; /* Цвет ползунка при наведении */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 640px) {
+  .timeSection {
+    margin-bottom: 1rem; /* Уменьшаем отступ на мобильных */
+  }
+  
+  .timeTabs {
+    margin-bottom: 0.75rem; /* Уменьшаем отступ на мобильных */
+  }
+  
+  .timeTab {
+    padding: 0.375rem 0.75rem; /* Уменьшаем отступы на мобильных */
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
+  }
+  
+  .timeGridHeader {
+    padding: 0.5rem 0.75rem; /* Уменьшаем отступы на мобильных */
+  }
+  
+  .selectedTime {
+    font-size: 0.875rem; /* Уменьшаем размер шрифта */
+  }
+  
+  .timeSlot {
+    padding: 0.375rem; /* Уменьшаем отступы на мобильных */
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
+    min-height: 36px; /* Уменьшаем минимальную высоту */
+  }
+  
+  .timeGridContent {
+    max-height: 180px; /* Уменьшаем максимальную высоту */
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки на мобильных */
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .label {
+    color: #d1d5db; /* Светлый цвет текста для темной темы */
+  }
+  
+  .timeTabs {
+    background-color: #374151; /* Темно-серый фон для табов */
+  }
+  
+  .timeTab {
+    color: #9ca3af; /* Светло-серый цвет текста */
+  }
+  
+  .timeTab.active {
+    background-color: #1f2937; /* Темный фон для активного таба */
+    color: #f9fafb; /* Светлый цвет текста */
+  }
+  
+  .timeTab:not(.active):hover {
+    background-color: #4b5563; /* Темно-серый фон при наведении */
+    color: #d1d5db; /* Светлый цвет текста при наведении */
+  }
+  
+  .timeGrid {
+    border-color: #4b5563; /* Темная рамка */
+  }
+  
+  .timeGridHeader {
+    background-color: #374151; /* Темный фон заголовка */
+    border-bottom-color: #4b5563; /* Темная разделительная линия */
+    color: #f9fafb; /* Светлый цвет текста */
+  }
+  
+  .timeGridContent {
+    background-color: #4b5563; /* Темный цвет разделительных линий */
+  }
+  
+  .timeSlot {
+    background-color: #1f2937; /* Темный фон слотов */
+    color: #d1d5db; /* Светлый цвет текста */
+  }
+  
+  .timeSlot:not(.selected):hover {
+    background-color: #374151; /* Темно-серый фон при наведении */
+    color: #f9fafb; /* Светлый цвет текста при наведении */
+  }
+}

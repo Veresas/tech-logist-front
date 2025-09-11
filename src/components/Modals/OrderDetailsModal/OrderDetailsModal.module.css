@@ -1,0 +1,449 @@
+.rightColumnText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modalContent {
+  padding: 20px;
+  position: relative;
+  min-width: 600px; /* Минимальная ширина для ПК */
+  max-width: 650px;
+  margin: 0 auto; /* Центрируем модалку внутри контейнера */
+}
+
+/* Индикатор срочности */
+.urgentIndicator {
+  top: 20px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  transition: background-color 0.3s ease;
+}
+
+.urgentIndicator[data-urgent="true"] {
+  background-color: #FF372D;
+}
+
+/* Секция описания */
+.descriptionSection {
+  margin-bottom: 24px;
+  padding-left: 0; /* Убираем отступ слева */
+  width: 100%; /* Растягиваем на всю ширину */
+}
+
+.modalTitle {
+  font-size: 24px; /* Размер шрифта названия */
+  font-weight: 600;
+  color: #0C2D6F;
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0C2D6F;
+  margin: 0 0 8px 0;
+}
+
+.descriptionText {
+  font-size: 14px; /* Размер шрифта описания */
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Сетка контента */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Фиксированные размеры колонок */
+  gap: 3%;
+  margin-bottom: 24px;
+  align-items: start;
+}
+
+/* Левая колонка - время и маршрут */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 360px; /* Фиксированная ширина */
+  min-height: 340px; /* Минимальная высота */
+}
+
+/* Секция времени */
+.timeSection {
+  display: flex;
+  justify-content: center;
+}
+
+.timeBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: transparent; /* Убираем подложку, она будет у родительского блока */
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0C2D6F;
+}
+
+/* Секция маршрута */
+.routeSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1; /* Занимает оставшееся пространство */
+  justify-content: space-between; /* Распределяем точки по краям */
+  height: 100%; /* Занимаем всю высоту родителя */
+}
+
+.routeLine {
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background-color: #A8B5FB;
+}
+
+.locationPoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Точка отправления - всегда вверху */
+.locationPoint:first-child {
+  margin-top: 0; /* Убираем отступ сверху */
+}
+
+/* Точка доставки - всегда внизу */
+.locationPoint:last-child {
+  margin-bottom: 0; /* Убираем отступ снизу */
+}
+
+
+.locationIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.locationText {
+  font-size: 14px;
+  color: #0C2D6F;
+  line-height: 1.4;
+  flex: 1;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Правая колонка - груз и контакты */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  width: 160px; /* Фиксированная ширина */
+  min-height: 340px; /* Такая же высота как у левой колонки */
+  align-items: center; /* Центрируем содержимое правой колонки */
+}
+
+/* Секция фотографии */
+.photoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центруем фото и подписи */
+}
+
+.photoPlaceholder {
+  width: 140px; /* Фиксированная ширина */
+  height: 140px; /* Фиксированная высота */
+  background-color: #6b7280;
+  border-radius: 16px; /* Скругление 16px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  flex-shrink: 0; /* Не сжимается */
+}
+
+.photoPlaceholder:hover {
+  transform: scale(1.02);
+}
+
+.cargoPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px; /* Скругление для изображения */
+}
+
+.expandIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Информация о грузе */
+.cargoInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центруем блок информации о грузе */
+  text-align: center;
+}
+
+.cargoDetail {
+  display: flex;
+  flex-direction: column; /* Располагаем в колонку */
+  align-items: center; /* Центруем элементы детали */
+}
+
+.detailLabel {
+  font-size: 14px;
+  color: #0C2D6F;
+  font-weight: 500;
+  text-align: center; /* Текст по центру */
+}
+
+.detailValue {
+  font-size: 14px;
+  color: #0C2D6F;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+  text-align: center; /* Текст по центру */
+}
+
+/* Секция контактов */
+.contactsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центруем секцию контактов */
+  text-align: center;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центруем информацию о контактах */
+}
+
+.contactDetail {
+  display: flex;
+  flex-direction: column; /* Располагаем в колонку */
+  align-items: center; /* Центруем элементы детали контактов */
+}
+
+/* Добавляем подложки для двух основных блоков */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 360px; /* Фиксированная ширина */
+  padding: 20px; /* Отступы для подложки */
+  background-color: #E6EAFF; /* Подложка для всего левого блока */
+  border-radius: 12px; /* Скругление для блока */
+  margin-right: 0; /* Убираем сдвиг к "стенке" */
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  width: 160px; /* Фиксированная ширина */
+  padding: 20px; /* Отступы для подложки */
+  background-color: #E6EAFF; /* Подложка для всего правого блока */
+  border-radius: 12px; /* Скругление для блока */
+  margin-left: 0; /* Убираем сдвиг к "стенке" */
+}
+
+/* Кнопки действий */
+.actionButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.actionButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f3f4f6;
+  color: #0C2D6F;
+  min-width: 240px;
+}
+
+.actionButton:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* Оверлей для развернутой фотографии */
+.photoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.photoContainer {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.expandedPhoto {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.closePhotoButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.closePhotoButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .modalContent {
+    min-width: auto;
+    padding: 16px;
+  }
+  
+  .leftColumn {
+    width: 100%;
+    min-height: auto;
+  }
+  
+  .rightColumn {
+    width: 100%;
+    min-height: auto;
+    align-items: center; /* Центрируем содержимое */
+  }
+  
+  .photoPlaceholder {
+    width: 120px; /* Меньший размер на мобильных */
+    height: 120px;
+  }
+  
+  .modalTitle {
+    font-size: 20px; /* Меньший шрифт на мобильных */
+  }
+  
+  .descriptionText {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 12px;
+  }
+
+  .photoPlaceholder {
+    width: 100px; /* Еще меньше на маленьких экранах */
+    height: 100px;
+  }
+  
+  .modalTitle {
+    font-size: 18px;
+  }
+  
+  .descriptionText {
+    font-size: 12px;
+  }
+  
+  .actionButtons {
+    flex-direction: column; /* Кнопки в колонку на мобильных */
+    gap: 12px;
+  }
+  
+  .actionButton {
+    width: 100%; /* Кнопки на всю ширину */
+  }
+}
+
+/* Темная тема */
+.dark .sectionTitle {
+  color: #f9fafb;
+}
+
+.dark .modalTitle {
+  color: #f9fafb;
+}
+
+.dark .descriptionText {
+  color: #d1d5db;
+}
+
+.dark .timeBox {
+  background-color: #0C2D6F;
+  color: #f9fafb;
+}
+
+.dark .locationText {
+  color: #f9fafb;
+}
+
+.dark .detailLabel {
+  color: #d1d5db;
+}
+
+.dark .detailValue {
+  color: #f9fafb;
+}
+
+.dark .actionButton {
+  background-color: #0C2D6F;
+  color: #f9fafb;
+}
+
+.dark .actionButton:hover {
+  background-color: #4b5563;
+}

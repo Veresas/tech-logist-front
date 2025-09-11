@@ -1,4 +1,5 @@
 import { ordersApi } from "../../utils/ApiFactory";
+import type { ModelOrderOut } from "../../api";
 export const OCActionList = {
     TAKE: (id: number) => ordersApi.ordersIdAcceptPatch(id, {}),
     REJECT: (id: number) => ordersApi.ordersIdRejectPatch(id, {}),
@@ -11,3 +12,5 @@ export const OCActionList = {
 export type OrderCardAction = typeof OCActionList[keyof typeof OCActionList];
 export type OrderCardClickHandler = (orderId: number, action: OrderCardAction) => void;
 export type OrderCardClickPhotoHandler = (photoId: string) => void;
+export type OrderCardClickInfoHandler = (order: ModelOrderOut) => void;
+export type OrderCardEditHandler = (id: number) => void;

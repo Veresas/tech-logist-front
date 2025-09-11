@@ -1,0 +1,54 @@
+/* Модальное окно подтверждения удаления */
+.deleteConfirmationModal {
+    z-index: 10001;
+  }
+  
+  .deleteModalContent {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .deleteModalActions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .deleteButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #ef4444;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  .deleteButton:hover {
+    background-color: #dc2626;
+  }
+  
+  .cancelButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #f3f4f6;
+    color: #374151;
+    transition: background-color 0.2s ease;
+  }
+  
+  .cancelButton:hover {
+    background-color: #e5e7eb;
+  }
+  
+  /* Темная тема */
+  .dark .modalContent {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+  

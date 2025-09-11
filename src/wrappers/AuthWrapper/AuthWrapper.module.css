@@ -1,0 +1,18 @@
+.authWrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 18%;
+}
+
+/* Альтернатива: если SidebarHeader имеет фиксированную ширину */
+/*
+.mainContent {
+    flex: 1;
+    margin-left: 250px; или другая фиксированная ширина
+    padding: 20px;
+}
+*/

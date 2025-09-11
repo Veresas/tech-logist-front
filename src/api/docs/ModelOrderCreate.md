@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **cargo_weight** | **number** |  | [optional] [default to undefined]
 **depart_loc** | **number** |  | [optional] [default to undefined]
 **goal_loc** | **number** |  | [optional] [default to undefined]
+**is_urgent** | **boolean** |  | [optional] [default to undefined]
 **photo_id** | **string** |  | [optional] [default to undefined]
 **time** | **string** |  | [optional] [default to undefined]
 
@@ -27,6 +28,7 @@ const instance: ModelOrderCreate = {
     cargo_weight,
     depart_loc,
     goal_loc,
+    is_urgent,
     photo_id,
     time,
 };

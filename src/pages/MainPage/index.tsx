@@ -1,54 +1,49 @@
 //import React, { useEffect, useState } from 'react'
-import { useState } from 'react';
-import { OrderCreateForm } from '../../components/OrderCreateForm'
-//import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer'
+import { useEffect, useState } from 'react';
+import { OrderListContainer} from '../../components/'
+import type { ModelDropDownListInfoResponse } from '../../api';
+import { ordersApi, referencyApi } from '../../utils/ApiFactory';
+import styles from './MainPage.module.css';
 
 export const MainPage = () => {
-    const [showOrderModal, setShowOrderModal] = useState(false);
-    const handleOrderCreate = async () => {
-        console.log('order create');
-        setShowOrderModal(false);
-    }
+    //const { logout, isAuthenticated } = useAuth();
+    //const navigate = useNavigate();
+    const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
+    const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
+    
 
-    const handleOpenOrderModal = () => {
-        setShowOrderModal(true);
-    }
+    useEffect(() => {
+        getDropDownListInfo();
+    }, []);
 
-    const handleCloseOrderModal = () => {
-        setShowOrderModal(false);
-    }
+    /*
+    const handleLogout = async() => {
+        try {
+            await identityApi.publicAuthLogoutPost();
+            logout();
+            navigate('/login');
+        } catch (error) {
+            console.error('Ошибка выхода из системы:', error);
+        }
+    }*/
+
+
+
+    const getDropDownListInfo = async () => {
+        try {
+          const res = await referencyApi.refDropdownListInfoGet();
+          setLocationOptions(res.data.dep_builds);
+          setCargoTypeOptions(res.data.cargo_types);
+        } catch (error) {
+          console.error('Ошибка получения списка типов грузов и связей подразделений и зданий:', error);
+        }
+      };
 
     return (
-        <div>
+        <div className={styles.body}>
+            <OrderListContainer isPrivate={false} ordersApi={ordersApi} locationOptions={locationOptions} cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 
 
-                        {/* Кнопка для открытия модального окна */}
-                        <button 
-                onClick={handleOpenOrderModal}
-                style={{
-                    position: 'fixed',
-                    top: '20px',
-                    right: '20px',
-                    padding: '10px 20px',
-                    backgroundColor: '#6b7280',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer'
-                }}
-            >
-                Создать заказ
-            </button>
-
-            {/* Модальное окно */}
-            {showOrderModal && (
-                <OrderCreateForm 
-                    onSubmit={handleOrderCreate} 
-                    onClose={handleCloseOrderModal} 
-                />
-            )}
-        </div>
+            </div>
     )
 }
-
-//            <OrderListContainer isPrivate={false} ></OrderListContainer>  

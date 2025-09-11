@@ -74,6 +74,14 @@
                     "Check"
                 ],
                 "summary": "Проверка подключения к сервису",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Если true — вернуть имя пользователя",
+                        "name": "is_name",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -436,6 +444,52 @@
                 }
             }
         },
+        "/orders/update/{id}": {
+            "get": {
+                "description": "Возвращает заявку с данными для обновления",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Получить заявку для обновления",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка для обновления",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrderForUpdateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный формат ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/orders/{id}": {
             "get": {
                 "description": "Возвращает информацию о заявке по её ID",
@@ -481,6 +535,60 @@
                     },
                     "500": {
                         "description": "Ошибка получения заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Обновляет существующую заявку",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Обновить заявку",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID заявки",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Данные для обновления заявки",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.OrderUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Заявка успешно обновлена",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Неверные данные заявки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка обновления заявки",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
@@ -754,6 +862,30 @@
                 }
             }
         },
+        "/public/auth/logout": {
+            "post": {
+                "description": "Выходит из системы",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Выходит из системы",
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно вышел",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/ref/dropdown-list-info": {
             "get": {
                 "description": "Возвращает список типов грузов и связей подразделений и зданий",
@@ -790,6 +922,9 @@
             "description": "DTO для передачи роли на фронт",
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string"
+                },
                 "role": {
                     "enum": [
                         "driver",
@@ -914,11 +1049,28 @@
                 "goal_loc": {
                     "type": "integer"
                 },
+                "is_urgent": {
+                    "type": "boolean"
+                },
                 "photo_id": {
                     "type": "string"
                 },
                 "time": {
                     "type": "string"
+                }
+            }
+        },
+        "model.OrderForUpdateResponse": {
+            "description": "DTO для обновления заявки",
+            "type": "object",
+            "properties": {
+                "order_for_update": {
+                    "description": "OrderForUpdate DTO для обновления заявки",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.OrderCreate"
+                        }
+                    ]
                 }
             }
         },
@@ -953,6 +1105,9 @@
                 "id": {
                     "type": "integer"
                 },
+                "is_urgent": {
+                    "type": "boolean"
+                },
                 "order_status_name": {
                     "$ref": "#/definitions/model.OrderStatusEnum"
                 },
@@ -981,6 +1136,42 @@
                 "CANCEL",
                 "UNKNOWN"
             ]
+        },
+        "model.OrderUpdate": {
+            "description": "DTO для обновления заявки",
+            "type": "object",
+            "properties": {
+                "cargo_description": {
+                    "type": "string"
+                },
+                "cargo_name": {
+                    "type": "string"
+                },
+                "cargo_type_id": {
+                    "type": "integer"
+                },
+                "cargo_weight": {
+                    "type": "number"
+                },
+                "depart_loc": {
+                    "type": "integer"
+                },
+                "goal_loc": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_urgent": {
+                    "type": "boolean"
+                },
+                "photo_id": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
         },
         "model.OrdersResponse": {
             "description": "Ответ со списком заявок",

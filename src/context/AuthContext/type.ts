@@ -8,6 +8,7 @@ export interface AuthContextType {
     login: () => void; // Функция для установки isAuthenticated в true после успешного входа
     logout: () => void; // Функция для сброса isAuthenticated в false после выхода
     verifyAuth: () => Promise<void>; // Функция для проверки аутентификации
+    fullName: string;
 }
 
 export interface AuthContextProps {

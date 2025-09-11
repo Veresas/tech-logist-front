@@ -1,0 +1,39 @@
+.FiltrContainer {
+	height: 15vh;
+}
+.wrapper {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+}
+
+.left {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.filtersButton {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 16px;
+	border: 2px solid #b7befc;
+	border-radius: 12px;
+	background: #ffffff;
+	color: #1f2a44;
+	cursor: pointer;
+}
+
+.badge {
+	margin-left: 6px;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #eef1ff;
+	color: #3b4ac6;
+	display: grid;
+	place-items: center;
+	font-size: 14px;
+}
+

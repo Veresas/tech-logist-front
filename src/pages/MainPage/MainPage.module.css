@@ -6,7 +6,8 @@
   justify-content: flex-start;
   align-items: flex-start;
   font-family: 'Inter', sans-serif;
-  padding: 0;
+  padding-left: 4% ;
+  padding-top: 1%;
 }
 
 .body.dark {

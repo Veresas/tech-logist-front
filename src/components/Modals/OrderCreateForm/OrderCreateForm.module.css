@@ -15,7 +15,7 @@
   background-color: #f5f5f5;
   border-radius: 0.75rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  max-width: 800px;
+  max-width: 650px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
@@ -750,4 +750,239 @@
   flex-direction: column;
   gap: 1rem;
   /*transition: background-color 0.3s ease, border-color 0.3s ease;*/
+}
+
+/* Стили для карточки заказа */
+.orderCard {
+  background-color: #f3f4f6;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.orderCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.orderNumber {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.urgentIndicator {
+  width: 12px;
+  height: 12px;
+  background-color: #f59e0b;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.orderTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.cardSeparator {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 16px 0;
+}
+
+.orderDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detailIcon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.detailText {
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.routeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.routeConnector {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;
+  color: #6b7280;
+}
+
+.cardActions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.cardButton {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.cardButton:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.cardButton:active {
+  transform: translateY(1px);
+}
+
+.cardButtonPrimary {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.cardButtonPrimary:hover {
+  background-color: #d1d5db;
+  border-color: #9ca3af;
+  color: #1f2937;
+}
+
+/* Темная тема для карточки заказа */
+.dark .orderCard {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+.dark .orderCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .orderNumber {
+  color: #9ca3af;
+}
+
+.dark .orderTitle {
+  color: #f9fafb;
+}
+
+.dark .cardSeparator {
+  background-color: #4b5563;
+}
+
+.dark .detailIcon {
+  color: #9ca3af;
+}
+
+.dark .detailText {
+  color: #d1d5db;
+}
+
+.dark .routeConnector {
+  color: #9ca3af;
+}
+
+.dark .cardButton {
+  border-color: #4b5563;
+  color: #d1d5db;
+  background-color: transparent;
+}
+
+.dark .cardButton:hover {
+  background-color: #4b5563;
+  border-color: #6b7280;
+  color: #f9fafb;
+}
+
+.dark .cardButtonPrimary {
+  background-color: #4b5563;
+  border-color: #6b7280;
+  color: #f9fafb;
+}
+
+.dark .cardButtonPrimary:hover {
+  background-color: #6b7280;
+  border-color: #9ca3af;
+  color: #ffffff;
+}
+
+/* Адаптивность для карточки заказа */
+@media (max-width: 768px) {
+  .orderCard {
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .orderTitle {
+    font-size: 15px;
+  }
+  
+  .detailText {
+    font-size: 13px;
+  }
+  
+  .cardActions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .cardButton {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orderCard {
+    padding: 12px;
+  }
+  
+  .orderTitle {
+    font-size: 14px;
+  }
+  
+  .detailText {
+    font-size: 12px;
+  }
+  
+  .cardButton {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }

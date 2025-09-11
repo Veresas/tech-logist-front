@@ -1,0 +1,9 @@
+.orderList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    padding: 20px;
+    width: 100%;
+    gap: 5%;
+    box-sizing: border-box;
+}
+

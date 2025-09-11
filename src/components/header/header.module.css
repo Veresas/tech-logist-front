@@ -1,0 +1,133 @@
+.container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 20%;
+	background: linear-gradient(180deg, #6f5af5 0%, #7762ff 100%);
+	padding: 24px 16px;
+	box-sizing: border-box;
+	border-top-right-radius: 16px;
+	border-bottom-right-radius: 16px;
+	color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	font-size: 14px;
+}
+
+.profileCard {
+	background: rgba(255, 255, 255, 0.15);
+	border-radius: 10px;
+	padding: 10px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	cursor: pointer;
+	outline: none;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profileCard:focus-visible {
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.profileAvatar {
+	width: 20%;
+	aspect-ratio: 1 / 1;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.3);
+	color: #6f5af5;
+	display: grid;
+	place-items: center;
+}
+
+.profileAvatar img {
+	width: 70%;
+	height: 70%;
+	object-fit: contain;
+	display: block;
+}
+
+.profileInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	line-height: 1.15;
+}
+
+.profileName {
+	font-weight: 600;
+	opacity: 0.95;
+	display: grid;
+}
+
+.profileLink {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	opacity: 0.9;
+}
+
+.nav {
+	margin-top: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.navItem {
+	appearance: none;
+	background: transparent;
+	border: none;
+	color: #ffffff;
+	text-align: left;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding: 8px 10px;
+	border-radius: 8px;
+	cursor: pointer;
+	outline: none;
+}
+
+.navItem svg {
+	color: #ffffff;
+	opacity: 0.95;
+}
+
+.navItem:hover,
+.navItem:focus-visible {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.navItemActive {
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.divider {
+	margin: 10px 0;
+	border: none;
+	height: 1px;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.brandMark {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	height: 64px;
+	margin-top: auto;
+}
+
+.brandGlyph {
+	opacity: 0.95;
+}
+
+@media (max-height: 680px) {
+	.container { padding: 16px 12px; }
+	.navItem { padding: 6px 8px; }
+}
+
+

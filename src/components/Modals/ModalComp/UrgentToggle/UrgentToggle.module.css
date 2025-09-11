@@ -1,0 +1,139 @@
+/* 
+ * Стили для компонента UrgentToggle
+ * Переключатель срочности заказа с анимацией
+ */
+
+/* Контейнер переключателя */
+.urgentToggle {
+  display: flex; /* Flexbox для горизонтального расположения */
+  align-items: center; /* Вертикальное выравнивание по центру */
+  gap: 0.75rem; /* Отступ между переключателем и текстом */
+  margin-bottom: 1.5rem; /* Отступ снизу от других элементов */
+}
+
+/* Основной переключатель */
+.toggleSwitch {
+  position: relative; /* Для позиционирования ползунка */
+  width: 48px; /* Ширина переключателя */
+  height: 24px; /* Высота переключателя */
+  background-color: #d1d5db; /* Серый фон для неактивного состояния */
+  border-radius: 12px; /* Скругленные углы */
+  cursor: pointer; /* Курсор-указатель при наведении */
+  transition: background-color 0.3s ease; /* Плавная анимация изменения цвета */
+  display: flex; /* Flexbox для центрирования ползунка */
+  align-items: center; /* Вертикальное центрирование */
+  padding: 2px; /* Внутренний отступ для ползунка */
+}
+
+/* Активное состояние переключателя */
+.toggleSwitch.active {
+  background-color: #ef4444; /* Красный цвет для активного состояния */
+}
+
+/* Отключенное состояние переключателя */
+.toggleSwitch.disabled {
+  background-color: #9ca3af; /* Серый цвет для отключенного состояния */
+  cursor: not-allowed; /* Курсор "недоступно" */
+  opacity: 0.6; /* Уменьшенная прозрачность */
+}
+
+/* Состояние наведения для активного переключателя */
+.toggleSwitch:not(.disabled):hover {
+  background-color: #dc2626; /* Темно-красный при наведении */
+}
+
+/* Состояние наведения для неактивного переключателя */
+.toggleSwitch:not(.active):not(.disabled):hover {
+  background-color: #9ca3af; /* Темно-серый при наведении */
+}
+
+/* Ползунок переключателя */
+.toggleHandle {
+  width: 20px; /* Ширина ползунка */
+  height: 20px; /* Высота ползунка */
+  background-color: white; /* Белый цвет ползунка */
+  border-radius: 50%; /* Круглая форма */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для объемности */
+  transition: transform 0.3s ease; /* Плавная анимация перемещения */
+  transform: translateX(0); /* Начальная позиция (влево) */
+}
+
+/* Позиция ползунка в активном состоянии */
+.toggleSwitch.active .toggleHandle {
+  transform: translateX(24px); /* Перемещение вправо */
+}
+
+/* Анимация при наведении на ползунок */
+.toggleSwitch:not(.disabled):hover .toggleHandle {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Увеличенная тень при наведении */
+}
+
+/* Текстовая метка переключателя */
+.toggleLabel {
+  font-size: 0.875rem; /* Размер шрифта */
+  font-weight: 500; /* Жирность шрифта */
+  color: #374151; /* Цвет текста */
+  user-select: none; /* Запрещаем выделение текста */
+}
+
+/* Состояние фокуса для accessibility */
+.toggleSwitch:focus {
+  outline: 2px solid #3b82f6; /* Синяя рамка при фокусе */
+  outline-offset: 2px; /* Отступ рамки от элемента */
+}
+
+/* Анимация появления переключателя */
+@keyframes toggleFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.toggleSwitch {
+  animation: toggleFadeIn 0.2s ease-out; /* Плавное появление */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 640px) {
+  .urgentToggle {
+    margin-bottom: 1rem; /* Уменьшаем отступ на мобильных */
+  }
+  
+  .toggleSwitch {
+    width: 44px; /* Немного уменьшаем размер на мобильных */
+    height: 22px;
+  }
+  
+  .toggleHandle {
+    width: 18px; /* Уменьшаем размер ползунка */
+    height: 18px;
+  }
+  
+  .toggleSwitch.active .toggleHandle {
+    transform: translateX(22px); /* Корректируем позицию */
+  }
+  
+  .toggleLabel {
+    font-size: 0.8rem; /* Уменьшаем размер текста */
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .toggleLabel {
+    color: #d1d5db; /* Светлый цвет текста для темной темы */
+  }
+  
+  .toggleSwitch:not(.active):not(.disabled) {
+    background-color: #4b5563; /* Темно-серый для темной темы */
+  }
+  
+  .toggleSwitch:not(.active):not(.disabled):hover {
+    background-color: #6b7280; /* Светло-серый при наведении в темной теме */
+  }
+}

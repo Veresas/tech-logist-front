@@ -1,0 +1,21 @@
+.orderListContainer {
+    width: 100%;
+    max-width: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.orderCreateModalContainer{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end; /* Прижимаем содержимое к правому краю */
+}
+
+.orderCreateModal{
+    width: 15%;
+    /* align-items здесь не работает, так как это свойство для flex-контейнера */
+    margin-right: 5%; /* На случай, если контейнер переопределит justify-content */
+    background-color: #7764FE;
+    color: #FFFFFF;
+}

@@ -11,8 +11,10 @@ docs/ModelDropDownListInfoResponse.md
 docs/ModelLoginRequest.md
 docs/ModelOrder.md
 docs/ModelOrderCreate.md
+docs/ModelOrderForUpdateResponse.md
 docs/ModelOrderOut.md
 docs/ModelOrderStatusEnum.md
+docs/ModelOrderUpdate.md
 docs/ModelOrdersResponse.md
 docs/ModelRegisterRequest.md
 docs/ModelRoleEnum.md
