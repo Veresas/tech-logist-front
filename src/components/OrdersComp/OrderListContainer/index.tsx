@@ -2,8 +2,9 @@ import type {OrderListContainerProps} from "./type"
 import { useState, useEffect, useCallback } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche} from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer } from "../../../components"
-
-import type { ModelOrderOut, ModelOrderUpdate, ModelOrderCreate } from "../../../api"
+import { useUtils } from "../../../utils/ContextHooks/UtilsContextHooks"
+import { useAuth } from "../../../utils/ContextHooks/AuthContextHooks"
+import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
 
 import styles from './OrderListContainer.module.css'
 
@@ -17,6 +18,18 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const [photoUrl, setPhotoUrl] = useState<string | null>(null)
     const [orderForEdit, setOrderForEdit] = useState<ModelOrderCreate | null>(null)
     const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined)
+    const { newOrderMarker, triggerNewOrderMarker} = useUtils();
+    const { role } = useAuth();
+    const [firstRender, setFrirstRender] = useState<boolean>(false)
+
+    //Тригер обновления списка заказов с защитой от перовго рендера
+    useEffect(() => {
+      if (!firstRender){
+        fetchOrders()
+      } else {
+        setFrirstRender(true)
+      }
+    }, [newOrderMarker])
 
     const { filteredOrders,
       today,
@@ -119,6 +132,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
       try {
           await ordersApi.ordersCreatePost(order);
           setIsModalCreateOpen(false);
+          triggerNewOrderMarker();
       } catch (error) {
           console.error('Ошибка создания заказа:', error);
           alert('Ошибка создания заказа. Попробуйте еще раз.');
@@ -151,10 +165,11 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         />
 
         <div className={styles.orderCreateModalContainer}>
+          { role !==  ModelRoleEnum.DRIVER &&
           <button
             className={styles.orderCreateModal}
             onClick={() => setIsModalCreateOpen(true)}
-          >Создать заказ +</button>
+          >Создать заказ +</button>}
         </div>
         
         <OrderList

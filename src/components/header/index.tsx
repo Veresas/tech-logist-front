@@ -44,8 +44,6 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = () => {
   const navigate = useNavigate();
 
   const onProfileClick = () => {
-    alert('Личный кабинет не доступен');
-
     navigate('/s/cabinet');
   }
 

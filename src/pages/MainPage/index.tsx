@@ -5,12 +5,14 @@ import type { ModelDropDownListInfoResponse } from '../../api';
 import { ordersApi, referencyApi } from '../../utils/ApiFactory';
 import styles from './MainPage.module.css';
 
+
 export const MainPage = () => {
     //const { logout, isAuthenticated } = useAuth();
     //const navigate = useNavigate();
     const [locationOptions, setLocationOptions] = useState<ModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<ModelDropDownListInfoResponse['cargo_types']>({});
     
+
 
     useEffect(() => {
         getDropDownListInfo();
