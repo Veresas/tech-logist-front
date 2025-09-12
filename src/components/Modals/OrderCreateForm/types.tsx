@@ -1,7 +1,7 @@
 import { type ModelDropDownListInfoResponse, type ModelOrderCreate, type ModelOrderUpdate } from '../../../api';
 
 export interface OrderCreateFormProps {
-  onSubmitCreateOrder: ((data: ModelOrderCreate) => void) | undefined;
+  onSubmitCreateOrder: ((data: ModelOrderCreate, idempotencyKey: string) => void) | undefined;
   onSubmitUpdateOrder: ((orderID: number, data: ModelOrderUpdate) => void) | undefined;
   locationOptions: ModelDropDownListInfoResponse['dep_builds'];
   cargoTypeOptions: ModelDropDownListInfoResponse['cargo_types'];

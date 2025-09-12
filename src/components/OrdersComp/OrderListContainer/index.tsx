@@ -78,7 +78,6 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         await ordersApi.ordersIdPatch(orderId, order)
         fetchOrders()
         handleCloseModalEdit()
-        setIsModalEditOpen(false)
       } catch (error) {
         console.error('Ошибка обновления заказа:', error)
       }
@@ -128,9 +127,9 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         }
     }
 
-    const handleOrderCreate = async (order: ModelOrderCreate) => {
+    const handleOrderCreate = async (order: ModelOrderCreate, idempotencyKey: string) => {
       try {
-          await ordersApi.ordersCreatePost(order);
+          await ordersApi.ordersCreatePost(order, { headers: { 'Idempotency-Key': idempotencyKey } });
           setIsModalCreateOpen(false);
           triggerNewOrderMarker();
       } catch (error) {

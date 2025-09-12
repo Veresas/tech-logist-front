@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
 import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
@@ -16,6 +16,7 @@ import { TimeSelector } from '../ModalComp/TimeSelector';
 import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 import { usePhotoUpload } from '../../../hooks/modalHooks/usePhotoUpload';
 
+import { v4 as uuidv4 } from 'uuid';
 // Импортируем утилиты
 import { 
   transformLocationOptions, 
@@ -51,7 +52,6 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   // Используем созданные хуки
   const { draft, clearDraft, saveDraft } = useOrderDraft();
 
-
   const { 
     photoPreview, 
     isUploading, 
@@ -67,13 +67,16 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     restorePhotoId
   } = usePhotoUpload();
   
+  const idempotencyKey = useRef<string>(uuidv4());
+
   const {
     initialFormData,
     initialIsUrgent,
     initialSelectedDate,
     initialSelectedTime,
-    initialPhotoId
+    initialPhotoId,
   } : InitialData = useMemo(() => {
+    
     let initialFormData: Partial<ModelOrderCreate>;
     let initialIsUrgent: boolean;
     let initialSelectedDate: 'today' | 'tomorrow';
@@ -149,7 +152,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     control,
     watch,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ModelOrderCreate>({
     defaultValues: initialFormData,
   });
@@ -182,7 +185,9 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
       alert('Дождитесь завершения загрузки фото');
       return;
     }
-
+    if (isSubmitting) {
+      return;
+    }
     try {
       if (order) {
         // Редактируем существующий заказ
@@ -259,7 +264,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
         clearDraft();
 
         if (onSubmitCreateOrder) {
-          onSubmitCreateOrder(orderData);
+          onSubmitCreateOrder(orderData, idempotencyKey.current);
         }
       }
     } catch (error) {
@@ -300,11 +305,13 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   const modalFooter = (
     <button
       type="submit"
-      className={`${styles.saveButton} ${isUploading ? styles.disabled : ''}`}
+      className={`${styles.saveButton} ${(isUploading || isSubmitting) ? styles.disabled : ''}`}
       onClick={handleSubmit(handleFormSubmit)}
-      disabled={isUploading}
+      disabled={isUploading || isSubmitting}
+      aria-disabled={isUploading || isSubmitting}
+      aria-busy={isSubmitting}
     >
-      {isUploading ? 'Загрузка фото...' : 'Сохранить'}
+      {isUploading ? 'Загрузка фото...' : isSubmitting ? 'Сохранение...' : 'Сохранить'}
     </button>
   );
 
