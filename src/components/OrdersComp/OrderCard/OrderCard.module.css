@@ -4,9 +4,6 @@
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 310px;
-  max-width: 330px;
-  min-height: 340px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -208,11 +205,13 @@
   border-color: #2563eb;
 }
 
+
+
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .orderCard {
-    min-width: 280px;
-    min-height: 300px;
+    min-width: 0;
+    max-width: none;
     padding: 16px;
     gap: 12px;
   }
@@ -234,11 +233,17 @@
   .cardActions {
     gap: 8px;
   }
+
+  .routeSection {
+    flex-direction: row;
+  }
 }
 
 @media (max-width: 480px) {
   .orderCard {
-    min-width: 260px;
+    min-width: 0;
+    width: 100%;
+    max-width: none;
     min-height: 280px;
     padding: 14px;
     gap: 10px;

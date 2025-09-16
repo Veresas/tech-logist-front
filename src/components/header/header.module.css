@@ -3,7 +3,6 @@
 	top: 0;
 	left: 0;
 	height: 100vh;
-	width: 20%;
 	background: linear-gradient(180deg, #6f5af5 0%, #7762ff 100%);
 	padding: 24px 16px;
 	box-sizing: border-box;
@@ -14,6 +13,11 @@
 	flex-direction: column;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 	font-size: 14px;
+	transition: width 220ms ease-in-out, box-shadow 220ms ease-in-out;
+}
+
+.container:hover {
+	width: 20%;
 }
 
 .profileCard {
@@ -26,6 +30,7 @@
 	cursor: pointer;
 	outline: none;
 	border: 1px solid rgba(255, 255, 255, 0.2);
+	transition: gap 180ms ease-in-out, padding 180ms ease-in-out;
 }
 
 .profileCard:focus-visible {
@@ -89,6 +94,7 @@
 	border-radius: 8px;
 	cursor: pointer;
 	outline: none;
+	transition: padding 180ms ease-in-out, gap 180ms ease-in-out, background 180ms ease-in-out;
 }
 
 .navItem svg {
@@ -124,6 +130,15 @@
 .brandGlyph {
 	opacity: 0.95;
 }
+
+/* Свернутое состояние: показываем только иконки */
+.container:not(:hover) .profileInfo { display: none; }
+.container:not(:hover) .profileCard { gap: 0; padding: 8px; }
+.container:not(:hover) .profileAvatar { width: 32px; height: 32px; border-radius: 12px; }
+.container:not(:hover) .profileAvatar img { width: 24px; height: 24px; }
+.container:not(:hover) .navItem span { display: none; }
+.container:not(:hover) .navItem { justify-content: center; gap: 0; padding: 10px; }
+.container:not(:hover) .divider { display: none; }
 
 @media (max-height: 680px) {
 	.container { padding: 16px 12px; }

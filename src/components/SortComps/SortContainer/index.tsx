@@ -5,9 +5,11 @@ import { SearchPlace, FilterTagList } from "../"
 import type { tag } from "../types"
 import styles from "./sortContainer.module.css"
 import { ICON_FILTER } from "../../../../public"
+import { usePlatform } from '../../../utils/ContextHooks';
 
 export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} : SortContainerProp) => {
     const [isOpen, setIsOpen] = useState(false)
+    const { isMobile } = usePlatform();
     const [filterTags, setFilterTags] = useState<tag[]>([])
 
     const onClearAll = () => {
@@ -61,7 +63,8 @@ export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} :
                     onClick={() => setIsOpen(true)}
                 >
                     <img src={ICON_FILTER} alt="" />
-                    <span>Фильтры</span>
+
+                    {!isMobile && <span>Фильтры</span>}
                     <span className={styles.badge}>{activeCount}</span>
                 </button>
             </div>

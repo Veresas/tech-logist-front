@@ -5,11 +5,12 @@ import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
 import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
 import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../../public"
+import { usePlatform } from '../../../utils/ContextHooks';
 
 export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {
     const { role } = useAuth();
     const { theme } = useTheme();
-
+    const { isMobile } = usePlatform();
     // Форматирование времени
     const formatTime = (timeString?: string) => {
         if (!timeString) return '';
@@ -95,10 +96,18 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
 
                     {/* Соединительная линия */}
                     <div className={styles.routeConnector}>
-                        <svg width="16" height="50" viewBox="0 0 16 50" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line color='#A8B5FB' x1="8" y1="2" x2="8" y2="38"/>
-                            <polyline color='#A8B5FB' points="2,36 8,42 14,36"/>
-                        </svg>
+                        {!isMobile &&
+                            <svg width="16" height="50" viewBox="0 0 16 50" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line color='#A8B5FB' x1="8" y1="2" x2="8" y2="38"/>
+                                <polyline color='#A8B5FB' points="2,36 8,42 14,36"/>
+                            </svg>}
+                        
+                        {isMobile &&
+                            <svg width="50" height="16" viewBox="0 0 50 16" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line color='#A8B5FB' x1="2" y1="8" x2="38" y2="8"/>
+                                <polyline color='#A8B5FB' points="36,2 42,8 36,14"/>
+                            </svg>
+                        }
                     </div>
 
                     {/* Точка назначения */}

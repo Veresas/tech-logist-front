@@ -4,18 +4,40 @@
     text-align: left;
     margin: 0;
     padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* чтобы внутренний скролл не выходил за пределы */
 }
+
+.scrollArea {
+    flex: 1;
+    min-height: 0; /* критично для flex + overflow */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; /* плавный скролл на iOS */
+}
+
+/* скрываем полосу прокрутки кроссбраузерно */
+.scrollArea::-webkit-scrollbar { width: 0; height: 0; }
+.scrollArea { -ms-overflow-style: none; scrollbar-width: none; }
 
 .orderCreateModalContainer{
     display: flex;
     width: 100%;
     justify-content: flex-end; /* Прижимаем содержимое к правому краю */
+    margin-bottom: 20px;
 }
 
 .orderCreateModal{
-    width: 15%;
+
     /* align-items здесь не работает, так как это свойство для flex-контейнера */
     margin-right: 5%; /* На случай, если контейнер переопределит justify-content */
     background-color: #7764FE;
     color: #FFFFFF;
+}
+
+@media (min-width: 769px) {
+    .orderCreateModal{
+        width: 15%;
+    }
 }

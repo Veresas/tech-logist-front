@@ -5,5 +5,19 @@
     width: 100%;
     gap: 5%;
     box-sizing: border-box;
+
+    /* фиксируем проблему */
+    align-items: start;
+    align-content: start;
+    grid-auto-rows: max-content; /* строки по размеру контента */
+}
+
+/* Мобильная вёрстка: одна колонка, карточки на всю ширину */
+@media (max-width: 768px) {
+    .orderList {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+    }
 }
 

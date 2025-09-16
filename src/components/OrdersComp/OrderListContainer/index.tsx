@@ -171,12 +171,14 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
           >Создать заказ +</button>}
         </div>
         
-        <OrderList
-          orders={filteredOrders!}
-          handleAction={handleSendRequest}
-          isPrivate={isPrivate}
-          handleInfo={handleInfo}
-        />
+        <div className={styles.scrollArea}>
+          <OrderList
+            orders={filteredOrders!}
+            handleAction={handleSendRequest}
+            isPrivate={isPrivate}
+            handleInfo={handleInfo}
+          />
+        </div>
         
         {selectedOrder && (
           <OrderDetailsModal

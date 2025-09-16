@@ -1,18 +1,26 @@
 .authWrapper {
     display: flex;
-    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* внутренняя прокрутка только у контента */
 }
-
+  
 .mainContent {
     flex: 1;
-    margin-left: 18%;
+    height: 100%;
+    overflow: hidden; /* чтобы список прокручивался внутри себя */
 }
-
-/* Альтернатива: если SidebarHeader имеет фиксированную ширину */
-/*
+  
+  /* Стили для мобильных устройств (по умолчанию) */
 .mainContent {
-    flex: 1;
-    margin-left: 250px; или другая фиксированная ширина
-    padding: 20px;
+    padding-bottom: 55px;
+    /* margin-left отсутствует */
 }
-*/
+  
+  /* Стили для десктопа */
+@media (min-width: 769px) {
+    .mainContent {
+      margin-left: 10%;
+      padding-bottom: 0; /* сброс padding-bottom на десктопе */
+    }
+}

@@ -1,0 +1,38 @@
+.container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 55px;
+    background: #7E57C2; /* фиолетовый как на скрине */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    padding: 6px;
+    z-index: 1000;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #F2E7FE;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.item:focus-visible {
+    outline: 2px solid #B39DDB;
+    outline-offset: -2px;
+}
+
+.label {
+    font-size: 11px;
+    line-height: 1;
+}
+
+
