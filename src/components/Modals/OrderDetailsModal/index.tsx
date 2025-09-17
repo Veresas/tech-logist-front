@@ -71,7 +71,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
           <button
             key="reject"
             className={styles.actionButton}
-            style={{ backgroundColor: '#D10A00', color: 'white' }} 
+            style={{ backgroundColor: '#D10A00', color: 'white', fontSize: '20px'}} 
             onClick={() => onReject(order.id || 0)}
           >
             Отклонить
@@ -81,7 +81,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
           <button
             key="complete"
             className={styles.actionButton}
-            style={{ backgroundColor: '#3049CE', color: 'white' }} 
+            style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }} 
             onClick={() => onComplete(order.id || 0)}
           >
             Завершить
@@ -94,7 +94,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
           <button
             key="take"
             className={styles.actionButton}
-            style={{ backgroundColor: '#3049CE', color: 'white' }} 
+            style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }} 
             onClick={() => onTake(order.id || 0)}
           >
             Взять заказ
@@ -107,7 +107,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         <button
           key="delete"
           className={styles.actionButton}
-          style={{ backgroundColor: '#D10A00', color: 'white' }} 
+          style={{ backgroundColor: '#D10A00', color: 'white', fontSize: '20px' }} 
           onClick={() => setShowDeleteConfirmation(true)}
         >
           Удалить заказ
@@ -117,7 +117,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         <button
           key="edit"
           className={styles.actionButton}
-          style={{ backgroundColor: '#3049CE', color: 'white' }}
+          style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }}
           onClick={() => onEdit(order.id || 0, order)}
         >
           Редактировать
@@ -182,10 +182,10 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   };
 
   const time = (
-    <div className={styles.timeSection} style={{ justifyContent: 'flex-start' }}>
-      <div className={styles.timeBox} style={{ alignItems: 'flex-start' }}>
-        <img src={ICON_TIMER} alt="" />
-        <div>
+    <div className={styles.timeSection}>
+      <div className={styles.timeBox}>
+        <img width={24} height={24} src={ICON_TIMER} alt="" />
+        <div className={styles.timeBoxText}>
           <div>{formatTimeParts(order.time).datePart}</div>
           <div>{formatTimeParts(order.time).timePart}</div>
         </div>
@@ -197,7 +197,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
     <div className={styles.routeSection}>
       {/* Точка отправления */}
       <div className={styles.locationPoint}>
-        <img src={ICON_START_POINT} />
+        <img width={22} height={22} src={ICON_START_POINT} />
         <div className={styles.locationText}>
           {order.depart_loc_name || ''}
         </div>
@@ -205,7 +205,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       <div className={styles.routeLine}></div>
       {/* Точка назначения */}
       <div className={styles.locationPoint}>
-        <img src={ICON_FINAL_POINT} />
+        <img width={22} height={22} src={ICON_FINAL_POINT} />
         <div className={styles.locationText}>
           {order.goal_loc_name || ''}
         </div>
@@ -286,7 +286,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
 
   const contact = (
     <div className={styles.contactsSection}>
-      <h4 className={styles.detailLabel}>Контакты</h4>
+      <span className={styles.detailLabel}>Контакты</span>
       <div className={styles.contactInfo}>
         <div className={styles.contactDetail}>
           <span className={styles.detailValue}>{ role === ModelRoleEnum.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
@@ -304,10 +304,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   
   const description = (
     <div>
-      <h4 className={styles.sectionTitle}>Описание:</h4>
-      <p className={styles.descriptionText}>
-        {order.cargo_description || 'Рыбный текст'}
-      </p>
+      <span className={styles.descriptionText}>Описание: {order.cargo_description}</span>
     </div>
   )
 

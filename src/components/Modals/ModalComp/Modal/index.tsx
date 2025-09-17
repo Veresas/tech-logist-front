@@ -163,7 +163,7 @@ export const Modal = ({
             onClick={onClose}
             aria-label="Закрыть модальное окно" // Описание для screen readers
           >
-            ×
+            X
           </button>
         </div>
 
