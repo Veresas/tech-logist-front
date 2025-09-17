@@ -1,11 +1,11 @@
 .FiltrContainer {
-	height: 15vh;
+	height: auto;
+	/* оставляем контейнеру естественную высоту, чтобы он учитывал высоту активных фильтров */
 }
 .wrapper {
 	display: flex;
 	align-items: center;
 	gap: 24px;
-	margin-left: 4%;
 }
 
 .left {

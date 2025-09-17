@@ -20,7 +20,7 @@
   /* Стили для десктопа */
 @media (min-width: 769px) {
     .mainContent {
-      margin-left: 10%;
+      margin-left: 4%;
       padding-bottom: 0; /* сброс padding-bottom на десктопе */
     }
 }

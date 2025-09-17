@@ -155,20 +155,22 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     if (error) return <div>{error}</div>
     return (
       <div className={styles.orderListContainer}>
-        <SortContainer
-          Today={today}
-          Urgent={isUrgent}
-          setName={setName}
-          setIsUrgent={setIsUrgent}
-          setToday={setToday}
-        />
+        <div className={styles.oLCHeader}>
+          <SortContainer
+            Today={today}
+            Urgent={isUrgent}
+            setName={setName}
+            setIsUrgent={setIsUrgent}
+            setToday={setToday}
+          />
 
-        <div className={styles.orderCreateModalContainer}>
-          { role !==  ModelRoleEnum.DRIVER &&
-          <button
-            className={styles.orderCreateModal}
-            onClick={() => setIsModalCreateOpen(true)}
-          >Создать заказ +</button>}
+          <div className={styles.orderCreateModalContainer}>
+            { role !==  ModelRoleEnum.DRIVER &&
+            <button
+              className={styles.orderCreateModal}
+              onClick={() => setIsModalCreateOpen(true)}
+            >Создать заказ +</button>}
+          </div>
         </div>
         
         <div className={styles.scrollArea}>

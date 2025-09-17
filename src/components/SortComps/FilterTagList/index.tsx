@@ -13,13 +13,14 @@ export const FilterTagList = ({
             {tags.map(tag => (
                 <div key={tag.id} className={styles.filterTag}>
                     <span className={styles.tagText}>{tag.name}</span>
-                    <button 
-                        className={styles.closeButton} 
-                        onClick={tag.onRemove}
-                        aria-label={`Удалить фильтр ${tag.name}`}
-                    >
-                        ×
-                    </button>
+                    <div className={styles.closeButtonArea}> 
+                        <span className={styles.closeButton} 
+                            onClick={tag.onRemove}
+                            aria-label={`Удалить фильтр ${tag.name}`}
+                        >
+                            x
+                        </span>
+                    </div>
                 </div>
             ))}
             {onClearAll && (

@@ -175,7 +175,6 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
       setSelectedDate(draft.selectedDate);
       setSelectedTime(draft.selectedTime);
       
-      console.log('Черновик восстановлен:', draft);
     }
   }, []);
 

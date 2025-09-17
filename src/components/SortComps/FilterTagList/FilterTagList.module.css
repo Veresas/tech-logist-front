@@ -1,5 +1,6 @@
 .activeFilters {
-	height: 50px;
+	/* вместо фиксированной высоты — минимальная, чтобы учитывать переносы строк */
+	min-height: 50px;
 	display: flex;
 	align-items: center;
 	gap: 12px;
@@ -13,23 +14,35 @@
 	gap: 8px;
 	padding: 6px 12px;
 	border: 1px solid #b7befc;
-	border-radius: 999px;
+	border-radius: 16px;
 	background: #f7f8ff;
 	color: #3b4ac6;
 	font-size: 14px;
+	height: 28px;
 }
 
 .tagText { white-space: nowrap; }
 
 .closeButton {
-	/*
-	width: 16px;
-	height: 16px;*/
-	border-radius: 50%;
+	/* сбрасываем отступы и делаем контейнером центрирования */
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
 	border: none;
-	background: #ffffff;
-	color: #7a86f6;
+	background: transparent;
+	color: #3049CE;
 	cursor: pointer;
+}
+
+.closeButtonArea {
+	width: 14px;
+	height: 14px;
+	background-color: #E6EAFF;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	line-height: 1;
 }
 
 .clearAllButton {

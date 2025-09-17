@@ -8,7 +8,6 @@ import { usePlatform } from '../../utils/ContextHooks';
 export const AuthWrapper = () => {
     const { isAuthenticated, isLoading, verifyAuth } = useAuth();
     const { isMobile } = usePlatform();
-    console.log('[AuthWrapper] triggered by path:', window.location.pathname);
     useEffect(() => {
         verifyAuth();
     }, [])

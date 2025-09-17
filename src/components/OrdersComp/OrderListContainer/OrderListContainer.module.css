@@ -21,15 +21,19 @@
 .scrollArea::-webkit-scrollbar { width: 0; height: 0; }
 .scrollArea { -ms-overflow-style: none; scrollbar-width: none; }
 
+.oLCHeader {
+    margin-left: 1.5%;
+}
+
 .orderCreateModalContainer{
     display: flex;
     width: 100%;
-    justify-content: flex-end; /* Прижимаем содержимое к правому краю */
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .orderCreateModal{
-
+    border-radius: 16px;
     /* align-items здесь не работает, так как это свойство для flex-контейнера */
     margin-right: 5%; /* На случай, если контейнер переопределит justify-content */
     background-color: #7764FE;

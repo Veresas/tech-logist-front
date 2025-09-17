@@ -63,7 +63,7 @@ export const useOrderDraft = () => {
     try {
       // Сохраняем в localStorage
       localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draftData));
-      console.log('Черновик заказа сохранен:', draftData);
+
     } catch (error) {
       // Обрабатываем ошибки сохранения (например, превышение лимита localStorage)
       console.error('Ошибка сохранения черновика:', error);
@@ -83,7 +83,7 @@ export const useOrderDraft = () => {
       const draftData = localStorage.getItem(DRAFT_STORAGE_KEY);
       if (draftData) {
         const parsedDraft = JSON.parse(draftData) as OrderDraft;
-        console.log('Черновик заказа загружен:', parsedDraft);
+
         return parsedDraft;
       }
     } catch (error) {
@@ -104,7 +104,6 @@ export const useOrderDraft = () => {
     try {
       localStorage.removeItem(DRAFT_STORAGE_KEY);
       setDraft(null);
-      console.log('Черновик заказа очищен');
     } catch (error) {
       console.error('Ошибка очистки черновика:', error);
     }

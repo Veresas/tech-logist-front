@@ -113,7 +113,6 @@ export const parseTimeFromAPI = (timeString: string) => {
  */
 export const parseTimeFromAPIUTC = (timeString: string) => {
   try {
-    console.log('Парсинг UTC времени из API:', timeString);
     
     // Извлекаем время напрямую из строки без конвертации
     const timeMatch = timeString.match(/T(\d{2}):(\d{2}):\d{2}/);
@@ -138,8 +137,6 @@ export const parseTimeFromAPIUTC = (timeString: string) => {
     } else {
       selectedDate = 'today';
     }
-    
-    console.log('Результат UTC парсинга:', { selectedDate, selectedTime });
     
     return {
       selectedDate,

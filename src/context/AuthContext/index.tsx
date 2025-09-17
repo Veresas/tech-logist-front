@@ -14,7 +14,6 @@ export const AuthProvider = ({children} : AuthContextProps) => {
     const [fullName, setFullName] = useState<string>("");
     const verifyAuth = async () => {
         try {
-            console.log('[AuthProvider] Verifying authentication');
             let isGetName = false;
             if (fullName === "") {
                 isGetName = true;
@@ -40,7 +39,6 @@ export const AuthProvider = ({children} : AuthContextProps) => {
             setIsAuthenticated(false);
         } finally {
             setIsLoading(false);
-            console.log('[AuthProvider] role: ', role);
         }
     };
     

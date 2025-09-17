@@ -129,7 +129,6 @@ export const usePhotoUpload = () => {
       const uploadedPhotoId = uploadResponse.data.photo_id;
       setPhotoId(uploadedPhotoId);
       
-      console.log('Фото успешно загружено, ID:', uploadedPhotoId);
       
     } catch (error) {
       console.error('Ошибка загрузки фото:', error);

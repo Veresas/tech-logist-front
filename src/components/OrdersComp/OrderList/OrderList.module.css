@@ -1,9 +1,7 @@
 .orderList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
-    padding: 20px;
+    grid-template-columns: repeat(4, 1fr);
     width: 100%;
-    gap: 5%;
     box-sizing: border-box;
 
     /* фиксируем проблему */
@@ -17,7 +15,6 @@
     .orderList {
         grid-template-columns: 1fr;
         gap: 12px;
-        padding: 12px;
     }
 }
 
