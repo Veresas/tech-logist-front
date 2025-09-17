@@ -5,6 +5,7 @@ import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer } from "..
 import { useUtils } from "../../../utils/ContextHooks/UtilsContextHooks"
 import { useAuth } from "../../../utils/ContextHooks/AuthContextHooks"
 import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
+import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 
 import styles from './OrderListContainer.module.css'
 
@@ -21,6 +22,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const { newOrderMarker, triggerNewOrderMarker} = useUtils();
     const { role } = useAuth();
     const [firstRender, setFrirstRender] = useState<boolean>(false)
+    const { clearDraft } = useOrderDraft();
 
     //Тригер обновления списка заказов с защитой от перовго рендера
     useEffect(() => {
@@ -132,6 +134,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
           await ordersApi.ordersCreatePost(order, { headers: { 'Idempotency-Key': idempotencyKey } });
           setIsModalCreateOpen(false);
           triggerNewOrderMarker();
+          clearDraft()
       } catch (error) {
           console.error('Ошибка создания заказа:', error);
           alert('Ошибка создания заказа. Попробуйте еще раз.');

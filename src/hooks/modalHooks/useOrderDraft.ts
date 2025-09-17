@@ -50,22 +50,32 @@ export const useOrderDraft = () => {
    * @param data - данные формы для сохранения
    */
   const saveDraft = useCallback((data: Partial<ModelOrderCreate>, isUrgent: boolean, selectedDate: 'today' | 'tomorrow', selectedTime: string, photoId: string) => {
-
-    // Формируем объект черновика со всеми текущими данными
-    const draftData: OrderDraft = {
-      formData: data,
-      isUrgent,
-      selectedDate,
-      selectedTime,
-      photoId: photoId || undefined,
-    };
+    const isEmptyForm =
+      !data.cargo_name &&
+      !data.cargo_description &&
+      !data.depart_loc &&
+      !data.goal_loc &&
+      (data.cargo_weight === undefined || data.cargo_weight === null || data.cargo_weight === ('' as unknown)) &&
+      !data.cargo_type_id &&
+      !photoId;
 
     try {
-      // Сохраняем в localStorage
-      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draftData));
+      const existing = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (existing && isEmptyForm) {
+        // Не перетираем существующий осмысленный черновик пустыми значениями
+        return;
+      }
 
+      const draftData: OrderDraft = {
+        formData: data,
+        isUrgent,
+        selectedDate,
+        selectedTime,
+        photoId: photoId || undefined,
+      };
+
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draftData));
     } catch (error) {
-      // Обрабатываем ошибки сохранения (например, превышение лимита localStorage)
       console.error('Ошибка сохранения черновика:', error);
     }
   }, []);

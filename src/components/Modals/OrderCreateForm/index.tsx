@@ -151,6 +151,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     handleSubmit,
     control,
     watch,
+    getValues,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ModelOrderCreate>({
@@ -164,19 +165,25 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   // Следим за изменениями формы
   const formValues = watch();
 
-  // Восстанавливаем черновик при инициализации
+  // Восстанавливаем черновик когда он загрузится
   useEffect(() => {
     if (!order && draft) {
-      // Восстанавливаем данные формы
       reset(draft.formData);
-      
-      // Восстанавливаем дополнительные состояния
       setIsUrgent(draft.isUrgent);
       setSelectedDate(draft.selectedDate);
       setSelectedTime(draft.selectedTime);
-      
     }
-  }, []);
+  }, [order, draft, reset]);
+
+  // Сохраняем черновик при размонтировании модалки (не перезаписываем осмысленное пустым)
+  useEffect(() => {
+    return () => {
+      if (!order) {
+        const latestValues = getValues();
+        saveDraft(latestValues, isUrgent, selectedDate, selectedTime, photoId);
+      }
+    };
+  }, [order, getValues, isUrgent, selectedDate, selectedTime, photoId, saveDraft]);
 
   // Обработчик отправки формы
   const handleFormSubmit: SubmitHandler<ModelOrderCreate> = async (data) => {
@@ -259,9 +266,6 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
           is_urgent: isUrgent,
         };
 
-        // Очищаем черновик после успешной отправки
-        clearDraft();
-
         if (onSubmitCreateOrder) {
           onSubmitCreateOrder(orderData, idempotencyKey.current);
         }
@@ -296,7 +300,8 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   // Обработчик потери фокуса для сохранения черновика
   const handleFieldBlur = () => {
     if (!order) {
-      saveDraft(formValues, isUrgent, selectedDate, selectedTime, photoId); // Принудительно сохраняем черновик при потере фокуса
+      const current = getValues();
+      saveDraft(current, isUrgent, selectedDate, selectedTime, photoId); // Принудительно сохраняем черновик при потере фокуса
     }
   };
 

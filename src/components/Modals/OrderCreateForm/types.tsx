@@ -16,5 +16,5 @@ export interface InitialData {
   initialIsUrgent: boolean;
   initialSelectedDate: 'today' | 'tomorrow';
   initialSelectedTime: string;
-  initialPhotoId: string;
+  initialPhotoId: string; 
 }
