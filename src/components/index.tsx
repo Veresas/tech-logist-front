@@ -18,3 +18,4 @@ export { SidebarHeader } from './header';
 export { MobileBottomNav } from './MobileBottomNav';
 
 export { SortContainer } from "./SortComps"
+export { MobileMenu } from "./MobileMenu"

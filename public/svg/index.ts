@@ -18,5 +18,18 @@ export const ICON_FINAL_POINT = "/svg/final_point.svg";
 export const ICON_EDIT_INFO = "/svg/edit_info.svg";
 export const ICON_EDIT_PHOTO = "/svg/edit_photo.svg";
 export const ICON_LIGHT_THEME = "/svg/light_theme.svg";
+export const ICON_MENU = "/svg/Menu.svg"
 
+
+// Пурпурные иконки (новые ссылки)
+export const ICON_PURPLE_ALL_ORDERS = "/svg/purpule_svg/All_Orders.svg";
+export const ICON_PURPLE_MY_ORDERS = "/svg/purpule_svg/My_Orders.svg";
+export const ICON_PURPLE_MAP = "/svg/purpule_svg/Map.svg";
+export const ICON_PURPLE_STATISTICS = "/svg/purpule_svg/Statistics.svg";
+export const ICON_PURPLE_SETTINGS = "/svg/purpule_svg/Settings.svg";
+export const ICON_PURPLE_SUPPORT = "/svg/purpule_svg/Support.svg";
+export const ICON_PURPLE_PROFILE = "/svg/purpule_svg/Profile.svg";
+export const ICON_PURPLE_NOTIFICATIONS = "/svg/purpule_svg/Notifications.svg";
+export const ICON_PURPLE_ALL_USERS = "/svg/purpule_svg/All_Users.svg";
+export const ICON_PURPLE_THEME = "/svg/purpule_svg/Theme.svg";
 

@@ -1,7 +1,7 @@
 import './App.css'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage, MainPage, PrivatePage, BufferPage, ProfilePage } from './pages';
+import { LoginPage, MainPage, PrivatePage, BufferPage, ProfilePage, MobileMenuPage } from './pages';
 import { AuthWrapper } from "./wrappers"
 import { ToastContainer } from 'react-toastify';
 
@@ -18,7 +18,7 @@ function App() {
                 <Route path='/s/main' element={<MainPage />}/>
                 <Route path='/s/cabinet' element= {<ProfilePage />}/>
                 <Route path='/s/private_order' element={<PrivatePage />}/>
-
+                <Route path='/s/menu' element={<MobileMenuPage />}/>
               </Route>
               
               <Route path="*" element={<div>404 Not Found</div>} />

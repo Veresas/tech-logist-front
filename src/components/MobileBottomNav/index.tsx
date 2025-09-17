@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './mobileBottomNav.module.css';
 import { useNavigate } from 'react-router-dom';
-import { ICON_ALL_ORDERS, ICON_MY_ORDERS, ICON_MAP } from '../../../public';
+import { ICON_ALL_ORDERS, ICON_MY_ORDERS, ICON_MAP, ICON_MENU } from '../../../public';
 
 // Нижняя панель навигации для мобильной платформы (фиксированная, высота 55px)
 // Комментарии и логи — на русском языке
@@ -22,7 +22,7 @@ export const MobileBottomNav: React.FC = () => {
     };
 
     const handleMenuClick = () => {
-        alert('Меню будет доступно позже');
+        navigate('/s/menu');
     };
 
     const handleKeyDown = (action?: () => void) => (event: React.KeyboardEvent) => {
@@ -75,7 +75,7 @@ export const MobileBottomNav: React.FC = () => {
                 aria-label="Меню"
             >
                 {/* Заглушка без иконки */}
-                <span className={styles.label}>Меню</span>
+                <img src={ICON_MENU} alt="" width={34} height={34} aria-hidden />
             </button>
         </nav>
     );

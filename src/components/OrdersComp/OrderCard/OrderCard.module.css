@@ -56,6 +56,10 @@
   box-shadow: 0 0 8px rgba(255, 83, 15, 0.4);
 }
 
+.urgentIndicator[data-urgent="false"] {
+  display: none;
+}
+
 /* Название заказа */
 .orderTitle {
   font-size: 18px;
