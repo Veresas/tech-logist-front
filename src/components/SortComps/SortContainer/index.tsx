@@ -7,14 +7,19 @@ import styles from "./sortContainer.module.css"
 import { ICON_FILTER } from "../../../../public"
 import { usePlatform } from '../../../utils/ContextHooks';
 
-export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} : SortContainerProp) => {
+export const SortContainer = ({ Today, Urgent, DepartLoc, GoalLoc, CargoType, 
+    setName, setToday, setIsUrgent, setDepartLoc, setGoalLoc, setCargoType } : SortContainerProp) => {
+
     const [isOpen, setIsOpen] = useState(false)
     const { isMobile } = usePlatform();
     const [filterTags, setFilterTags] = useState<tag[]>([])
 
     const onClearAll = () => {
         setIsUrgent(undefined);
-        setToday(undefined)
+        setToday(undefined);
+        setDepartLoc(undefined);
+        setGoalLoc(undefined);
+        setCargoType(undefined);
     }
 
     const deleteTag = useCallback((id: string) => {
@@ -46,9 +51,34 @@ export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} :
                 onRemove: () => deleteTag("Urgent"),
             });
         }
+
+        if (DepartLoc !== undefined) {
+            newTags.push({
+                id: "DepartLoc",
+                name: DepartLoc,
+                onRemove: () => deleteTag("DepartLoc"),
+            });
+        }
+
+        if (GoalLoc !== undefined) {
+            newTags.push({
+                id: "GoalLoc",
+                name: GoalLoc,
+                onRemove: () => deleteTag("GoalLoc"),
+            });
+        }
+
+        if (CargoType !== undefined) {
+            newTags.push({
+                id: "CargoType",
+                name: CargoType,
+                onRemove: () => deleteTag("CargoType"),
+            });
+        }
+        
         
         setFilterTags(newTags);
-    }, [Today, Urgent, deleteTag]);
+    }, [Today, Urgent, CargoType, GoalLoc, DepartLoc, deleteTag]);
 
     const activeCount = useMemo(() => filterTags.length, [filterTags]);
 
@@ -79,8 +109,14 @@ export const SortContainer = ({ Today, Urgent, setName, setToday, setIsUrgent} :
                 setIsOpen={setIsOpen}
                 today={Today}
                 isUrgent={Urgent}
+                departLoc={DepartLoc}
+                goalLoc={GoalLoc}
+                cargoType={CargoType}
                 setToday={setToday}
                 setIsUrgent={setIsUrgent}
+                setCargoType={setCargoType}
+                setDepartLoc={setDepartLoc}
+                setGoalLoc={setGoalLoc}
             />
 
         </div>

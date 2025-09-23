@@ -35,10 +35,16 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
 
     const { filteredOrders,
       today,
-      isUrgent,
-      setName,
-      setIsUrgent,
-      setToday } = useSearche(orders)
+        isUrgent,
+        departLoc,
+        goalLoc,
+        cargoType,
+        setName,
+        setIsUrgent,
+        setToday,
+        setDepartLoc,
+        setGoalLoc,
+        setCargoType, } = useSearche(orders)
 
     const handleInfo = useCallback((order: ModelOrderOut) => {
         setSelectedOrder(order)
@@ -162,9 +168,15 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
           <SortContainer
             Today={today}
             Urgent={isUrgent}
+            DepartLoc={departLoc}
+            GoalLoc={goalLoc}
+            CargoType={cargoType}
             setName={setName}
             setIsUrgent={setIsUrgent}
             setToday={setToday}
+            setCargoType={setCargoType}
+            setDepartLoc={setDepartLoc}
+            setGoalLoc={setGoalLoc}
           />
 
           <div className={styles.orderCreateModalContainer}>

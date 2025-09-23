@@ -5,6 +5,10 @@ export function useSearche(orders: ModelOrderOut[] | undefined){
     const [name, setName] = useState<string | undefined>(undefined);
     const [today, setToday] = useState<boolean | undefined>(undefined);
     const [isUrgent, setIsUrgent] = useState<boolean | undefined>(undefined);
+    const [departLoc, setDepartLoc] = useState<string | undefined>(undefined);
+    const [goalLoc, setGoalLoc] = useState<string | undefined>(undefined);
+    const [cargoType, setCargoType] = useState<string | undefined>(undefined);
+
 
     const filteredOrders = useMemo(() => {
         if (!orders || orders.length === 0) {
@@ -32,8 +36,21 @@ export function useSearche(orders: ModelOrderOut[] | undefined){
                 result = result.filter(order => order.time?.startsWith(tomorrowString));
             }
         }
+
         if (isUrgent !== undefined) {
             result = result.filter(order => order.is_urgent === isUrgent);
+        }
+
+        if (departLoc !== undefined) {
+            result = result.filter(order => order.depart_loc_name === departLoc);
+        }
+
+        if (goalLoc !== undefined) {
+            result = result.filter(order => order.goal_loc_name === goalLoc);
+        }
+
+        if (cargoType !== undefined) {
+            result = result.filter(order => order.cargo_type_name === cargoType);
         }
 
 
@@ -46,9 +63,15 @@ export function useSearche(orders: ModelOrderOut[] | undefined){
         name,
         today,
         isUrgent,
+        departLoc,
+        goalLoc,
+        cargoType,
         setName,
         setIsUrgent,
         setToday,
+        setDepartLoc,
+        setGoalLoc,
+        setCargoType,
     }
         
 

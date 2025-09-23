@@ -1,40 +1,50 @@
-.filter-group {
+.sortModalContent {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #0C2D6F;
+}
+
+.inputGroup {
+ flex-direction: column;
+}
+
+.filterGroup {
     margin: 16px 0;
-  }
+}
   
-  .filter-group h4 {
-    margin: 0 0 8px 0;
-    color: #374151;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  .button-triplet {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .filter-button {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    background: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-  
-  .filter-button:hover {
-    border-color: #9ca3af;
-  }
-  
-  .filter-button.active {
-    background: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-  }
-  
-  .filter-button:not(.active):hover {
-    background: #f9fafb;
-  }
+.filterGroup h4 {
+  margin: 0 0 8px 0;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.buttonTriplet {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.filterButton {
+  background: #D5DAF7;
+  width: 100px;
+  color: #3B60AA;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  border-color: #9ca3af;
+}
+
+.filterButton.active {
+  background: #A8B5FB;
+  border-color: #A8B5FB;
+}
+
+.filterButton:not(.active):hover {
+  background: #f9fafb;
+}

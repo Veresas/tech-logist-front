@@ -1,12 +1,12 @@
-import { createContext, useEffect, useState, type ReactNode } from "react"
+import { createContext, useState, type ReactNode } from "react"
 import type { RefCotextTypes } from "./types"
 import type { ModelDropDownListInfoResponse } from '../../api';
 import { referencyApi } from '../../utils/ApiFactory';
-const RefContext = createContext<RefCotextTypes | undefined>(undefined);
+const DropdownContext = createContext<RefCotextTypes | undefined>(undefined);
 
-export { RefContext };
+export { DropdownContext };
 
-export const RefContextProvider = ({children} : {children: ReactNode}) => {
+export const DropdownContextProvider = ({children} : {children: ReactNode}) => {
     const [locs, setLocs] = useState<ModelDropDownListInfoResponse['dep_builds']>({})
     const [cargoTypes, setCergoTypes] = useState<ModelDropDownListInfoResponse['cargo_types']>({})
 
@@ -21,10 +21,6 @@ export const RefContextProvider = ({children} : {children: ReactNode}) => {
         }
     };
 
-    useEffect(() => {
-        trigerReloadRefs()
-    }, [])
-
     const value = {
         locs,
         cargoTypes,
@@ -32,8 +28,8 @@ export const RefContextProvider = ({children} : {children: ReactNode}) => {
     }
 
     return (
-        <RefContext.Provider value={value}>
+        <DropdownContext.Provider value={value}>
             {children}
-        </RefContext.Provider>
+        </DropdownContext.Provider>
     )
 }
