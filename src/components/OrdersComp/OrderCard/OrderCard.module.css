@@ -19,9 +19,9 @@
 
 /* Темная тема */
 [data-theme = "dark"] .orderCard {
-  background-color: #1f2937;
-  border-color: #374151;
-  color: #f9fafb;
+  background-color: #454D77;
+  border: none;
+  color: #F9FAFF;
 }
 
 /* Заголовок карточки */

@@ -1,15 +1,13 @@
-.rightColumnText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .modalContent {
   background-color: #F9FAFF;
   position: relative;
   min-width: 600px; /* Минимальная ширина для ПК */
   max-width: 650px;
   margin: 0 auto; /* Центрируем модалку внутри контейнера */
+}
+
+[data-theme = "dark"] .modalContent {
+  background-color: #454d77;
 }
 
 /* Индикатор срочности */
@@ -27,6 +25,9 @@
   background-color: #FF372D;
 }
 
+[data-theme = "dark"] .urgentIndicator[data-urgent="true"] { 
+  background-color: #FF6666;
+}
 .mobileInfo {
   display: grid;
   grid-template-columns: 1fr 4fr; /* Фиксированные размеры колонок */
@@ -64,11 +65,19 @@
   overflow-wrap: break-word;
 }
 
+[data-theme = "dark"] .modalTitle {
+  color: #F9FAFF;
+}
+
 .sectionTitle {
   font-size: 16px;
   font-weight: 600;
   color: #0C2D6F;
   margin: 0 0 8px 0;
+}
+
+[data-theme = "dark"] .sectionTitle {
+  color: #F9FAFF;
 }
 
 .descriptionText {
@@ -80,6 +89,11 @@
   overflow-wrap: break-word;
 }
 
+[data-theme = "dark"] .descriptionText {
+  color: #F9FAFF;
+}
+
+
 /* Сетка контента */
 .contentGrid {
   display: grid;
@@ -87,14 +101,6 @@
   gap: 5%;
   margin-bottom: 24px;
   align-items: stretch; /* обе колонки одной высоты строки */
-}
-
-/* Левая колонка - время и маршрут */
-.leftColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 360px; /* Фиксированная ширина */
 }
 
 /* Секция времени */
@@ -130,6 +136,10 @@
   font-size: 20px;
   font-weight: 600;
   color: #3B60AA;
+}
+
+[data-theme = "dark"] .timeBox {
+  color: #E6EAFF;
 }
 
 .timeBoxText {
@@ -190,13 +200,11 @@
   overflow-wrap: break-word;
 }
 
-/* Правая колонка - груз и контакты */
-.rightColumn {
-  display: flex;
-  flex-direction: column;
-  width: 160px; /* Фиксированная ширина */
-  align-items: center; /* Центрируем содержимое правой колонки */
+[data-theme = "dark"] .locationText {
+  color: #E6EAFF;
 }
+
+
 
 /* Секция фотографии */
 .photoSection {
@@ -265,6 +273,11 @@
   text-align: center; /* Текст по центру */
 }
 
+[data-theme = "dark"] .detailLabel {
+  color:#F9FAFF;
+  font-size: 12px;
+}
+
 .detailValue {
   font-size: 14px;
   color: #3B60AA;
@@ -272,6 +285,10 @@
   overflow-wrap: break-word;
   line-height: 1.3;
   text-align: center; /* Текст по центру */
+}
+
+[data-theme = "dark"] .detailValue {
+  color: #E6EAFF;
 }
 
 /* Секция контактов */
@@ -306,6 +323,10 @@
   margin-right: 0; /* Убираем сдвиг к "стенке" */
 }
 
+[data-theme = "dark"] .leftColumn {
+  background-color: #151E29;
+}
+
 .rightColumn {
   display: flex;
   flex-direction: column;
@@ -317,6 +338,16 @@
   border-radius: 12px; /* Скругление для блока */
   margin-left: 0; /* Убираем сдвиг к "стенке" */
   height: auto; /* высота по контенту */
+}
+
+[data-theme = "dark"] .rightColumn {
+  background-color: #151E29;
+}
+
+.rightColumnText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Кнопки действий */
@@ -479,43 +510,4 @@
   .actionButton {
     width: 100%; /* Кнопки на всю ширину */
   }
-}
-
-/* Темная тема */
-[data-theme = "dark"]  .sectionTitle {
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .modalTitle {
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .descriptionText {
-  color: #d1d5db;
-}
-
-[data-theme = "dark"]  .timeBox {
-  background-color: #0C2D6F;
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .locationText {
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .detailLabel {
-  color: #d1d5db;
-}
-
-[data-theme = "dark"]  .detailValue {
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .actionButton {
-  background-color: #0C2D6F;
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .actionButton:hover {
-  background-color: #4b5563;
 }
