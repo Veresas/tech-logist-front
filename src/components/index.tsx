@@ -19,3 +19,5 @@ export { MobileBottomNav } from './MobileBottomNav';
 
 export { SortContainer } from "./SortComps"
 export { MobileMenu } from "./MobileMenu"
+
+export { NotiThemeModule } from "./NotiThemeModul"

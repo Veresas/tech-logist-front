@@ -1,0 +1,22 @@
+.NotiThemeContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    height: 40px;
+}
+
+.IconWrapper {
+    display: flex;
+    border-radius: 16px;
+    border: 1.5px solid #A8B5FB;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+[data-theme = "dark"] .IconWrapper {
+    border: none;
+    background-color: #454D77;
+}

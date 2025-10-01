@@ -1,7 +1,7 @@
 import type {OrderListContainerProps} from "./type"
 import { useState, useEffect, useCallback } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche} from '../../../hooks'
-import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer } from "../../../components"
+import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
 import { useUtils } from "../../../utils/ContextHooks/UtilsContextHooks"
 import { useAuth } from "../../../utils/ContextHooks/AuthContextHooks"
 import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
@@ -164,28 +164,31 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     if (error) return <div>{error}</div>
     return (
       <div className={styles.orderListContainer}>
-        <div className={styles.oLCHeader}>
-          <SortContainer
-            Today={today}
-            Urgent={isUrgent}
-            DepartLoc={departLoc}
-            GoalLoc={goalLoc}
-            CargoType={cargoType}
-            setName={setName}
-            setIsUrgent={setIsUrgent}
-            setToday={setToday}
-            setCargoType={setCargoType}
-            setDepartLoc={setDepartLoc}
-            setGoalLoc={setGoalLoc}
-          />
+        <div className={styles.oLCHeaderWrapper}>
+          <div className={styles.oLCHeader}>
+            <SortContainer
+              Today={today}
+              Urgent={isUrgent}
+              DepartLoc={departLoc}
+              GoalLoc={goalLoc}
+              CargoType={cargoType}
+              setName={setName}
+              setIsUrgent={setIsUrgent}
+              setToday={setToday}
+              setCargoType={setCargoType}
+              setDepartLoc={setDepartLoc}
+              setGoalLoc={setGoalLoc}
+            />
 
-          <div className={styles.orderCreateModalContainer}>
-            { role !==  ModelRoleEnum.DRIVER &&
-            <button
-              className={styles.orderCreateModal}
-              onClick={() => setIsModalCreateOpen(true)}
-            >Создать заказ +</button>}
+            <div className={styles.orderCreateModalContainer}>
+              { role !==  ModelRoleEnum.DRIVER &&
+              <button
+                className={styles.orderCreateModal}
+                onClick={() => setIsModalCreateOpen(true)}
+              >Создать заказ +</button>}
+            </div>
           </div>
+          <NotiThemeModule/>
         </div>
         
         <div className={styles.scrollArea}>

@@ -25,6 +25,13 @@
     margin-left: 1.5%;
 }
 
+.oLCHeaderWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 .orderCreateModalContainer{
     display: flex;
     width: 100%;
