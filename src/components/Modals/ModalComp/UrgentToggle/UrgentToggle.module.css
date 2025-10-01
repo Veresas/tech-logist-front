@@ -9,6 +9,7 @@
   align-items: center; /* Вертикальное выравнивание по центру */
   gap: 0.75rem; /* Отступ между переключателем и текстом */
   margin-bottom: 1.5rem; /* Отступ снизу от других элементов */
+  margin-top: 10px;
 }
 
 /* Основной переключатель */
@@ -29,6 +30,10 @@
 .toggleSwitch.active {
   background-color: #ef4444; /* Красный цвет для активного состояния */
 }
+[data-theme = "dark"] .toggleSwitch.active {
+  background-color: #FF6666;
+}
+
 
 /* Отключенное состояние переключателя */
 .toggleSwitch.disabled {
@@ -75,6 +80,11 @@
   color: #374151; /* Цвет текста */
   user-select: none; /* Запрещаем выделение текста */
 }
+
+[data-theme = "dark"] .toggleLabel { 
+  color: #F9FAFF;
+}
+
 
 /* Состояние фокуса для accessibility */
 .toggleSwitch:focus {

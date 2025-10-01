@@ -3,6 +3,7 @@ import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
 import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
 import styles from './OrderCreateForm.module.css';
+import "../ModalComp/ModalCops.css"
 import type { OrderCreateFormProps } from './types';
 import { useTheme } from '../../../utils/ContextHooks';
 // Импортируем модульные компоненты

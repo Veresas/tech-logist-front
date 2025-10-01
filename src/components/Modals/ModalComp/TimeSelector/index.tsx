@@ -169,6 +169,7 @@ export const TimeSelector = ({
             stroke="currentColor" 
             strokeWidth="2"
             aria-hidden="true" // Скрываем от screen readers
+            color='#A8B5FB'
           >
             <path d="m18 15-6-6-6 6"/>
           </svg>

@@ -45,10 +45,12 @@
     margin-right: 5%; /* На случай, если контейнер переопределит justify-content */
     background-color: #7764FE;
     color: #FFFFFF;
+    width: 190px;
 }
 
+/*
 @media (min-width: 769px) {
     .orderCreateModal{
         width: 15%;
     }
-}
+}*/

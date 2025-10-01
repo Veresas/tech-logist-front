@@ -11,10 +11,10 @@
   }
   
   [data-theme = "dark"] .body {
-    background-color: #1e1e1e;
+    background-color: #151e29;
   }
   [data-theme = "dark"]  .container {
-    background: #1e1e1e;
+    background: #151e29;
   }
   
   .container {

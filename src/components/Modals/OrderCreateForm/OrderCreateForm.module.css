@@ -287,7 +287,7 @@
 }
 
 [data-theme = "dark"]  .label {
-  color: #9ca3af;
+  color: #F9FAFF;
 }
 
 .input {
@@ -307,13 +307,13 @@
 }
 
 [data-theme = "dark"]  .input {
-  border-color: #4b5563;
-  background-color: #374151;
-  color: #f9fafb;
+  border: none;
+  background-color: #151E29;
+  color: #E6EAFF;
 }
 
 [data-theme = "dark"]  .input:focus {
-  border-color: #3b82f6;
+  border: none;
   background-color: #4b5563;
 }
 
@@ -465,7 +465,7 @@
 
 .photoPlaceholder {
   width: 100%;
-  height: 200px;
+  height: 270px;
   background-color: #6b7280;
   border-radius: 0.5rem;
   display: flex;
@@ -562,15 +562,22 @@
 }
 
 .saveButton {
-  background-color: #e5e7eb;
-  color: #6b7280;
+  background-color: #7764FE;
+  color: #F9FAFF;
   padding: 0.75rem 2rem;
   border-radius: 0.5rem;
-  border: none;
+  border: 1px solid #3049CE;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.875rem;
   transition: background-color 0.2s, color 0.2s;
+  width: 240px;
+}
+
+[data-theme = "dark"] .saveButton { 
+  background-color: #786ADA;
+  color: #F9FAFF;
+  border: none;
 }
 
 .saveButton:hover {
@@ -580,20 +587,6 @@
 
 .saveButton:active {
   background-color: #9ca3af;
-}
-
-[data-theme = "dark"]  .saveButton {
-  background-color: #4b5563;
-  color: #f9fafb;
-}
-
-[data-theme = "dark"]  .saveButton:hover {
-  background-color: #6b7280;
-  color: #ffffff;
-}
-
-[data-theme = "dark"]  .saveButton:active {
-  background-color: #374151;
 }
 
 .saveButton.disabled {
@@ -737,8 +730,8 @@
 }
 
 [data-theme = "dark"]  .locsSection {
-  background-color: #374151;
-  border-color: #4b5563;
+  background-color: #786ADA;
+  border-color: #786ADA;
 }
 
 .weightTypeSection {

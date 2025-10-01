@@ -185,7 +185,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
               <button
                 className={styles.orderCreateModal}
                 onClick={() => setIsModalCreateOpen(true)}
-              >Создать заказ +</button>}
+              >Создать заказ  +</button>}
             </div>
           </div>
           <NotiThemeModule/>
