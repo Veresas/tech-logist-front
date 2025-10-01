@@ -1,7 +1,7 @@
 
 import type { SearchProp } from "./types"
 import styles from "./SearchPlase.module.css"
-import { ICON_SEARCH } from "../../../../public"
+import { ICON_SEARCH } from "../../../assets"
 export const SearchPlace = ({ setName} : SearchProp) => {
     return (
         <div>

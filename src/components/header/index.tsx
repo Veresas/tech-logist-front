@@ -9,7 +9,7 @@ import {
   ICON_SETTINGS,
   ICON_SUPPORT,
   ICON_BRAND_GLYPH,
-} from "../../../public";
+} from "../../assets";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../utils/ContextHooks/AuthContextHooks";
 

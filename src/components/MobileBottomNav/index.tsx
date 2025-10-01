@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './mobileBottomNav.module.css';
 import { useNavigate } from 'react-router-dom';
-import { ICON_ALL_ORDERS, ICON_MY_ORDERS, ICON_MAP, ICON_MENU } from '../../../public';
+import { ICON_ALL_ORDERS, ICON_MY_ORDERS, ICON_MAP, ICON_MENU } from '../../assets';
 
 // Нижняя панель навигации для мобильной платформы (фиксированная, высота 55px)
 // Комментарии и логи — на русском языке

@@ -4,7 +4,7 @@ import { SortModal, } from "../../Modals/SortModal"
 import { SearchPlace, FilterTagList } from "../"
 import type { tag } from "../types"
 import styles from "./sortContainer.module.css"
-import { ICON_FILTER } from "../../../../public"
+import { ICON_FILTER } from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';
 
 export const SortContainer = ({ Today, Urgent, DepartLoc, GoalLoc, CargoType, 

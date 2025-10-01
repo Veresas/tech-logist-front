@@ -33,3 +33,4 @@ export const ICON_PURPLE_NOTIFICATIONS = "/svg/purpule_svg/Notifications.svg";
 export const ICON_PURPLE_ALL_USERS = "/svg/purpule_svg/All_Users.svg";
 export const ICON_PURPLE_THEME = "/svg/purpule_svg/Theme.svg";
 
+export const ICON_BRAND_GLYPH = "/icons/logo.png";

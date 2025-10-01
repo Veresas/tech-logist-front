@@ -6,7 +6,7 @@ import { Modal } from '../ModalComp/Modal';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal';
 import styles from './OrderDetailsModal.module.css';
 import { X, Expand } from 'lucide-react';
-import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../../public"
+import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';
 
 export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({

@@ -3,7 +3,7 @@ import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
 import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
 import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
-import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../../public"
+import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';
 
 export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {

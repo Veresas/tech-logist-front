@@ -1,6 +1,6 @@
 import { MobileMenu } from "../../components"
 import styles from "./MobileMenuPage.module.css"
-import { ICON_PURPLE_NOTIFICATIONS, ICON_PURPLE_THEME, ICON_BRAND_GLYPH } from '../../../public';
+import { ICON_PURPLE_NOTIFICATIONS, ICON_PURPLE_THEME, ICON_BRAND_GLYPH } from '../../assets';
 import { useNavigate } from "react-router-dom";
 export const MobileMenuPage = () => {
     const navigate = useNavigate();
