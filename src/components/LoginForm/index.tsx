@@ -1,15 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { type ModelLoginRequest  } from '../../api/api';
 import styles from './loginForm.module.css';
 import type { LoginFormProps } from './type';
-import { ThemeContext } from '../../context/ThemeContext';
-import { ThemeList } from '../../context/ThemeContext/types';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
-    const themeContext = useContext(ThemeContext);
-    const isDarkTheme = themeContext?.theme === ThemeList.DARK;
     const [showPassword, setShowPassword] = useState(false);
     const {
         register,
@@ -18,7 +14,7 @@ export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
     
     
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} ${isDarkTheme ? styles.dark : ''}`}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <h2 className={styles.formTitle}>Вход в профиль</h2>
             
             <div className={styles.inputGroup}>

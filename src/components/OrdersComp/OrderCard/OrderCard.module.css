@@ -18,7 +18,7 @@
 }
 
 /* Темная тема */
-.orderCard.dark {
+[data-theme = "dark"] .orderCard {
   background-color: #1f2937;
   border-color: #374151;
   color: #f9fafb;
@@ -38,7 +38,7 @@
   letter-spacing: 0.5px;
 }
 
-.dark .orderNumber {
+[data-theme = "dark"] .orderNumber {
   color: #9ca3af;
 }
 
@@ -70,7 +70,7 @@
   word-wrap: break-word;
 }
 
-.dark .orderTitle {
+[data-theme = "dark"] .orderTitle {
   color: #f9fafb;
 }
 
@@ -81,7 +81,7 @@
   margin: 0;
 }
 
-.dark .cardSeparator {
+[data-theme = "dark"] .cardSeparator {
   background-color: #374151;
 }
 
@@ -108,7 +108,7 @@
   flex-shrink: 0;
 }
 
-.dark .detailIcon {
+[data-theme = "dark"] .detailIcon {
   color: #9ca3af;
 }
 
@@ -118,7 +118,7 @@
   line-height: 1.4;
 }
 
-.dark .detailText {
+[data-theme = "dark"] .detailText {
   color: #d1d5db;
 }
 
@@ -138,7 +138,7 @@
   
 }
 
-.dark .routeConnector {
+[data-theme = "dark"] .routeConnector {
   color: #9ca3af;
 }
 
@@ -175,13 +175,13 @@
   transform: translateY(1px);
 }
 
-.dark .cardButton {
+[data-theme = "dark"] .cardButton {
   background-color: #374151;
   border-color: #4b5563;
   color: #f9fafb;
 }
 
-.dark .cardButton:hover {
+[data-theme = "dark"] .cardButton:hover {
   background-color: #4b5563;
   border-color: #6b7280;
 }
@@ -198,13 +198,13 @@
   border-color: #2563eb;
 }
 
-.dark .cardButtonPrimary {
+[data-theme = "dark"] .cardButtonPrimary {
   background-color: #3b82f6;
   border-color: #3b82f6;
   color: #ffffff;
 }
 
-.dark .cardButtonPrimary:hover {
+[data-theme = "dark"] .cardButtonPrimary:hover {
   background-color: #2563eb;
   border-color: #2563eb;
 }

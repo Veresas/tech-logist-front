@@ -10,10 +10,10 @@
     padding-top: 1%;
   }
   
-  .body.dark {
+  [data-theme = "dark"] .body {
     background-color: #1e1e1e;
   }
-  .dark .container {
+  [data-theme = "dark"]  .container {
     background: #1e1e1e;
   }
   

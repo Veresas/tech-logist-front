@@ -11,7 +11,7 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.form.dark {
+[data-theme = "dark"]  .form {
   background-color: #1f2937;
   color: #f9fafb;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -26,7 +26,7 @@
   transition: color 0.3s ease;
 }
 
-.dark .formTitle {
+[data-theme = "dark"]  .formTitle {
   color: #f9fafb;
 }
 
@@ -56,18 +56,18 @@
   color: #6b7280;
 }
 
-.dark .input {
+[data-theme = "dark"]  .input {
   border-color: #4b5563;
   background-color: #374151;
   color: #f9fafb;
 }
 
-.dark .input:focus {
+[data-theme = "dark"]  .input:focus {
   border-color: #3b82f6;
   background-color: #4b5563;
 }
 
-.dark .input::placeholder {
+[data-theme = "dark"]  .input::placeholder {
   color: #9ca3af;
 }
 
@@ -95,11 +95,11 @@
   color: #374151;
 }
 
-.dark .eyeButton {
+[data-theme = "dark"]  .eyeButton {
   color: #9ca3af;
 }
 
-.dark .eyeButton:hover {
+[data-theme = "dark"]  .eyeButton:hover {
   color: #f9fafb;
 }
 
@@ -120,11 +120,11 @@
   text-decoration: underline;
 }
 
-.dark .forgotPasswordLink {
+[data-theme = "dark"]  .forgotPasswordLink {
   color: #9ca3af;
 }
 
-.dark .forgotPasswordLink:hover {
+[data-theme = "dark"]  .forgotPasswordLink:hover {
   color: #f9fafb;
 }
 
@@ -148,16 +148,16 @@
   background-color: #374151;
 }
 
-.dark .loginButton {
+[data-theme = "dark"]  .loginButton {
   background-color: #4b5563;
   color: #ffffff;
 }
 
-.dark .loginButton:hover {
+[data-theme = "dark"]  .loginButton:hover {
   background-color: #6b7280;
 }
 
-.dark .loginButton:active {
+[data-theme = "dark"]  .loginButton:active {
   background-color: #374151;
 }
 
@@ -182,16 +182,16 @@
   background-color: #9ca3af;
 }
 
-.dark .registerButton {
+[data-theme = "dark"]  .registerButton {
   background-color: #374151;
   color: #9ca3af;
 }
 
-.dark .registerButton:hover {
+[data-theme = "dark"]  .registerButton:hover {
   background-color: #4b5563;
   color: #f9fafb;
 }
 
-.dark .registerButton:active {
+[data-theme = "dark"]  .registerButton:active {
   background-color: #6b7280;
 } 

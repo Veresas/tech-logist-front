@@ -34,7 +34,7 @@
 }
 
 /* Темная тема для модального окна */
-.modal.dark {
+[data-theme = "dark"] .modal {
   background: #1f2937; /* Темно-серый фон */
   color: #f9fafb; /* Светлый текст */
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), /* Более темная тень */
@@ -51,7 +51,7 @@
 }
 
 /* Темная тема для заголовка */
-.modal.dark .modalHeader {
+[data-theme = "dark"] .modalHeader {
   border-bottom-color: #374151; /* Темная разделительная линия */
 }
 
@@ -64,7 +64,7 @@
 }
 
 /* Темная тема для заголовка */
-.modal.dark .modalTitle {
+[data-theme = "dark"] .modalTitle {
   color: #f9fafb; /* Светлый текст для темной темы */
 }
 
@@ -92,11 +92,11 @@
 }
 
 /* Состояние наведения для кнопки закрытия в темной теме */
-.modal.dark .closeButton {
+[data-theme = "dark"].closeButton {
   color: #9ca3af; /* Светло-серый цвет символа для темной темы */
 }
 
-.modal.dark .closeButton:hover {
+[data-theme = "dark"] .closeButton:hover {
   background-color: #374151; /* Темно-серый фон при наведении */
   color: #f9fafb; /* Светлый цвет символа при наведении */
 }
@@ -126,7 +126,7 @@
 }
 
 /* Темная тема для футера */
-.modal.dark .modalFooter {
+[data-theme = "dark"] .modalFooter {
   border-top-color: #374151; /* Темная разделительная линия */
 }
 

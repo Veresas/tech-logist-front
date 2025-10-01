@@ -124,7 +124,7 @@
   }
 }
 
-.modal.dark {
+[data-theme = "dark"] .modal {
   background-color: #1f2937;
   color: #f9fafb;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -167,17 +167,17 @@
   transform: translateY(1px);
 }
 
-.dark .modalHeader {
+[data-theme = "dark"]  .modalHeader {
   border-bottom-color: #374151;
 }
 
-.dark .clearButton {
+[data-theme = "dark"]  .clearButton {
   background: #374151;
   border-color: #4b5563;
   color: #d1d5db;
 }
 
-.dark .clearButton:hover {
+[data-theme = "dark"]  .clearButton:hover {
   background: #4b5563;
   color: #f9fafb;
 }
@@ -190,7 +190,7 @@
   transition: color 0.3s ease;
 }
 
-.dark .modalTitle {
+[data-theme = "dark"]  .modalTitle {
   color: #f9fafb;
 }
 
@@ -255,7 +255,7 @@
   transition: color 0.3s ease;
 }
 
-.dark .toggleLabel {
+[data-theme = "dark"]  .toggleLabel {
   color: #f9fafb;
 }
 
@@ -286,7 +286,7 @@
   transition: color 0.3s ease;
 }
 
-.dark .label {
+[data-theme = "dark"]  .label {
   color: #9ca3af;
 }
 
@@ -306,13 +306,13 @@
   background-color: #ffffff;
 }
 
-.dark .input {
+[data-theme = "dark"]  .input {
   border-color: #4b5563;
   background-color: #374151;
   color: #f9fafb;
 }
 
-.dark .input:focus {
+[data-theme = "dark"]  .input:focus {
   border-color: #3b82f6;
   background-color: #4b5563;
 }
@@ -331,7 +331,7 @@
   padding-right: 2.5rem;
 }
 
-.dark .select {
+[data-theme = "dark"]  .select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
 }
 
@@ -369,13 +369,13 @@
   border-color: #6b7280;
 }
 
-.dark .timeTab {
+[data-theme = "dark"]  .timeTab {
   border-color: #4b5563;
   background-color: #374151;
   color: #9ca3af;
 }
 
-.dark .timeTab.active {
+[data-theme = "dark"]  .timeTab.active {
   background-color: #6b7280;
   color: white;
   border-color: #6b7280;
@@ -390,7 +390,7 @@
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.dark .timeGrid {
+[data-theme = "dark"]  .timeGrid {
   border-color: #4b5563;
   background-color: #374151;
 }
@@ -407,7 +407,7 @@
   transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.dark .timeGridHeader {
+[data-theme = "dark"]  .timeGridHeader {
   border-bottom-color: #4b5563;
   background-color: #4b5563;
   color: #f9fafb;
@@ -442,17 +442,17 @@
   border-color: #6b7280;
 }
 
-.dark .timeSlot {
+[data-theme = "dark"]  .timeSlot {
   border-color: #4b5563;
   background-color: #4b5563;
   color: #f9fafb;
 }
 
-.dark .timeSlot:hover {
+[data-theme = "dark"]  .timeSlot:hover {
   background-color: #6b7280;
 }
 
-.dark .timeSlot.selected {
+[data-theme = "dark"]  .timeSlot.selected {
   background-color: #6b7280;
   color: white;
   border-color: #6b7280;
@@ -533,18 +533,18 @@
   border-radius: 0.375rem;
 }
 
-.dark .photoPlaceholder {
+[data-theme = "dark"]  .photoPlaceholder {
   background-color: #4b5563;
   border-color: #6b7280;
   color: #d1d5db;
 }
 
-.dark .photoPlaceholder:hover {
+[data-theme = "dark"]  .photoPlaceholder:hover {
   border-color: #9ca3af;
   background-color: #374151;
 }
 
-.dark .photoPlaceholder.uploading {
+[data-theme = "dark"]  .photoPlaceholder.uploading {
   border-color: #3b82f6;
   background-color: #374151;
 }
@@ -557,7 +557,7 @@
   transition: border-color 0.3s ease;
 }
 
-.dark .modalFooter {
+[data-theme = "dark"]  .modalFooter {
   border-top-color: #374151;
 }
 
@@ -582,17 +582,17 @@
   background-color: #9ca3af;
 }
 
-.dark .saveButton {
+[data-theme = "dark"]  .saveButton {
   background-color: #4b5563;
   color: #f9fafb;
 }
 
-.dark .saveButton:hover {
+[data-theme = "dark"]  .saveButton:hover {
   background-color: #6b7280;
   color: #ffffff;
 }
 
-.dark .saveButton:active {
+[data-theme = "dark"]  .saveButton:active {
   background-color: #374151;
 }
 
@@ -608,12 +608,12 @@
   color: #6b7280;
 }
 
-.dark .saveButton.disabled {
+[data-theme = "dark"]  .saveButton.disabled {
   background-color: #6b7280;
   color: #9ca3af;
 }
 
-.dark .saveButton.disabled:hover {
+[data-theme = "dark"]  .saveButton.disabled:hover {
   background-color: #6b7280;
   color: #9ca3af;
 }
@@ -661,30 +661,30 @@
 }
 
 /* Темная тема для React Select */
-.dark .reactSelect__control {
+[data-theme = "dark"]  .reactSelect__control {
   background-color: #374151;
   border-color: #4b5563;
 }
 
-.dark .reactSelect__control--is-focused {
+[data-theme = "dark"]  .reactSelect__control--is-focused {
   border-color: #3b82f6;
   box-shadow: 0 0 0 1px #3b82f6;
 }
 
-.dark .reactSelect__menu {
+[data-theme = "dark"]  .reactSelect__menu {
   background-color: #374151;
   border: 1px solid #4b5563;
 }
 
-.dark .reactSelect__placeholder {
+[data-theme = "dark"]  .reactSelect__placeholder {
   color: #9ca3af;
 }
 
-.dark .reactSelect__single-value {
+[data-theme = "dark"]  .reactSelect__single-value {
   color: #f9fafb;
 }
 
-.dark .reactSelect__input-container {
+[data-theme = "dark"]  .reactSelect__input-container {
   color: #f9fafb;
 }
 
@@ -736,7 +736,7 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.dark .locsSection {
+[data-theme = "dark"]  .locsSection {
   background-color: #374151;
   border-color: #4b5563;
 }
@@ -884,59 +884,59 @@
 }
 
 /* Темная тема для карточки заказа */
-.dark .orderCard {
+[data-theme = "dark"]  .orderCard {
   background-color: #374151;
   border-color: #4b5563;
   color: #f9fafb;
 }
 
-.dark .orderCard:hover {
+[data-theme = "dark"]  .orderCard:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.dark .orderNumber {
+[data-theme = "dark"]  .orderNumber {
   color: #9ca3af;
 }
 
-.dark .orderTitle {
+[data-theme = "dark"]  .orderTitle {
   color: #f9fafb;
 }
 
-.dark .cardSeparator {
+[data-theme = "dark"]  .cardSeparator {
   background-color: #4b5563;
 }
 
-.dark .detailIcon {
+[data-theme = "dark"]  .detailIcon {
   color: #9ca3af;
 }
 
-.dark .detailText {
+[data-theme = "dark"]  .detailText {
   color: #d1d5db;
 }
 
-.dark .routeConnector {
+[data-theme = "dark"]  .routeConnector {
   color: #9ca3af;
 }
 
-.dark .cardButton {
+[data-theme = "dark"]  .cardButton {
   border-color: #4b5563;
   color: #d1d5db;
   background-color: transparent;
 }
 
-.dark .cardButton:hover {
+[data-theme = "dark"]  .cardButton:hover {
   background-color: #4b5563;
   border-color: #6b7280;
   color: #f9fafb;
 }
 
-.dark .cardButtonPrimary {
+[data-theme = "dark"]  .cardButtonPrimary {
   background-color: #4b5563;
   border-color: #6b7280;
   color: #f9fafb;
 }
 
-.dark .cardButtonPrimary:hover {
+[data-theme = "dark"]  .cardButtonPrimary:hover {
   background-color: #6b7280;
   border-color: #9ca3af;
   color: #ffffff;

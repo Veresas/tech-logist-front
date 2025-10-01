@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import type { OrderDetailsModalProps } from './types';
 import { ModelRoleEnum, ModelOrderStatusEnum } from '../../../api';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
-import { useTheme } from '../../../utils/ContextHooks/ThemeContextHooks';
 import { Modal } from '../ModalComp/Modal';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal';
 import styles from './OrderDetailsModal.module.css';
@@ -22,7 +21,6 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   photoUrl
 }) => {
   const { role } = useAuth();
-  const { theme } = useTheme();
   const [isPhotoExpanded, setIsPhotoExpanded] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const { isMobile } = usePlatform();
@@ -381,7 +379,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         onClose={onClose}
         title={undefined}
         titelElement={getTitelElement()}
-        className={`${styles.orderDetailsModal} ${theme === 'dark' ? styles.dark : ''}`}
+        className={styles.orderDetailsModal}
       >
         {isMobile ? mobile : desktop}
       </Modal>

@@ -5,7 +5,7 @@ export const useDropdown = () => {
     const context = useContext(DropdownContext)
 
     if (!context) {
-        throw new Error('useTheme must be used within ThemeProvider');
+        throw new Error('useDropdown must be used within DropdownProvider');
     }
     
     return context

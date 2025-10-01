@@ -482,40 +482,40 @@
 }
 
 /* Темная тема */
-.dark .sectionTitle {
+[data-theme = "dark"]  .sectionTitle {
   color: #f9fafb;
 }
 
-.dark .modalTitle {
+[data-theme = "dark"]  .modalTitle {
   color: #f9fafb;
 }
 
-.dark .descriptionText {
+[data-theme = "dark"]  .descriptionText {
   color: #d1d5db;
 }
 
-.dark .timeBox {
+[data-theme = "dark"]  .timeBox {
   background-color: #0C2D6F;
   color: #f9fafb;
 }
 
-.dark .locationText {
+[data-theme = "dark"]  .locationText {
   color: #f9fafb;
 }
 
-.dark .detailLabel {
+[data-theme = "dark"]  .detailLabel {
   color: #d1d5db;
 }
 
-.dark .detailValue {
+[data-theme = "dark"]  .detailValue {
   color: #f9fafb;
 }
 
-.dark .actionButton {
+[data-theme = "dark"]  .actionButton {
   background-color: #0C2D6F;
   color: #f9fafb;
 }
 
-.dark .actionButton:hover {
+[data-theme = "dark"]  .actionButton:hover {
   background-color: #4b5563;
 }

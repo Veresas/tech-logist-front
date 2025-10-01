@@ -1,6 +1,5 @@
 import type { OrderCardProps } from './type';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
-import { useTheme } from '../../../utils/ContextHooks/ThemeContextHooks';
 import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
 import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
@@ -9,7 +8,6 @@ import { usePlatform } from '../../../utils/ContextHooks';
 
 export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {
     const { role } = useAuth();
-    const { theme } = useTheme();
     const { isMobile } = usePlatform();
     // Форматирование времени
     const formatTime = (timeString?: string) => {
@@ -59,7 +57,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
     };
 
     return (
-        <div className={`${styles.orderCard} ${theme === 'dark' ? styles.dark : ''}`}>
+        <div className={styles.orderCard}>
             {/* Заголовок карточки */}
             <div className={styles.cardHeader}>
                 <span className={styles.orderNumber}>№{order.id?.toString().padStart(4, '0') || '0000'}</span>

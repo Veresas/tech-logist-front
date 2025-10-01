@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
 import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
 import styles from './OrderCreateForm.module.css';
 import type { OrderCreateFormProps } from './types';
-import { ThemeContext } from '../../../context/ThemeContext';
-import { ThemeList } from '../../../context/ThemeContext/types';
-
+import { useTheme } from '../../../utils/ContextHooks';
 // Импортируем модульные компоненты
 import { Modal } from '../ModalComp/Modal';
 import { UrgentToggle } from '../ModalComp/UrgentToggle';
@@ -43,8 +41,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   cargoTypeOptions
  }: OrderCreateFormProps) => {
 
-  const themeContext = useContext(ThemeContext);
-  const isDarkTheme = themeContext?.theme === ThemeList.DARK;
+  const { isDarkMode } = useTheme()
   
   // Состояние для отслеживания измененных полей при редактировании
   const [originalValues, setOriginalValues] = useState<Partial<ModelOrderCreate>>({});
@@ -326,7 +323,6 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
       title={getModalTitle(!!order)}
       titelElement={undefined}
       footer={modalFooter}
-      className={isDarkTheme ? styles.dark : ''}
     >
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         {/* Переключатель срочности */}
@@ -380,11 +376,11 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
-                          ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                          ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                           : 'transparent',
-                        color: isDarkTheme ? '#f9fafb' : '#374151',
+                        color: isDarkMode ? '#f9fafb' : '#374151',
                         '&:hover': {
-                          backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                          backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                         }
                       })}}
                     />
@@ -413,11 +409,11 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
-                          ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                          ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                           : 'transparent',
-                        color: isDarkTheme ? '#f9fafb' : '#374151',
+                        color: isDarkMode ? '#f9fafb' : '#374151',
                         '&:hover': {
-                          backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                          backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                         }
                       })}}
                     />
@@ -475,11 +471,11 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
                       styles={{ option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused 
-                          ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                          ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                           : 'transparent',
-                        color: isDarkTheme ? '#f9fafb' : '#374151',
+                        color: isDarkMode ? '#f9fafb' : '#374151',
                         '&:hover': {
-                          backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                          backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                         }
                       })}}
                     />

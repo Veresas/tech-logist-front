@@ -47,7 +47,7 @@
   }
   
   /* Темная тема */
-  .dark .modalContent {
+  [data-theme = "dark"]  .modalContent {
     background-color: #1f2937;
     color: #f9fafb;
   }

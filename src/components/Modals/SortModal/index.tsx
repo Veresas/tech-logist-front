@@ -1,13 +1,12 @@
 // SortModal.tsx
-import React, { useContext } from 'react';
+import React from 'react';
 import { Modal } from '../ModalComp/Modal';
 import styles from './SortModal.module.css';
 import type { SortModalProps } from './types';
 import { useDropdown } from "../../../utils/ContextHooks"; // Предполагаем, что хук возвращает { locations, cargoTypes }
 import Select from 'react-select';
 import { transformLocationOptions, transformCargoTypeOptions } from '../../../utils/orderUtils'; // Импортируем утилиты
-import { ThemeContext } from '../../../context/ThemeContext';
-import { ThemeList } from '../../../context/ThemeContext/types';
+import { useTheme } from '../../../utils/ContextHooks';
 
 export const SortModal: React.FC<SortModalProps> = ({
     isOpen,
@@ -24,8 +23,7 @@ export const SortModal: React.FC<SortModalProps> = ({
     setCargoType
 }) => {
     const { locs, cargoTypes: availableCargoTypes } = useDropdown(); // Получаем данные из контекста
-    const themeContext = useContext(ThemeContext);
-    const isDarkTheme = themeContext?.theme === ThemeList.DARK;
+    const { isDarkMode } = useTheme()
 
     // Функция для обработки изменения локации
     const handleDepartLocationChange = (selectedOption: { value: number; label: string } | null) => {
@@ -64,11 +62,11 @@ export const SortModal: React.FC<SortModalProps> = ({
                         styles={{ option: (provided, state) => ({
                             ...provided,
                             backgroundColor: state.isFocused 
-                                ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                                ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                                 : 'transparent',
-                            color: isDarkTheme ? '#f9fafb' : '#374151',
+                            color: isDarkMode ? '#f9fafb' : '#374151',
                             '&:hover': {
-                                backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                                backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                             }
                         })}}
                     />
@@ -89,11 +87,11 @@ export const SortModal: React.FC<SortModalProps> = ({
                         styles={{ option: (provided, state) => ({
                             ...provided,
                             backgroundColor: state.isFocused 
-                                ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                                ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                                 : 'transparent',
-                            color: isDarkTheme ? '#f9fafb' : '#374151',
+                            color: isDarkMode ? '#f9fafb' : '#374151',
                             '&:hover': {
-                                backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                                backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                             }
                         })}}
                     />
@@ -114,11 +112,11 @@ export const SortModal: React.FC<SortModalProps> = ({
                         styles={{ option: (provided, state) => ({
                             ...provided,
                             backgroundColor: state.isFocused 
-                                ? (isDarkTheme ? '#4b5563' : '#f3f4f6')
+                                ? (isDarkMode ? '#4b5563' : '#f3f4f6')
                                 : 'transparent',
-                            color: isDarkTheme ? '#f9fafb' : '#374151',
+                            color: isDarkMode ? '#f9fafb' : '#374151',
                             '&:hover': {
-                                backgroundColor: isDarkTheme ? '#4b5563' : '#f3f4f6'
+                                backgroundColor: isDarkMode ? '#4b5563' : '#f3f4f6'
                             }
                         })}}
                     />
