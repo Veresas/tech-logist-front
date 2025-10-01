@@ -5,8 +5,13 @@
 	padding: 12px 16px;
 	border: 2px solid #b7befc;
 	border-radius: 999px;
-	background: #ffffff;
+	background-color: #ffffff;
 
+}
+
+[data-theme = "dark"] .searchBox {
+	background-color: #454D77;
+	border: none;
 }
 
 .searchIcon {
@@ -22,8 +27,13 @@
 	border: none;
 	outline: none;
 	font-size: 16px;
-	background: #ffffff;
+	background-color: #ffffff;
 	color: #1f2a44;
+}
+
+[data-theme = "dark"] .searchInput {
+	background-color: #454D77;
+	color: #F9FAFF;
 }
 
 @media (min-width: 769px) {

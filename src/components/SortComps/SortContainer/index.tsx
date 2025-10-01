@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import type { SortContainerProp } from "./types"
 import { SortModal, } from "../../Modals/SortModal"
-import { SearchPlace, FilterTagList } from "../"
+import { SearchPlace, FilterTagList } from ".."
 import type { tag } from "../types"
 import styles from "./sortContainer.module.css"
 import { ICON_FILTER } from "../../../assets"

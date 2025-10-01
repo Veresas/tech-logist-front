@@ -27,6 +27,12 @@
 	cursor: pointer;
 }
 
+[data-theme = "dark"] .filtersButton {
+	background-color: #454D77;
+	border: none;
+	color: #F9FAFF;
+}
+
 .badge {
 	margin-left: 6px;
 	width: 24px;
@@ -37,4 +43,9 @@
 	display: grid;
 	place-items: center;
 	font-size: 14px;
+}
+
+[data-theme = "dark"] .badge {
+	background-color: #CCD4FF;
+	color: #151E29;
 }
