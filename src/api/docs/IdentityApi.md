@@ -4,65 +4,11 @@ All URIs are relative to *http://localhost:8400/api*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**apiPublicAuthRegisterPost**](#apipublicauthregisterpost) | **POST** /api/public/auth/register | Зарегистрировать нового пользователя|
 |[**identUsersIdGet**](#identusersidget) | **GET** /ident/users/{id} | Получить пользователя по ID|
 |[**identUsersIdPatch**](#identusersidpatch) | **PATCH** /ident/users/{id} | Обновить данные пользователя|
 |[**publicAuthLoginPost**](#publicauthloginpost) | **POST** /public/auth/login | Входит в систему|
 |[**publicAuthLogoutPost**](#publicauthlogoutpost) | **POST** /public/auth/logout | Выходит из системы|
-
-# **apiPublicAuthRegisterPost**
-> { [key: string]: any; } apiPublicAuthRegisterPost(user)
-
-Создает нового пользователя в системе
-
-### Example
-
-```typescript
-import {
-    IdentityApi,
-    Configuration,
-    ModelRegisterRequest
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new IdentityApi(configuration);
-
-let user: ModelRegisterRequest; //Данные для регистрации
-
-const { status, data } = await apiInstance.apiPublicAuthRegisterPost(
-    user
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **user** | **ModelRegisterRequest**| Данные для регистрации | |
-
-
-### Return type
-
-**{ [key: string]: any; }**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**201** | Пользователь успешно создан |  -  |
-|**400** | Неверные данные пользователя |  -  |
-|**500** | Ошибка создания пользователя |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+|[**publicAuthRegisterPost**](#publicauthregisterpost) | **POST** /public/auth/register | Зарегистрировать нового пользователя|
 
 # **identUsersIdGet**
 > ModelTLIdentetyModelUser identUsersIdGet()
@@ -270,6 +216,60 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Пользователь успешно вышел |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **publicAuthRegisterPost**
+> { [key: string]: any; } publicAuthRegisterPost(user)
+
+Создает нового пользователя в системе
+
+### Example
+
+```typescript
+import {
+    IdentityApi,
+    Configuration,
+    ModelRegisterRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new IdentityApi(configuration);
+
+let user: ModelRegisterRequest; //Данные для регистрации
+
+const { status, data } = await apiInstance.publicAuthRegisterPost(
+    user
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **user** | **ModelRegisterRequest**| Данные для регистрации | |
+
+
+### Return type
+
+**{ [key: string]: any; }**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Пользователь успешно создан |  -  |
+|**400** | Неверные данные пользователя |  -  |
+|**500** | Ошибка создания пользователя |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

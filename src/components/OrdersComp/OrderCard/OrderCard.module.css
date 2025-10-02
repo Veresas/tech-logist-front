@@ -246,9 +246,7 @@
 @media (max-width: 480px) {
   .orderCard {
     min-width: 0;
-    width: 100%;
     max-width: none;
-    min-height: 280px;
     padding: 14px;
     gap: 10px;
   }

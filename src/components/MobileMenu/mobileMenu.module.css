@@ -30,6 +30,10 @@
 	cursor: pointer;
 }
 
+[data-theme = "dark"] .menuItem {
+    color: #F9FAFF;
+}
+
 .icon { width: 22px; height: 22px; }
 
 .itemText { font-size: 16px; }

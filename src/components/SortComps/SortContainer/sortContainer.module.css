@@ -49,3 +49,11 @@
 	background-color: #CCD4FF;
 	color: #151E29;
 }
+
+@media (max-width: 400px) {
+	.wrapper {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	}
+}

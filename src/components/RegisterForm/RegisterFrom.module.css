@@ -33,6 +33,7 @@
   background-color: #f9fafb;
   font-size: 0.875rem;
   transition: border-color 0.2s, background-color 0.2s;
+  color: #3B60AA;
 }
 
 .input:focus {

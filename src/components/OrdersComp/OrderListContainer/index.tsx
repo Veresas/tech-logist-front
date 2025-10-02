@@ -2,8 +2,7 @@ import type {OrderListContainerProps} from "./type"
 import { useState, useEffect, useCallback } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche} from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
-import { useUtils } from "../../../utils/ContextHooks/UtilsContextHooks"
-import { useAuth } from "../../../utils/ContextHooks/AuthContextHooks"
+import { useUtils, useAuth , usePlatform} from "../../../utils/ContextHooks"
 import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
 import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 
@@ -21,6 +20,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined)
     const { newOrderMarker, triggerNewOrderMarker} = useUtils();
     const { role } = useAuth();
+    const { isDesktop } = usePlatform();
     const [firstRender, setFrirstRender] = useState<boolean>(false)
     const { clearDraft } = useOrderDraft();
 
@@ -188,7 +188,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
               >Создать заказ  +</button>}
             </div>
           </div>
-          <NotiThemeModule/>
+          {isDesktop &&  <NotiThemeModule/>}
         </div>
         
         <div className={styles.scrollArea}>

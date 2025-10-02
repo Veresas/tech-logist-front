@@ -36,3 +36,6 @@ export const ICON_PURPLE_ALL_USERS = "/svg/purpule_svg/All_Users.svg";
 export const ICON_PURPLE_THEME = "/svg/purpule_svg/Theme.svg";
 
 export const ICON_BRAND_GLYPH = "/icons/logo.png";
+
+export const BIG_LOGO_COLOR = "/icons/BIG_LOGO_COLOR.png"
+export const BIG_LOGO_WHITE = "/icons/BIG_LOGO_WHITE.png"

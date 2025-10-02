@@ -4,7 +4,7 @@ import styles from "./SearchPlase.module.css"
 import { ICON_SEARCH } from "../../../assets"
 export const SearchPlace = ({ setName} : SearchProp) => {
     return (
-        <div>
+        <div className={styles.searchPlace}>
             <div className={styles.searchBox}>
                 <div className={styles.searchIcon}>
                     <img src={ICON_SEARCH} alt=""></img>

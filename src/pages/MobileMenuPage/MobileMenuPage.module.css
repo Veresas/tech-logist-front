@@ -6,6 +6,11 @@
     background-color: #E6EAFF;
 }
 
+[data-theme = "dark"] .body {
+    background-color: #151e29;
+    color: #F9FAFF;
+}
+
 .headerRow {
     display: flex;
     justify-content: flex-end;
@@ -13,22 +18,27 @@
     margin-bottom: 16px;
 }
 
-.brand { width: 92px; height: auto; justify-self: start; margin-left: 10%;}
+.brand { 
+    width: 200px;
+    height: auto; 
+    justify-self: start; 
+    margin-left: 10%;
+}
 
-.headerActions { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+.headerActions { 
+    display: flex; 
+    gap: 8px; 
+    align-items: 
+    center; 
+    margin-left: auto; 
+}
 
-.actionsHolder { display: flex; gap: 8px; justify-content: flex-end; width: 100%; }
-
-/* Кнопки в шапке (локальные стили для этой страницы) */
-.circleBtn {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid #c8cffc;
-    background: #ffffff;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
+.actionsHolder { 
+    display: flex; 
+    gap: 8px; 
+    justify-content: 
+    flex-end; width: 
+    100%; 
 }
 
 .menuColumn {

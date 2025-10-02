@@ -14,6 +14,10 @@
 	border: none;
 }
 
+.searchPlace {
+	min-width: 240px;
+}
+
 .searchIcon {
 	width: 20px;
 	height: 20px;
@@ -48,3 +52,13 @@
 		min-width: 420px;
 	}
 }	
+
+@media (max-width: 400px) {
+	.searchPlace {
+		width: 240px;
+	}
+
+	.searchInput {
+		font-size: 12px;
+	}
+}

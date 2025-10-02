@@ -1,16 +1,12 @@
-import { MobileMenu } from "../../components"
+import { MobileMenu, NotiThemeModule } from "../../components"
 import styles from "./MobileMenuPage.module.css"
-import { ICON_PURPLE_NOTIFICATIONS, ICON_PURPLE_THEME, ICON_BRAND_GLYPH } from '../../assets';
+import { BIG_LOGO_COLOR, BIG_LOGO_WHITE } from '../../assets';
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../utils/ContextHooks";
+
 export const MobileMenuPage = () => {
     const navigate = useNavigate();
-    const onBellClick = () => {
-        
-    }
-
-    const onThemeClick = () => {
-
-    }
+    const {isDarkMode} = useTheme();
 
     const onAllOrdersClick = () => {
         navigate("/s/main")
@@ -29,18 +25,12 @@ export const MobileMenuPage = () => {
             <div className={styles.headerRow}>
                 
                 <div className={styles.headerActions}>
-                    <div className={styles.actionsHolder}>
-                        <span aria-label="Уведомления" className={styles.circleBtn} onClick={onBellClick}>
-                            <img src={ICON_PURPLE_NOTIFICATIONS} alt="" />
-                        </span>
-                        <span aria-label="Сменить тему" className={styles.circleBtn} onClick={onThemeClick}>
-                            <img src={ICON_PURPLE_THEME} alt="" />
-                        </span>
-                    </div>
+                    <NotiThemeModule/>
                 </div>
             </div>
             <div className={styles.menuColumn}>
-                <img className={styles.brand} src={ICON_BRAND_GLYPH} alt="Логотип" />
+                
+                <img className={styles.brand} src={isDarkMode ? BIG_LOGO_WHITE : BIG_LOGO_COLOR} alt="Логотип" />
                 <MobileMenu
                 onAllOrdersClick={onAllOrdersClick}
                 onMyOrdersClick={onMyOrdersClick}

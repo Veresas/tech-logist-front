@@ -707,42 +707,6 @@ export class CheckApi extends BaseAPI {
 export const IdentityApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Создает нового пользователя в системе
-         * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPublicAuthRegisterPost: async (user: ModelRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'user' is not null or undefined
-            assertParamExists('apiPublicAuthRegisterPost', 'user', user)
-            const localVarPath = `/api/public/auth/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Возвращает информацию о пользователе по его ID (int или UUID)
          * @summary Получить пользователя по ID
          * @param {string} id ID пользователя (число или UUID)
@@ -882,6 +846,42 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthRegisterPost: async (user: ModelRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('publicAuthRegisterPost', 'user', user)
+            const localVarPath = `/public/auth/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -892,19 +892,6 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
 export const IdentityApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = IdentityApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Создает нового пользователя в системе
-         * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPublicAuthRegisterPost(user, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IdentityApi.apiPublicAuthRegisterPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * Возвращает информацию о пользователе по его ID (int или UUID)
          * @summary Получить пользователя по ID
@@ -957,6 +944,19 @@ export const IdentityApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthLogoutPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publicAuthRegisterPost(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthRegisterPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -967,16 +967,6 @@ export const IdentityApiFp = function(configuration?: Configuration) {
 export const IdentityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = IdentityApiFp(configuration)
     return {
-        /**
-         * Создает нового пользователя в системе
-         * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.apiPublicAuthRegisterPost(user, options).then((request) => request(axios, basePath));
-        },
         /**
          * Возвращает информацию о пользователе по его ID (int или UUID)
          * @summary Получить пользователя по ID
@@ -1017,6 +1007,16 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
         publicAuthLogoutPost(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.publicAuthLogoutPost(options).then((request) => request(axios, basePath));
         },
+        /**
+         * Создает нового пользователя в системе
+         * @summary Зарегистрировать нового пользователя
+         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.publicAuthRegisterPost(user, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1027,18 +1027,6 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
  * @extends {BaseAPI}
  */
 export class IdentityApi extends BaseAPI {
-    /**
-     * Создает нового пользователя в системе
-     * @summary Зарегистрировать нового пользователя
-     * @param {ModelRegisterRequest} user Данные для регистрации
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IdentityApi
-     */
-    public apiPublicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig) {
-        return IdentityApiFp(this.configuration).apiPublicAuthRegisterPost(user, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Возвращает информацию о пользователе по его ID (int или UUID)
      * @summary Получить пользователя по ID
@@ -1085,6 +1073,18 @@ export class IdentityApi extends BaseAPI {
      */
     public publicAuthLogoutPost(options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).publicAuthLogoutPost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Создает нового пользователя в системе
+     * @summary Зарегистрировать нового пользователя
+     * @param {ModelRegisterRequest} user Данные для регистрации
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).publicAuthRegisterPost(user, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
