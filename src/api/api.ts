@@ -781,6 +781,40 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Проверяет, существует ли логин в системе
+         * @summary Проверка уникальности логина
+         * @param {string} login Логин для проверки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthCheckLoginLoginGet: async (login: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'login' is not null or undefined
+            assertParamExists('publicAuthCheckLoginLoginGet', 'login', login)
+            const localVarPath = `/public/auth/check-login/{login}`
+                .replace(`{${"login"}}`, encodeURIComponent(String(login)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Входит в систему
          * @summary Входит в систему
          * @param {ModelLoginRequest} user Данные для входа
@@ -920,6 +954,19 @@ export const IdentityApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Проверяет, существует ли логин в системе
+         * @summary Проверка уникальности логина
+         * @param {string} login Логин для проверки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publicAuthCheckLoginLoginGet(login: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publicAuthCheckLoginLoginGet(login, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthCheckLoginLoginGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Входит в систему
          * @summary Входит в систему
          * @param {ModelLoginRequest} user Данные для входа
@@ -989,6 +1036,16 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.identUsersIdPatch(id, user, options).then((request) => request(axios, basePath));
         },
         /**
+         * Проверяет, существует ли логин в системе
+         * @summary Проверка уникальности логина
+         * @param {string} login Логин для проверки
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicAuthCheckLoginLoginGet(login: string, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
+            return localVarFp.publicAuthCheckLoginLoginGet(login, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Входит в систему
          * @summary Входит в систему
          * @param {ModelLoginRequest} user Данные для входа
@@ -1050,6 +1107,18 @@ export class IdentityApi extends BaseAPI {
      */
     public identUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).identUsersIdPatch(id, user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Проверяет, существует ли логин в системе
+     * @summary Проверка уникальности логина
+     * @param {string} login Логин для проверки
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IdentityApi
+     */
+    public publicAuthCheckLoginLoginGet(login: string, options?: RawAxiosRequestConfig) {
+        return IdentityApiFp(this.configuration).publicAuthCheckLoginLoginGet(login, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

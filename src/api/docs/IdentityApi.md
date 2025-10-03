@@ -6,6 +6,7 @@ All URIs are relative to *http://localhost:8400/api*
 |------------- | ------------- | -------------|
 |[**identUsersIdGet**](#identusersidget) | **GET** /ident/users/{id} | Получить пользователя по ID|
 |[**identUsersIdPatch**](#identusersidpatch) | **PATCH** /ident/users/{id} | Обновить данные пользователя|
+|[**publicAuthCheckLoginLoginGet**](#publicauthcheckloginloginget) | **GET** /public/auth/check-login/{login} | Проверка уникальности логина|
 |[**publicAuthLoginPost**](#publicauthloginpost) | **POST** /public/auth/login | Входит в систему|
 |[**publicAuthLogoutPost**](#publicauthlogoutpost) | **POST** /public/auth/logout | Выходит из системы|
 |[**publicAuthRegisterPost**](#publicauthregisterpost) | **POST** /public/auth/register | Зарегистрировать нового пользователя|
@@ -118,6 +119,59 @@ No authorization required
 |**400** | Неверный формат ID |  -  |
 |**404** | Пользователь не найден |  -  |
 |**500** | Ошибка обновления пользователя |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **publicAuthCheckLoginLoginGet**
+> boolean publicAuthCheckLoginLoginGet()
+
+Проверяет, существует ли логин в системе
+
+### Example
+
+```typescript
+import {
+    IdentityApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new IdentityApi(configuration);
+
+let login: string; //Логин для проверки (default to undefined)
+
+const { status, data } = await apiInstance.publicAuthCheckLoginLoginGet(
+    login
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **login** | [**string**] | Логин для проверки | defaults to undefined|
+
+
+### Return type
+
+**boolean**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | true - логин свободен, false - занят |  -  |
+|**400** | Некорректный ввод |  -  |
+|**500** | Внутренняя ошибка |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

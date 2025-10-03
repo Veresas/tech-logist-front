@@ -25,7 +25,7 @@ export const LoginPage = () => {
 
     const handleRegister = async (data: ModelRegisterRequest) => {
         try {
-            await identityApi.apiPublicAuthRegisterPost(data);
+            await identityApi.publicAuthRegisterPost(data);
             showSuccess('Регистрация прошла успешно');
             setIsRegister(false);
         } catch (error) {
@@ -34,10 +34,21 @@ export const LoginPage = () => {
         }
     }
 
+    const validLoginReq = async (login: string) => {
+        try {
+            const resp = await identityApi.publicAuthCheckLoginLoginGet(login)
+            return resp.data;
+        } catch (error) {
+            showError('Ошибка валидации логина. Попробуйте позже');
+            console.error(error);
+            return false
+        }
+    }
+
 
     return (
         <div>
-            {isRegister ? <RegisterForm onSubmit={handleRegister} setIsRegister={setIsRegister} /> : <LoginForm onSubmit={handleLogin} setIsRegister={setIsRegister} />}
+            {isRegister ? <RegisterForm onSubmit={handleRegister} setIsRegister={setIsRegister} validLoginReq={validLoginReq}/> : <LoginForm onSubmit={handleLogin} setIsRegister={setIsRegister} />}
             
         </div>
     )

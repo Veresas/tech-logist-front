@@ -27,7 +27,9 @@ const validateFio = (value: string | undefined) => {
   return true;
 };
 
-export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
+
+
+export const RegisterForm = ( {onSubmit, validLoginReq} : RegisterFormProps) => {
   const {
     register,
     handleSubmit,
@@ -36,6 +38,13 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
   } = useForm<ModelRegisterRequest >({
     mode: 'onBlur', // Проверка полей при фокусе
   });
+
+  const validLogin = (value: string | undefined) => {
+    if (!value) return 'Логин обязателен';
+    if (!/^[a-zA-Z]+$/.test(value)) return 'Логин должен содержать только латинские буквы';
+    if (!validLoginReq(value)) return 'Логин занят'
+    return true;
+  };
 
   const [passwordFocused, setPasswordFocused] = useState(false);
   const passwordValue = watch('password');
@@ -59,6 +68,17 @@ export const RegisterForm = ( {onSubmit} : RegisterFormProps) => {
           placeholder="Фамилия Имя Отчество"
         />
         {errors.fio && <div className={styles.error}>{errors.fio.message as string}</div>}
+      </div>
+
+      <div className={styles.inputGroup}>
+        <input
+          {...register("login", { required: true, validate: validLogin })}
+          id="login"
+          type="text"
+          className={styles.input}
+          placeholder="Логин"
+        />
+        {errors.login && <div className={styles.error}>{errors.login.message as string}</div>}
       </div>
       
       <div className={styles.inputGroup}>

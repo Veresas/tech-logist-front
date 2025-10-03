@@ -764,6 +764,56 @@
                 }
             }
         },
+        "/public/auth/check-login/{login}": {
+            "get": {
+                "description": "Проверяет, существует ли логин в системе",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Проверка уникальности логина",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Логин для проверки",
+                        "name": "login",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "true - логин свободен, false - занят",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный ввод",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/public/auth/login": {
             "post": {
                 "description": "Входит в систему",
