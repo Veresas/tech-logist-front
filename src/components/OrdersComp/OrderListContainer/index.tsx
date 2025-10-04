@@ -1,6 +1,6 @@
 import type {OrderListContainerProps} from "./type"
-import { useState, useEffect, useCallback } from 'react'
-import { useOrders, useOrderCardHandlers, useSearche} from '../../../hooks'
+import { useCallback } from 'react'
+import { useOrders, useOrderCardHandlers, useSearche, useOrderModals, useOrderActions, useOrderPhoto, useOrderListState } from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
 import { useUtils, useAuth , usePlatform} from "../../../utils/ContextHooks"
 import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
@@ -9,30 +9,23 @@ import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 import styles from './OrderListContainer.module.css'
 
 export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
+    // Основные хуки для работы с заказами
     const { orders, isLoading, error, fetchOrders } = useOrders(isPrivate)
     const { handleSendRequest } = useOrderCardHandlers()
-    const [selectedOrder, setSelectedOrder] = useState<ModelOrderOut | null>(null)
-    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false)
-    const [isModalEditOpen, setIsModalEditOpen] = useState(false)
-    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
-    const [photoUrl, setPhotoUrl] = useState<string | null>(null)
-    const [orderForEdit, setOrderForEdit] = useState<ModelOrderCreate | null>(null)
-    const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined)
+    
+    // Менеджеры для управления состоянием
+    const modals = useOrderModals()
+    const actions = useOrderActions(ordersApi, fetchOrders)
+    const photo = useOrderPhoto(modals.selectedOrder, ordersApi)
+    
+    // Контекстные хуки
     const { newOrderMarker, triggerNewOrderMarker} = useUtils();
+    useOrderListState(newOrderMarker, fetchOrders)
     const { role } = useAuth();
     const { isDesktop } = usePlatform();
-    const [firstRender, setFrirstRender] = useState<boolean>(false)
     const { clearDraft } = useOrderDraft();
 
-    //Тригер обновления списка заказов с защитой от перовго рендера
-    useEffect(() => {
-      if (!firstRender){
-        fetchOrders()
-      } else {
-        setFrirstRender(true)
-      }
-    }, [newOrderMarker])
-
+    // Фильтрация и поиск заказов
     const { filteredOrders,
       today,
         isUrgent,
@@ -46,119 +39,80 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         setGoalLoc,
         setCargoType, } = useSearche(orders)
 
+    // Обработчики для модальных окон
     const handleInfo = useCallback((order: ModelOrderOut) => {
-        setSelectedOrder(order)
-        setIsModalDetailsOpen(true)
-    }, [])
+        modals.openDetailsModal(order)
+    }, [modals])
 
-    const handleGetPhoto = useCallback(async () => {
-        if (selectedOrder?.photo_id) {
-            try {
-                const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id, { responseType: 'blob' })
-                setPhotoUrl(URL.createObjectURL(res.data))
-            } catch (error) {
-                console.error('Ошибка получения фотографии:', error)
-                setPhotoUrl(null)
-            }
-        }
-    }, [selectedOrder?.photo_id, ordersApi])
-
-    const handleCloseModalDetails = useCallback(() => {
-        setIsModalDetailsOpen(false)
-        setOrderForEdit(null)
-        setOrderEditID(undefined)
-    }, [])
-
-    const handleCloseModalEdit = useCallback(() => {
-      setIsModalEditOpen(false)
-      setSelectedOrder(null)
-  }, [])
-
-    const handleEdit = async (orderId: number) => {
-      const res = await ordersApi.ordersUpdateIdGet(orderId)
-      setOrderForEdit(res.data.order_for_update as ModelOrderCreate || null)
-      setOrderEditID(orderId)
-      setIsModalEditOpen(true)
-    }
-
-    const handleUpdateOrder = async (orderId: number, order: ModelOrderUpdate) => {
-      try {
-        await ordersApi.ordersIdPatch(orderId, order)
-        fetchOrders()
-        handleCloseModalEdit()
-      } catch (error) {
-        console.error('Ошибка обновления заказа:', error)
-      }
-    }
-
-    const handleTake = async (orderId: number) => {
-      try {
-        await ordersApi.ordersIdAcceptPatch(orderId)
-        fetchOrders()
-        handleCloseModalDetails()
-        setIsModalDetailsOpen(false)
-      } catch (error) {
-        console.error('Ошибка взятия заказа:', error)
-      }
-    }
-
-    const handleDelete = async (orderId: number) => {
+    const handleEdit = useCallback(async (orderId: number) => {
         try {
-            await ordersApi.ordersIdCancelPatch(orderId)
-            fetchOrders()
-            handleCloseModalDetails()
-            setIsModalDetailsOpen(false)
+            const orderForEdit = await actions.handleGetOrderForEdit(orderId)
+            modals.openEditModal(orderForEdit, orderId)
+        } catch (error) {
+            console.error('Ошибка получения данных для редактирования:', error)
+        }
+    }, [actions, modals])
+
+    const handleUpdateOrder = useCallback(async (orderId: number, order: ModelOrderUpdate) => {
+        try {
+            await actions.handleUpdateOrder(orderId, order)
+            modals.closeEditModal()
+        } catch (error) {
+            console.error('Ошибка обновления заказа:', error)
+        }
+    }, [actions, modals])
+
+    const handleTake = useCallback(async (orderId: number) => {
+        try {
+            await actions.handleTakeOrder(orderId)
+            modals.closeDetailsModal()
+        } catch (error) {
+            console.error('Ошибка взятия заказа:', error)
+        }
+    }, [actions, modals])
+
+    const handleDelete = useCallback(async (orderId: number) => {
+        try {
+            await actions.handleDeleteOrder(orderId)
+            modals.closeDetailsModal()
         } catch (error) {
             console.error('Ошибка удаления заказа:', error)
         }
-    }
+    }, [actions, modals])
 
-    const handleComplete = async (orderId: number) => {
+    const handleComplete = useCallback(async (orderId: number) => {
         try {
-            await ordersApi.ordersIdCompletePatch(orderId)
-            fetchOrders()
-            handleCloseModalDetails()
-            setIsModalDetailsOpen(false)
+            await actions.handleCompleteOrder(orderId)
+            modals.closeDetailsModal()
         } catch (error) {
             console.error('Ошибка завершения заказа:', error)
         }
-    }
+    }, [actions, modals])
 
-    const handleReject = async (orderId: number) => {
+    const handleReject = useCallback(async (orderId: number) => {
         try {
-            await ordersApi.ordersIdRejectPatch(orderId)
-            fetchOrders()
-            handleCloseModalDetails()
-            setIsModalDetailsOpen(false)
+            await actions.handleRejectOrder(orderId)
+            modals.closeDetailsModal()
         } catch (error) {
             console.error('Ошибка отклонения заказа:', error)
         }
-    }
+    }, [actions, modals])
 
-    const handleOrderCreate = async (order: ModelOrderCreate, idempotencyKey: string) => {
-      try {
-          await ordersApi.ordersCreatePost(order, { headers: { 'Idempotency-Key': idempotencyKey } });
-          setIsModalCreateOpen(false);
-          triggerNewOrderMarker();
-          clearDraft()
-      } catch (error) {
-          console.error('Ошибка создания заказа:', error);
-          alert('Ошибка создания заказа. Попробуйте еще раз.');
-      }
-      setIsModalCreateOpen(false);
-  }
+    const handleOrderCreate = useCallback(async (order: ModelOrderCreate, idempotencyKey: string) => {
+        try {
+            await actions.handleCreateOrder(order, idempotencyKey)
+            modals.closeCreateModal()
+            triggerNewOrderMarker()
+            clearDraft()
+        } catch (error) {
+            console.error('Ошибка создания заказа:', error)
+            alert('Ошибка создания заказа. Попробуйте еще раз.')
+        }
+    }, [actions, modals, triggerNewOrderMarker, clearDraft])
 
-    useEffect(() => {
-      if (selectedOrder?.photo_id) {
-        handleGetPhoto()
-      } else {
-        setPhotoUrl(null)
-      }
-    }, [selectedOrder])
-
-    const handleCloseOrderModal = () => {
-      setIsModalCreateOpen(false);
-  }
+    const handleCloseOrderModal = useCallback(() => {
+        modals.closeCreateModal()
+    }, [modals])
     
     if (isLoading) return <div>Загрузка...</div>
     if (error) return <div>{error}</div>
@@ -184,7 +138,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
               { role !==  ModelRoleEnum.DRIVER &&
               <button
                 className={styles.orderCreateModal}
-                onClick={() => setIsModalCreateOpen(true)}
+                onClick={modals.openCreateModal}
               >Создать заказ  +</button>}
             </div>
           </div>
@@ -200,34 +154,33 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
           />
         </div>
         
-        {selectedOrder && (
+        {modals.selectedOrder && (
           <OrderDetailsModal
-            order={selectedOrder}
-            isOpen={isModalDetailsOpen}
-            onClose={handleCloseModalDetails}
+            order={modals.selectedOrder}
+            isOpen={modals.isModalDetailsOpen}
+            onClose={modals.closeDetailsModal}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onComplete={handleComplete}
             onReject={handleReject}
             onTake={handleTake}
-            photoUrl={photoUrl}
+            photoUrl={photo.photoUrl}
           />
         )}
 
-        {isModalEditOpen && orderForEdit && orderEditID && (
+        {modals.isModalEditOpen && modals.orderForEdit && modals.orderEditID && (
           <OrderCreateForm
-            order={orderForEdit}
-            orderID={orderEditID}
+            order={modals.orderForEdit}
+            orderID={modals.orderEditID}
             locationOptions={locationOptions}
             cargoTypeOptions={cargoTypeOptions}
             onSubmitCreateOrder={undefined}
             onSubmitUpdateOrder={handleUpdateOrder}
-            onClose={handleCloseModalEdit}
+            onClose={modals.closeEditModal}
           />
         )}
 
-                {/* Модальное окно */}
-        {isModalCreateOpen && (
+        {modals.isModalCreateOpen && (
             <OrderCreateForm 
                 onSubmitCreateOrder={handleOrderCreate} 
                 onSubmitUpdateOrder={undefined}

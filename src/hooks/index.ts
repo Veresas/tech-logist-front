@@ -13,3 +13,6 @@ export { useOrders } from "./orderHooks/useOrders"
 export { useOrderCardHandlers } from "./orderHooks/useOrderCardHandlers"
 
 export {useSearche } from "./orderHooks/useSercheHooks"
+
+// Менеджеры для OrderListContainer
+export * from './managers';
