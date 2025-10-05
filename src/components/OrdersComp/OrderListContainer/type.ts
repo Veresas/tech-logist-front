@@ -1,8 +1,8 @@
-import type { ModelDropDownListInfoResponse, OrdersApi } from "../../../api";
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse, OrdersApi } from "../../../api";
 
 export interface OrderListContainerProps {
     isPrivate: boolean,
     ordersApi: OrdersApi,
-    locationOptions: ModelDropDownListInfoResponse['dep_builds'],
-    cargoTypeOptions: ModelDropDownListInfoResponse['cargo_types']
+    locationOptions: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds'],
+    cargoTypeOptions: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types']
 }

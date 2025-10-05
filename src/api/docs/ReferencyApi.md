@@ -7,7 +7,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**refDropdownListInfoGet**](#refdropdownlistinfoget) | **GET** /ref/dropdown-list-info | Возвращает список типов грузов и связей подразделений и зданий|
 
 # **refDropdownListInfoGet**
-> ModelDropDownListInfoResponse refDropdownListInfoGet()
+> GithubComVeresusTlApiInternalModelDropDownListInfoResponse refDropdownListInfoGet()
 
 Возвращает список типов грузов и связей подразделений и зданий
 
@@ -31,7 +31,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**ModelDropDownListInfoResponse**
+**GithubComVeresusTlApiInternalModelDropDownListInfoResponse**
 
 ### Authorization
 

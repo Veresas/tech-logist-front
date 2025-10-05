@@ -12,7 +12,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**publicAuthRegisterPost**](#publicauthregisterpost) | **POST** /public/auth/register | Зарегистрировать нового пользователя|
 
 # **identUsersIdGet**
-> ModelTLIdentetyModelUser identUsersIdGet()
+> DtoUserForResponse identUsersIdGet()
 
 Возвращает информацию о пользователе по его ID (int или UUID)
 
@@ -43,7 +43,7 @@ const { status, data } = await apiInstance.identUsersIdGet(
 
 ### Return type
 
-**ModelTLIdentetyModelUser**
+**DtoUserForResponse**
 
 ### Authorization
 
@@ -75,14 +75,14 @@ No authorization required
 import {
     IdentityApi,
     Configuration,
-    ModelUserUpdate
+    DtoUserUpdate
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new IdentityApi(configuration);
 
 let id: string; //ID пользователя (число или UUID) (default to undefined)
-let user: ModelUserUpdate; //Данные для обновления
+let user: DtoUserUpdate; //Данные для обновления
 
 const { status, data } = await apiInstance.identUsersIdPatch(
     id,
@@ -94,7 +94,7 @@ const { status, data } = await apiInstance.identUsersIdPatch(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **user** | **ModelUserUpdate**| Данные для обновления | |
+| **user** | **DtoUserUpdate**| Данные для обновления | |
 | **id** | [**string**] | ID пользователя (число или UUID) | defaults to undefined|
 
 
@@ -186,13 +186,13 @@ No authorization required
 import {
     IdentityApi,
     Configuration,
-    ModelLoginRequest
+    DtoLoginRequest
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new IdentityApi(configuration);
 
-let user: ModelLoginRequest; //Данные для входа
+let user: DtoLoginRequest; //Данные для входа
 
 const { status, data } = await apiInstance.publicAuthLoginPost(
     user
@@ -203,7 +203,7 @@ const { status, data } = await apiInstance.publicAuthLoginPost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **user** | **ModelLoginRequest**| Данные для входа | |
+| **user** | **DtoLoginRequest**| Данные для входа | |
 
 
 ### Return type
@@ -284,13 +284,13 @@ No authorization required
 import {
     IdentityApi,
     Configuration,
-    ModelRegisterRequest
+    DtoRegisterRequest
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new IdentityApi(configuration);
 
-let user: ModelRegisterRequest; //Данные для регистрации
+let user: DtoRegisterRequest; //Данные для регистрации
 
 const { status, data } = await apiInstance.publicAuthRegisterPost(
     user
@@ -301,7 +301,7 @@ const { status, data } = await apiInstance.publicAuthRegisterPost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **user** | **ModelRegisterRequest**| Данные для регистрации | |
+| **user** | **DtoRegisterRequest**| Данные для регистрации | |
 
 
 ### Return type

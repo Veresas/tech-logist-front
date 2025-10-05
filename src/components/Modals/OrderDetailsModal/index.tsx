@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { OrderDetailsModalProps } from './types';
-import { ModelRoleEnum, ModelOrderStatusEnum } from '../../../api';
+import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from '../../../api';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
 import { Modal } from '../ModalComp/Modal';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal';
@@ -62,9 +62,9 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
   const getActionButtons = () => {
     const buttons: React.ReactNode[] = [];
 
-    if (role === ModelRoleEnum.DRIVER) {
+    if (role === DtoRoleStatic.DRIVER) {
       // Для водителя
-      if (order.order_status_name === ModelOrderStatusEnum.ACCEPT) {
+      if (order.order_status_name === orderStatus.ACCEPT) {
         buttons.push(
           <button
             key="reject"
@@ -87,7 +87,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         );
       }
 
-      if (order.order_status_name === ModelOrderStatusEnum.NEW) {
+      if (order.order_status_name === orderStatus.NEW) {
         buttons.push(
           <button
             key="take"
@@ -116,7 +116,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
           key="edit"
           className={styles.actionButton}
           style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }}
-          onClick={() => onEdit(order.id || 0, order)}
+          onClick={() => onEdit(order.id || 0)}
         >
           Редактировать
         </button>
@@ -271,7 +271,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
 
         <div className={styles.contactInfo}>
           <div className={styles.contactDetail}>
-            <span className={styles.detailValue}>{ role === ModelRoleEnum.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
+            <span className={styles.detailValue}>{ role === DtoRoleStatic.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
           </div>
           <div className={styles.contactDetail}>
             <span className={styles.detailValue}>{'Заглушка'}</span>
@@ -287,7 +287,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       <span className={styles.detailLabel}>Контакты</span>
       <div className={styles.contactInfo}>
         <div className={styles.contactDetail}>
-          <span className={styles.detailValue}>{ role === ModelRoleEnum.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
+          <span className={styles.detailValue}>{ role === DtoRoleStatic.DRIVER ?  order.dispatcher_name || '' : order.driver_name || ''}</span>
         </div>
         <div className={styles.contactDetail}>
           <span className={styles.detailValue}>{'Заглушка'}</span>

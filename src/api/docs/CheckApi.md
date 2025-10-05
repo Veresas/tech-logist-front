@@ -7,7 +7,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**checkGet**](#checkget) | **GET** /check | Проверка подключения к сервису|
 
 # **checkGet**
-> ModelCheckResponse checkGet()
+> GithubComVeresusTlApiInternalModelCheckResponse checkGet()
 
 Проверка подключения к сервису
 
@@ -38,7 +38,7 @@ const { status, data } = await apiInstance.checkGet(
 
 ### Return type
 
-**ModelCheckResponse**
+**GithubComVeresusTlApiInternalModelCheckResponse**
 
 ### Authorization
 

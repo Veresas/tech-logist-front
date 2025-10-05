@@ -1,6 +1,6 @@
 import type { OrderCardProps } from './type';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
-import { ModelRoleEnum, ModelOrderStatusEnum } from "../../../api";
+import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from "../../../api";
 import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
 import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
@@ -41,7 +41,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
         );
 
         // Кнопка "Взять заказ" - только в публичном списке, статус новый, роль водитель
-        if (!isPrivate && order.order_status_name === ModelOrderStatusEnum.NEW && role === ModelRoleEnum.DRIVER) {
+        if (!isPrivate && order.order_status_name === orderStatus.NEW && role === DtoRoleStatic.DRIVER) {
             buttons.push(
                 <button
                     key="take"

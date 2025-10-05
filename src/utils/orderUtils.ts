@@ -1,4 +1,4 @@
-import type { ModelDropDownListInfoResponse, ModelOrder } from '../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse, ModelOrder } from '../api';
 
 /**
  * Утилиты для работы с заказами
@@ -12,7 +12,7 @@ import type { ModelDropDownListInfoResponse, ModelOrder } from '../api';
  * @param depBuilds - объект с ID и названиями подразделений/зданий
  * @returns массив опций для react-select
  */
-export const transformLocationOptions = (depBuilds: ModelDropDownListInfoResponse['dep_builds']) => {
+export const transformLocationOptions = (depBuilds: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds']) => {
   if (!depBuilds) return [];
   
   return Object.entries(depBuilds).map(([id, name]) => ({
@@ -28,7 +28,7 @@ export const transformLocationOptions = (depBuilds: ModelDropDownListInfoRespons
  * @param cargoTypes - объект с ID и названиями типов грузов
  * @returns массив опций для react-select
  */
-export const transformCargoTypeOptions = (cargoTypes: ModelDropDownListInfoResponse['cargo_types']) => {
+export const transformCargoTypeOptions = (cargoTypes: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types']) => {
   if (!cargoTypes) return [];
   
   return Object.entries(cargoTypes).map(([id, name]) => ({

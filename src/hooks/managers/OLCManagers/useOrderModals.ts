@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { ModelOrderOut, ModelOrderCreate } from '../../../api';
+import type { GithubComVeresusTlApiInternalModelOrderOut, DtoOrderCreate } from '../../../api';
 
 /**
  * Менеджер для управления всеми модальными окнами в OrderListContainer
@@ -12,18 +12,18 @@ export const useOrderModals = () => {
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
   
   // Данные для модальных окон
-  const [selectedOrder, setSelectedOrder] = useState<ModelOrderOut | null>(null);
-  const [orderForEdit, setOrderForEdit] = useState<ModelOrderCreate | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<GithubComVeresusTlApiInternalModelOrderOut | null>(null);
+  const [orderForEdit, setOrderForEdit] = useState<DtoOrderCreate | null>(null);
   const [orderEditID, setOrderEditID] = useState<number | undefined>(undefined);
 
   // Открытие модального окна деталей заказа
-  const openDetailsModal = useCallback((order: ModelOrderOut) => {
+  const openDetailsModal = useCallback((order: GithubComVeresusTlApiInternalModelOrderOut) => {
     setSelectedOrder(order);
     setIsModalDetailsOpen(true);
   }, []);
 
   // Открытие модального окна редактирования заказа
-  const openEditModal = useCallback((order: ModelOrderCreate, orderId: number) => {
+  const openEditModal = useCallback((order: DtoOrderCreate, orderId: number) => {
     setOrderForEdit(order);
     setOrderEditID(orderId);
     setIsModalEditOpen(true);

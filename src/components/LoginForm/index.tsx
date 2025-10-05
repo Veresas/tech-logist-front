@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { type ModelLoginRequest  } from '../../api/api';
+import { type DtoLoginRequest  } from '../../api/api';
 import styles from './loginForm.module.css';
 import type { LoginFormProps } from './type';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -10,7 +10,7 @@ export const LoginForm = ( { onSubmit, setIsRegister } : LoginFormProps ) => {
     const {
         register,
         handleSubmit,
-      } = useForm<ModelLoginRequest >();
+      } = useForm<DtoLoginRequest >();
     
     
     return (

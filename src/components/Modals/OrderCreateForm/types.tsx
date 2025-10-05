@@ -1,18 +1,18 @@
-import { type ModelDropDownListInfoResponse, type ModelOrderCreate, type ModelOrderUpdate } from '../../../api';
+import type{ GithubComVeresusTlApiInternalModelDropDownListInfoResponse, DtoOrderCreate, DtoOrderUpdate } from '../../../api';
 
 export interface OrderCreateFormProps {
-  onSubmitCreateOrder: ((data: ModelOrderCreate, idempotencyKey: string) => void) | undefined;
-  onSubmitUpdateOrder: ((orderID: number, data: ModelOrderUpdate) => void) | undefined;
-  locationOptions: ModelDropDownListInfoResponse['dep_builds'];
-  cargoTypeOptions: ModelDropDownListInfoResponse['cargo_types'];
+  onSubmitCreateOrder: ((data: DtoOrderCreate, idempotencyKey: string) => void) | undefined;
+  onSubmitUpdateOrder: ((orderID: number, data: DtoOrderUpdate) => void) | undefined;
+  locationOptions: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds'];
+  cargoTypeOptions: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types'];
   onClose: () => void;
-  initialData?: Partial<ModelOrderCreate>;
-  order: ModelOrderCreate | undefined;
+  initialData?: Partial<DtoOrderCreate>;
+  order: DtoOrderCreate | undefined;
   orderID: number | undefined;
 }
 
 export interface InitialData {
-  initialFormData: Partial<ModelOrderCreate>;
+  initialFormData: Partial<DtoOrderCreate>;
   initialIsUrgent: boolean;
   initialSelectedDate: 'today' | 'tomorrow';
   initialSelectedTime: string;

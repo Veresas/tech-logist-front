@@ -18,7 +18,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**ordersUpdateIdGet**](#ordersupdateidget) | **GET** /orders/update/{id} | Получить заявку для обновления|
 
 # **ordersActualGet**
-> ModelOrdersResponse ordersActualGet()
+> GithubComVeresusTlApiInternalModelOrdersResponse ordersActualGet()
 
 Возвращает список всех актуальных заявок
 
@@ -49,7 +49,7 @@ const { status, data } = await apiInstance.ordersActualGet(
 
 ### Return type
 
-**ModelOrdersResponse**
+**GithubComVeresusTlApiInternalModelOrdersResponse**
 
 ### Authorization
 
@@ -80,13 +80,13 @@ No authorization required
 import {
     OrdersApi,
     Configuration,
-    ModelOrderCreate
+    DtoOrderCreate
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
-let order: ModelOrderCreate; //Данные для создания заявки
+let order: DtoOrderCreate; //Данные для создания заявки
 
 const { status, data } = await apiInstance.ordersCreatePost(
     order
@@ -97,7 +97,7 @@ const { status, data } = await apiInstance.ordersCreatePost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **order** | **ModelOrderCreate**| Данные для создания заявки | |
+| **order** | **DtoOrderCreate**| Данные для создания заявки | |
 
 
 ### Return type
@@ -286,7 +286,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ordersIdGet**
-> ModelOrder ordersIdGet()
+> DtoOrder ordersIdGet()
 
 Возвращает информацию о заявке по её ID
 
@@ -317,7 +317,7 @@ const { status, data } = await apiInstance.ordersIdGet(
 
 ### Return type
 
-**ModelOrder**
+**DtoOrder**
 
 ### Authorization
 
@@ -350,14 +350,14 @@ No authorization required
 import {
     OrdersApi,
     Configuration,
-    ModelOrderUpdate
+    DtoOrderUpdate
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new OrdersApi(configuration);
 
 let id: number; //ID заявки (default to undefined)
-let order: ModelOrderUpdate; //Данные для обновления заявки
+let order: DtoOrderUpdate; //Данные для обновления заявки
 
 const { status, data } = await apiInstance.ordersIdPatch(
     id,
@@ -369,7 +369,7 @@ const { status, data } = await apiInstance.ordersIdPatch(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **order** | **ModelOrderUpdate**| Данные для обновления заявки | |
+| **order** | **DtoOrderUpdate**| Данные для обновления заявки | |
 | **id** | [**number**] | ID заявки | defaults to undefined|
 
 
@@ -611,7 +611,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ordersUpdateIdGet**
-> ModelOrderForUpdateResponse ordersUpdateIdGet()
+> DtoOrderForUpdateResponse ordersUpdateIdGet()
 
 Возвращает заявку с данными для обновления
 
@@ -642,7 +642,7 @@ const { status, data } = await apiInstance.ordersUpdateIdGet(
 
 ### Return type
 
-**ModelOrderForUpdateResponse**
+**DtoOrderForUpdateResponse**
 
 ### Authorization
 

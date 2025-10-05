@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { ModelOrderCreate } from '../../api';
+import type { DtoOrderCreate } from '../../api';
 
 /**
  * Ключ для сохранения черновика в localStorage
@@ -12,7 +12,7 @@ const DRAFT_STORAGE_KEY = 'order_draft';
  * Содержит все необходимые данные для восстановления состояния формы
  */
 interface OrderDraft {
-  formData: Partial<ModelOrderCreate>; // Данные формы заказа
+  formData: Partial<DtoOrderCreate>; // Данные формы заказа
   isUrgent: boolean; // Флаг срочности
   selectedDate: 'today' | 'tomorrow'; // Выбранная дата
   selectedTime: string; // Выбранное время
@@ -49,7 +49,7 @@ export const useOrderDraft = () => {
    * 
    * @param data - данные формы для сохранения
    */
-  const saveDraft = useCallback((data: Partial<ModelOrderCreate>, isUrgent: boolean, selectedDate: 'today' | 'tomorrow', selectedTime: string, photoId: string) => {
+  const saveDraft = useCallback((data: Partial<DtoOrderCreate>, isUrgent: boolean, selectedDate: 'today' | 'tomorrow', selectedTime: string, photoId: string) => {
     const isEmptyForm =
       !data.cargo_name &&
       !data.cargo_description &&

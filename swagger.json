@@ -37,7 +37,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.CheckResponse"
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.CheckResponse"
                         }
                     },
                     "401": {
@@ -81,7 +81,7 @@
                     "200": {
                         "description": "Информация о пользователе",
                         "schema": {
-                            "$ref": "#/definitions/model.TL_identety_ModelUser"
+                            "$ref": "#/definitions/dto.UserForResponse"
                         }
                     },
                     "400": {
@@ -126,7 +126,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UserUpdate"
+                            "$ref": "#/definitions/dto.UserUpdate"
                         }
                     }
                 ],
@@ -188,7 +188,7 @@
                     "200": {
                         "description": "Список актуальных заявок",
                         "schema": {
-                            "$ref": "#/definitions/model.OrdersResponse"
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.OrdersResponse"
                         }
                     },
                     "500": {
@@ -221,7 +221,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.OrderCreate"
+                            "$ref": "#/definitions/dto.OrderCreate"
                         }
                     }
                 ],
@@ -421,7 +421,7 @@
                     "200": {
                         "description": "Заявка для обновления",
                         "schema": {
-                            "$ref": "#/definitions/model.OrderForUpdateResponse"
+                            "$ref": "#/definitions/dto.OrderForUpdateResponse"
                         }
                     },
                     "400": {
@@ -467,7 +467,7 @@
                     "200": {
                         "description": "Информация о заявке",
                         "schema": {
-                            "$ref": "#/definitions/model.Order"
+                            "$ref": "#/definitions/dto.Order"
                         }
                     },
                     "400": {
@@ -519,7 +519,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.OrderUpdate"
+                            "$ref": "#/definitions/dto.OrderUpdate"
                         }
                     }
                 ],
@@ -834,7 +834,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.LoginRequest"
+                            "$ref": "#/definitions/dto.LoginRequest"
                         }
                     }
                 ],
@@ -907,7 +907,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RegisterRequest"
+                            "$ref": "#/definitions/dto.RegisterRequest"
                         }
                     }
                 ],
@@ -953,7 +953,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.DropDownListInfoResponse"
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.DropDownListInfoResponse"
                         }
                     }
                 }
@@ -961,55 +961,7 @@
         }
     },
     "definitions": {
-        "model.CargoTypeMap": {
-            "description": "Мапа типов грузов",
-            "type": "object",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
-        "model.CheckResponse": {
-            "description": "DTO для передачи роли на фронт",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "role": {
-                    "enum": [
-                        "driver",
-                        "disp",
-                        "admin",
-                        "mainAdmin"
-                    ],
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/model.RoleEnum"
-                        }
-                    ]
-                }
-            }
-        },
-        "model.DepartmentBuildingMap": {
-            "description": "Мапа связей подразделений и зданий",
-            "type": "object",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
-        "model.DropDownListInfoResponse": {
-            "description": "DTO для передачи списка типов грузов и связей подразделений и зданий",
-            "type": "object",
-            "properties": {
-                "cargo_types": {
-                    "$ref": "#/definitions/model.CargoTypeMap"
-                },
-                "dep_builds": {
-                    "$ref": "#/definitions/model.DepartmentBuildingMap"
-                }
-            }
-        },
-        "model.LoginRequest": {
+        "dto.LoginRequest": {
             "description": "DTO для передачи данных авторизации",
             "type": "object",
             "properties": {
@@ -1023,7 +975,7 @@
                 }
             }
         },
-        "model.Order": {
+        "dto.Order": {
             "description": "Модель заявки",
             "type": "object",
             "properties": {
@@ -1036,6 +988,9 @@
                 "cargo_type_id": {
                     "type": "integer"
                 },
+                "cargo_type_snapshot": {
+                    "type": "string"
+                },
                 "cargo_weight": {
                     "type": "number"
                 },
@@ -1046,6 +1001,12 @@
                     "type": "string"
                 },
                 "depart_loc": {
+                    "type": "integer"
+                },
+                "dispatcher_id": {
+                    "type": "integer"
+                },
+                "driver_id": {
                     "type": "integer"
                 },
                 "driver_rate": {
@@ -1077,7 +1038,7 @@
                 }
             }
         },
-        "model.OrderCreate": {
+        "dto.OrderCreate": {
             "description": "DTO для создания заявки",
             "type": "object",
             "properties": {
@@ -1110,21 +1071,211 @@
                 }
             }
         },
-        "model.OrderForUpdateResponse": {
-            "description": "DTO для обновления заявки",
+        "dto.OrderForUpdateResponse": {
             "type": "object",
             "properties": {
                 "order_for_update": {
-                    "description": "OrderForUpdate DTO для обновления заявки",
+                    "$ref": "#/definitions/dto.OrderCreate"
+                }
+            }
+        },
+        "dto.OrderUpdate": {
+            "description": "DTO для обновления заявки",
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "cargo_description": {
+                    "type": "string"
+                },
+                "cargo_name": {
+                    "type": "string"
+                },
+                "cargo_type_id": {
+                    "type": "integer"
+                },
+                "cargo_weight": {
+                    "type": "number"
+                },
+                "depart_loc": {
+                    "type": "integer"
+                },
+                "goal_loc": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_urgent": {
+                    "type": "boolean"
+                },
+                "photo_id": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.RegisterRequest": {
+            "description": "DTO для передачи данных регистрации",
+            "type": "object",
+            "properties": {
+                "fio": {
+                    "type": "string",
+                    "example": "Иванов Иван Иванович"
+                },
+                "login": {
+                    "type": "string",
+                    "example": "user123"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "qwerty123"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "+79998887766"
+                },
+                "role": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/model.OrderCreate"
+                            "$ref": "#/definitions/dto.RoleStatic"
+                        }
+                    ],
+                    "example": "driver"
+                },
+                "role_password": {
+                    "type": "string",
+                    "example": "qwerty123"
+                }
+            }
+        },
+        "dto.RoleStatic": {
+            "description": "Роли пользователей в системе",
+            "type": "string",
+            "enum": [
+                "driver",
+                "disp",
+                "admin",
+                "mainAdmin"
+            ],
+            "x-enum-varnames": [
+                "DRIVER",
+                "DISP",
+                "ADMIN",
+                "MAIN_ADMIN"
+            ]
+        },
+        "dto.UserForResponse": {
+            "description": "Модель пользователя",
+            "type": "object",
+            "properties": {
+                "fio": {
+                    "type": "string"
+                },
+                "login": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "public_id": {
+                    "type": "string"
+                },
+                "role_id": {
+                    "type": "string"
+                },
+                "role_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UserUpdate": {
+            "description": "DTO для обновления информации о пользователе",
+            "type": "object",
+            "properties": {
+                "fio": {
+                    "type": "string"
+                },
+                "login": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOutStatus": {
+            "type": "string",
+            "enum": [
+                "Принят",
+                "Отменен",
+                "Выполнен",
+                "Новый",
+                "Неизвестно"
+            ],
+            "x-enum-varnames": [
+                "ACCEPT",
+                "CANCEL",
+                "COMPLETE",
+                "NEW",
+                "UNKNOWN"
+            ]
+        },
+        "github_com_veresus_tl-api_internal_model.CargoTypeMap": {
+            "description": "Мапа типов грузов",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "github_com_veresus_tl-api_internal_model.CheckResponse": {
+            "description": "DTO для передачи роли на фронт",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "role": {
+                    "enum": [
+                        "driver",
+                        "disp",
+                        "admin",
+                        "mainAdmin"
+                    ],
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.RoleStatic"
                         }
                     ]
                 }
             }
         },
-        "model.OrderOut": {
+        "github_com_veresus_tl-api_internal_model.DepartmentBuildingMap": {
+            "description": "Мапа связей подразделений и зданий",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "github_com_veresus_tl-api_internal_model.DropDownListInfoResponse": {
+            "description": "DTO для передачи списка типов грузов и связей подразделений и зданий",
+            "type": "object",
+            "properties": {
+                "cargo_types": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.CargoTypeMap"
+                },
+                "dep_builds": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.DepartmentBuildingMap"
+                }
+            }
+        },
+        "github_com_veresus_tl-api_internal_model.OrderOut": {
             "description": "DTO для передачи информации о заявке",
             "type": "object",
             "properties": {
@@ -1159,7 +1310,7 @@
                     "type": "boolean"
                 },
                 "order_status_name": {
-                    "$ref": "#/definitions/model.OrderStatusEnum"
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOutStatus"
                 },
                 "photo_id": {
                     "type": "string"
@@ -1169,61 +1320,7 @@
                 }
             }
         },
-        "model.OrderStatusEnum": {
-            "description": "Статус заказа",
-            "type": "string",
-            "enum": [
-                "Новый",
-                "Принят",
-                "Выполнен",
-                "Отменен",
-                "Неизвестно"
-            ],
-            "x-enum-varnames": [
-                "NEW",
-                "ACCEPT",
-                "COMPLETE",
-                "CANCEL",
-                "UNKNOWN"
-            ]
-        },
-        "model.OrderUpdate": {
-            "description": "DTO для обновления заявки",
-            "type": "object",
-            "properties": {
-                "cargo_description": {
-                    "type": "string"
-                },
-                "cargo_name": {
-                    "type": "string"
-                },
-                "cargo_type_id": {
-                    "type": "integer"
-                },
-                "cargo_weight": {
-                    "type": "number"
-                },
-                "depart_loc": {
-                    "type": "integer"
-                },
-                "goal_loc": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "is_urgent": {
-                    "type": "boolean"
-                },
-                "photo_id": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.OrdersResponse": {
+        "github_com_veresus_tl-api_internal_model.OrdersResponse": {
             "description": "Ответ со списком заявок",
             "type": "object",
             "properties": {
@@ -1233,102 +1330,8 @@
                 "orders": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.OrderOut"
+                        "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.OrderOut"
                     }
-                }
-            }
-        },
-        "model.RegisterRequest": {
-            "description": "DTO для передачи данных регистрации",
-            "type": "object",
-            "properties": {
-                "fio": {
-                    "type": "string",
-                    "example": "Иванов Иван Иванович"
-                },
-                "login": {
-                    "type": "string",
-                    "example": "user123"
-                },
-                "password": {
-                    "type": "string",
-                    "example": "qwerty123"
-                },
-                "phone": {
-                    "type": "string",
-                    "example": "+79998887766"
-                },
-                "role": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/model.RoleEnum"
-                        }
-                    ],
-                    "example": "driver"
-                },
-                "role_password": {
-                    "type": "string",
-                    "example": "qwerty123"
-                }
-            }
-        },
-        "model.RoleEnum": {
-            "description": "Роль пользователя в системе",
-            "type": "string",
-            "enum": [
-                "driver",
-                "disp",
-                "admin",
-                "mainAdmin"
-            ],
-            "x-enum-varnames": [
-                "DRIVER",
-                "DISP",
-                "ADMIN",
-                "MAIN_ADMIN"
-            ]
-        },
-        "model.TL_identety_ModelUser": {
-            "type": "object",
-            "properties": {
-                "fio": {
-                    "type": "string"
-                },
-                "internal_id": {
-                    "type": "integer"
-                },
-                "is_denied": {
-                    "type": "boolean"
-                },
-                "login": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "public_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.UserUpdate": {
-            "description": "DTO для обновления информации о пользователе",
-            "type": "object",
-            "properties": {
-                "fio": {
-                    "type": "string"
-                },
-                "login": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
                 }
             }
         }

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { RegisterForm, LoginForm } from '../../components';
 import { identityApi} from '../../utils/ApiFactory'
-import { type ModelLoginRequest, type ModelRegisterRequest } from '../../api'
+import type { DtoLoginRequest, DtoRegisterRequest } from '../../api'
 import { useToast } from '../../hooks/utilsHooks/noti_hooks';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
@@ -12,7 +12,7 @@ export const LoginPage = () => {
     const { showSuccess, showError } = useToast();
     const { login } = useAuth();
 
-    const handleLogin = async (data: ModelLoginRequest) => {
+    const handleLogin = async (data: DtoLoginRequest) => {
         try {
             await identityApi.publicAuthLoginPost(data);
             login(); 
@@ -23,7 +23,7 @@ export const LoginPage = () => {
         }
     }
 
-    const handleRegister = async (data: ModelRegisterRequest) => {
+    const handleRegister = async (data: DtoRegisterRequest) => {
         try {
             await identityApi.publicAuthRegisterPost(data);
             showSuccess('Регистрация прошла успешно');

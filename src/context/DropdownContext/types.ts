@@ -1,7 +1,7 @@
-import type { ModelDropDownListInfoResponse } from '../../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api';
 
 export interface RefCotextTypes {
-    locs: ModelDropDownListInfoResponse['dep_builds'];
-    cargoTypes: ModelDropDownListInfoResponse["cargo_types"];
+    locs: GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds'];
+    cargoTypes: GithubComVeresusTlApiInternalModelDropDownListInfoResponse["cargo_types"];
     trigerReloadRefs: () => void;
 }

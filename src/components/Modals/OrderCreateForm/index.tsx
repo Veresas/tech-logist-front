@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
-import type { ModelOrderCreate, ModelOrderUpdate } from '../../../api';
+import type { DtoOrderCreate, DtoOrderUpdate } from '../../../api';
 import styles from './OrderCreateForm.module.css';
 import "../ModalComp/ModalCops.css"
 import type { OrderCreateFormProps } from './types';
@@ -28,7 +28,7 @@ import {
 
 // Интерфейс для начальных данных формы
 interface InitialData {
-  initialFormData: Partial<ModelOrderCreate>;
+  initialFormData: Partial<DtoOrderCreate>;
   initialIsUrgent: boolean;
   initialSelectedDate: 'today' | 'tomorrow';
   initialSelectedTime: string;
@@ -45,7 +45,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   const { isDarkMode } = useTheme()
   
   // Состояние для отслеживания измененных полей при редактировании
-  const [originalValues, setOriginalValues] = useState<Partial<ModelOrderCreate>>({});
+  const [originalValues, setOriginalValues] = useState<Partial<DtoOrderCreate>>({});
 
   // Используем созданные хуки
   const { draft, clearDraft, saveDraft } = useOrderDraft();
@@ -75,7 +75,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     initialPhotoId,
   } : InitialData = useMemo(() => {
     
-    let initialFormData: Partial<ModelOrderCreate>;
+    let initialFormData: Partial<DtoOrderCreate>;
     let initialIsUrgent: boolean;
     let initialSelectedDate: 'today' | 'tomorrow';
     let initialSelectedTime: string;
@@ -152,7 +152,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     getValues,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ModelOrderCreate>({
+  } = useForm<DtoOrderCreate>({
     defaultValues: initialFormData,
   });
 
@@ -184,7 +184,7 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
   }, [order, getValues, isUrgent, selectedDate, selectedTime, photoId, saveDraft]);
 
   // Обработчик отправки формы
-  const handleFormSubmit: SubmitHandler<ModelOrderCreate> = async (data) => {
+  const handleFormSubmit: SubmitHandler<DtoOrderCreate> = async (data) => {
     if (isUploading) {
       alert('Дождитесь завершения загрузки фото');
       return;
@@ -195,16 +195,18 @@ export const OrderCreateForm = ({ onSubmitCreateOrder, onSubmitUpdateOrder,
     try {
       if (order) {
         // Редактируем существующий заказ
-        const updateData: ModelOrderUpdate = {};
-        
-        updateData.id = orderID;
+        const updateData: DtoOrderUpdate = {
+          id: orderID || 0
+        };
 
         const changedFields = new Set<string>();
       
         Object.keys(formValues).forEach(key => {
-          const fieldKey = key as keyof ModelOrderCreate;
-          if (formValues[fieldKey] !== originalValues[fieldKey]) {
-            changedFields.add(key);
+          if (key in originalValues) { // Проверяем, что ключ есть в originalValues
+            const fieldKey = key as keyof DtoOrderUpdate & keyof DtoOrderCreate;
+            if (formValues[fieldKey] !== originalValues[fieldKey]) {
+              changedFields.add(key);
+            }
           }
         });
         

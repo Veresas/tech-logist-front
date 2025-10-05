@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import type { ModelOrderOut } from "../../api";
+import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api";
 
-export function useSearche(orders: ModelOrderOut[] | undefined){
+export function useSearche(orders: GithubComVeresusTlApiInternalModelOrderOut[] | undefined){
     const [name, setName] = useState<string | undefined>(undefined);
     const [today, setToday] = useState<boolean | undefined>(undefined);
     const [isUrgent, setIsUrgent] = useState<boolean | undefined>(undefined);

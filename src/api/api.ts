@@ -24,571 +24,583 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
 /**
- * DTO для передачи роли на фронт
- * @export
- * @interface ModelCheckResponse
- */
-export interface ModelCheckResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelCheckResponse
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {ModelRoleEnum}
-     * @memberof ModelCheckResponse
-     */
-    'role'?: ModelRoleEnum;
-}
-
-
-/**
- * DTO для передачи списка типов грузов и связей подразделений и зданий
- * @export
- * @interface ModelDropDownListInfoResponse
- */
-export interface ModelDropDownListInfoResponse {
-    /**
-     * Мапа типов грузов
-     * @type {{ [key: string]: string; }}
-     * @memberof ModelDropDownListInfoResponse
-     */
-    'cargo_types'?: { [key: string]: string; };
-    /**
-     * Мапа связей подразделений и зданий
-     * @type {{ [key: string]: string; }}
-     * @memberof ModelDropDownListInfoResponse
-     */
-    'dep_builds'?: { [key: string]: string; };
-}
-/**
  * DTO для передачи данных авторизации
  * @export
- * @interface ModelLoginRequest
+ * @interface DtoLoginRequest
  */
-export interface ModelLoginRequest {
+export interface DtoLoginRequest {
     /**
      * 
      * @type {string}
-     * @memberof ModelLoginRequest
+     * @memberof DtoLoginRequest
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelLoginRequest
+     * @memberof DtoLoginRequest
      */
     'password'?: string;
 }
 /**
  * Модель заявки
  * @export
- * @interface ModelOrder
+ * @interface DtoOrder
  */
-export interface ModelOrder {
+export interface DtoOrder {
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'cargo_description'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'cargo_name'?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'cargo_type_id'?: number;
     /**
      * 
+     * @type {string}
+     * @memberof DtoOrder
+     */
+    'cargo_type_snapshot'?: string;
+    /**
+     * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'cargo_weight'?: number;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'completion_time'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'create_order_time'?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'depart_loc'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
+     */
+    'dispatcher_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoOrder
+     */
+    'driver_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoOrder
      */
     'driver_rate'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'goal_loc'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'id'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'is_postponed'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'is_urgent'?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'order_status_id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'photo_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'pickup_time'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrder
+     * @memberof DtoOrder
      */
     'time'?: string;
 }
 /**
  * DTO для создания заявки
  * @export
- * @interface ModelOrderCreate
+ * @interface DtoOrderCreate
  */
-export interface ModelOrderCreate {
+export interface DtoOrderCreate {
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'cargo_description'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'cargo_name'?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'cargo_type_id'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'cargo_weight'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'depart_loc'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'goal_loc'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'is_urgent'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'photo_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderCreate
+     * @memberof DtoOrderCreate
      */
     'time'?: string;
 }
 /**
- * DTO для обновления заявки
+ * 
  * @export
- * @interface ModelOrderForUpdateResponse
+ * @interface DtoOrderForUpdateResponse
  */
-export interface ModelOrderForUpdateResponse {
+export interface DtoOrderForUpdateResponse {
     /**
-     * OrderForUpdate DTO для обновления заявки
-     * @type {ModelOrderCreate}
-     * @memberof ModelOrderForUpdateResponse
+     * 
+     * @type {DtoOrderCreate}
+     * @memberof DtoOrderForUpdateResponse
      */
-    'order_for_update'?: ModelOrderCreate;
+    'order_for_update'?: DtoOrderCreate;
 }
 /**
- * DTO для передачи информации о заявке
+ * DTO для обновления заявки
  * @export
- * @interface ModelOrderOut
+ * @interface DtoOrderUpdate
  */
-export interface ModelOrderOut {
+export interface DtoOrderUpdate {
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderOut
+     * @memberof DtoOrderUpdate
      */
     'cargo_description'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'cargo_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'cargo_type_name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrderOut
-     */
-    'cargo_weight'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'depart_loc_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'dispatcher_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'driver_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'goal_loc_name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrderOut
-     */
-    'id'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ModelOrderOut
-     */
-    'is_urgent'?: boolean;
-    /**
-     * 
-     * @type {ModelOrderStatusEnum}
-     * @memberof ModelOrderOut
-     */
-    'order_status_name'?: ModelOrderStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'photo_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderOut
-     */
-    'time'?: string;
-}
-
-
-/**
- * Статус заказа
- * @export
- * @enum {string}
- */
-
-export const ModelOrderStatusEnum = {
-    NEW: 'Новый',
-    ACCEPT: 'Принят',
-    COMPLETE: 'Выполнен',
-    CANCEL: 'Отменен',
-    UNKNOWN: 'Неизвестно'
-} as const;
-
-export type ModelOrderStatusEnum = typeof ModelOrderStatusEnum[keyof typeof ModelOrderStatusEnum];
-
-
-/**
- * DTO для обновления заявки
- * @export
- * @interface ModelOrderUpdate
- */
-export interface ModelOrderUpdate {
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderUpdate
-     */
-    'cargo_description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'cargo_name'?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'cargo_type_id'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'cargo_weight'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'depart_loc'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'goal_loc'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {boolean}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'is_urgent'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'photo_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelOrderUpdate
+     * @memberof DtoOrderUpdate
      */
     'time'?: string;
-}
-/**
- * Ответ со списком заявок
- * @export
- * @interface ModelOrdersResponse
- */
-export interface ModelOrdersResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelOrdersResponse
-     */
-    'count'?: number;
-    /**
-     * 
-     * @type {Array<ModelOrderOut>}
-     * @memberof ModelOrdersResponse
-     */
-    'orders'?: Array<ModelOrderOut>;
 }
 /**
  * DTO для передачи данных регистрации
  * @export
- * @interface ModelRegisterRequest
+ * @interface DtoRegisterRequest
  */
-export interface ModelRegisterRequest {
+export interface DtoRegisterRequest {
     /**
      * 
      * @type {string}
-     * @memberof ModelRegisterRequest
+     * @memberof DtoRegisterRequest
      */
     'fio'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelRegisterRequest
+     * @memberof DtoRegisterRequest
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelRegisterRequest
+     * @memberof DtoRegisterRequest
      */
     'password'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelRegisterRequest
+     * @memberof DtoRegisterRequest
      */
     'phone'?: string;
     /**
      * 
-     * @type {ModelRoleEnum}
-     * @memberof ModelRegisterRequest
+     * @type {DtoRoleStatic}
+     * @memberof DtoRegisterRequest
      */
-    'role'?: ModelRoleEnum;
+    'role'?: DtoRoleStatic;
     /**
      * 
      * @type {string}
-     * @memberof ModelRegisterRequest
+     * @memberof DtoRegisterRequest
      */
     'role_password'?: string;
 }
 
 
 /**
- * Роль пользователя в системе
+ * Роли пользователей в системе
  * @export
  * @enum {string}
  */
 
-export const ModelRoleEnum = {
+export const DtoRoleStatic = {
     DRIVER: 'driver',
     DISP: 'disp',
     ADMIN: 'admin',
     MAIN_ADMIN: 'mainAdmin'
 } as const;
 
-export type ModelRoleEnum = typeof ModelRoleEnum[keyof typeof ModelRoleEnum];
+export type DtoRoleStatic = typeof DtoRoleStatic[keyof typeof DtoRoleStatic];
 
 
 /**
- * 
+ * Модель пользователя
  * @export
- * @interface ModelTLIdentetyModelUser
+ * @interface DtoUserForResponse
  */
-export interface ModelTLIdentetyModelUser {
+export interface DtoUserForResponse {
     /**
      * 
      * @type {string}
-     * @memberof ModelTLIdentetyModelUser
+     * @memberof DtoUserForResponse
      */
     'fio'?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ModelTLIdentetyModelUser
-     */
-    'internal_id'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ModelTLIdentetyModelUser
-     */
-    'is_denied'?: boolean;
-    /**
-     * 
      * @type {string}
-     * @memberof ModelTLIdentetyModelUser
+     * @memberof DtoUserForResponse
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelTLIdentetyModelUser
-     */
-    'password'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelTLIdentetyModelUser
+     * @memberof DtoUserForResponse
      */
     'phone'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelTLIdentetyModelUser
+     * @memberof DtoUserForResponse
      */
     'public_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoUserForResponse
+     */
+    'role_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoUserForResponse
+     */
+    'role_name'?: string;
 }
 /**
  * DTO для обновления информации о пользователе
  * @export
- * @interface ModelUserUpdate
+ * @interface DtoUserUpdate
  */
-export interface ModelUserUpdate {
+export interface DtoUserUpdate {
     /**
      * 
      * @type {string}
-     * @memberof ModelUserUpdate
+     * @memberof DtoUserUpdate
      */
     'fio'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUserUpdate
+     * @memberof DtoUserUpdate
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUserUpdate
+     * @memberof DtoUserUpdate
      */
     'password'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelUserUpdate
+     * @memberof DtoUserUpdate
      */
     'phone'?: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus = {
+    ACCEPT: 'Принят',
+    CANCEL: 'Отменен',
+    COMPLETE: 'Выполнен',
+    NEW: 'Новый',
+    UNKNOWN: 'Неизвестно'
+} as const;
+
+export type GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus = typeof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus[keyof typeof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus];
+
+
+/**
+ * DTO для передачи роли на фронт
+ * @export
+ * @interface GithubComVeresusTlApiInternalModelCheckResponse
+ */
+export interface GithubComVeresusTlApiInternalModelCheckResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelCheckResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DtoRoleStatic}
+     * @memberof GithubComVeresusTlApiInternalModelCheckResponse
+     */
+    'role'?: DtoRoleStatic;
+}
+
+
+/**
+ * DTO для передачи списка типов грузов и связей подразделений и зданий
+ * @export
+ * @interface GithubComVeresusTlApiInternalModelDropDownListInfoResponse
+ */
+export interface GithubComVeresusTlApiInternalModelDropDownListInfoResponse {
+    /**
+     * Мапа типов грузов
+     * @type {{ [key: string]: string; }}
+     * @memberof GithubComVeresusTlApiInternalModelDropDownListInfoResponse
+     */
+    'cargo_types'?: { [key: string]: string; };
+    /**
+     * Мапа связей подразделений и зданий
+     * @type {{ [key: string]: string; }}
+     * @memberof GithubComVeresusTlApiInternalModelDropDownListInfoResponse
+     */
+    'dep_builds'?: { [key: string]: string; };
+}
+/**
+ * DTO для передачи информации о заявке
+ * @export
+ * @interface GithubComVeresusTlApiInternalModelOrderOut
+ */
+export interface GithubComVeresusTlApiInternalModelOrderOut {
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'cargo_description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'cargo_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'cargo_type_name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'cargo_weight'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'depart_loc_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'dispatcher_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'driver_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'goal_loc_name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'is_urgent'?: boolean;
+    /**
+     * 
+     * @type {GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'order_status_name'?: GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'photo_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalModelOrderOut
+     */
+    'time'?: string;
+}
+
+
+/**
+ * Ответ со списком заявок
+ * @export
+ * @interface GithubComVeresusTlApiInternalModelOrdersResponse
+ */
+export interface GithubComVeresusTlApiInternalModelOrdersResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalModelOrdersResponse
+     */
+    'count'?: number;
+    /**
+     * 
+     * @type {Array<GithubComVeresusTlApiInternalModelOrderOut>}
+     * @memberof GithubComVeresusTlApiInternalModelOrdersResponse
+     */
+    'orders'?: Array<GithubComVeresusTlApiInternalModelOrderOut>;
 }
 
 /**
@@ -649,7 +661,7 @@ export const CheckApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkGet(isName?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelCheckResponse>> {
+        async checkGet(isName?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubComVeresusTlApiInternalModelCheckResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkGet(isName, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CheckApi.checkGet']?.[localVarOperationServerIndex]?.url;
@@ -672,7 +684,7 @@ export const CheckApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkGet(isName?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ModelCheckResponse> {
+        checkGet(isName?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<GithubComVeresusTlApiInternalModelCheckResponse> {
             return localVarFp.checkGet(isName, options).then((request) => request(axios, basePath));
         },
     };
@@ -744,11 +756,11 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
          * Обновляет информацию о пользователе по его ID (int или UUID)
          * @summary Обновить данные пользователя
          * @param {string} id ID пользователя (число или UUID)
-         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {DtoUserUpdate} user Данные для обновления
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        identUsersIdPatch: async (id: string, user: ModelUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        identUsersIdPatch: async (id: string, user: DtoUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('identUsersIdPatch', 'id', id)
             // verify required parameter 'user' is not null or undefined
@@ -817,11 +829,11 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Входит в систему
          * @summary Входит в систему
-         * @param {ModelLoginRequest} user Данные для входа
+         * @param {DtoLoginRequest} user Данные для входа
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicAuthLoginPost: async (user: ModelLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        publicAuthLoginPost: async (user: DtoLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'user' is not null or undefined
             assertParamExists('publicAuthLoginPost', 'user', user)
             const localVarPath = `/public/auth/login`;
@@ -883,11 +895,11 @@ export const IdentityApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Создает нового пользователя в системе
          * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {DtoRegisterRequest} user Данные для регистрации
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicAuthRegisterPost: async (user: ModelRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        publicAuthRegisterPost: async (user: DtoRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'user' is not null or undefined
             assertParamExists('publicAuthRegisterPost', 'user', user)
             const localVarPath = `/public/auth/register`;
@@ -933,7 +945,7 @@ export const IdentityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async identUsersIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelTLIdentetyModelUser>> {
+        async identUsersIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DtoUserForResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.identUsersIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.identUsersIdGet']?.[localVarOperationServerIndex]?.url;
@@ -943,11 +955,11 @@ export const IdentityApiFp = function(configuration?: Configuration) {
          * Обновляет информацию о пользователе по его ID (int или UUID)
          * @summary Обновить данные пользователя
          * @param {string} id ID пользователя (число или UUID)
-         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {DtoUserUpdate} user Данные для обновления
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async identUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async identUsersIdPatch(id: string, user: DtoUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.identUsersIdPatch(id, user, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.identUsersIdPatch']?.[localVarOperationServerIndex]?.url;
@@ -969,11 +981,11 @@ export const IdentityApiFp = function(configuration?: Configuration) {
         /**
          * Входит в систему
          * @summary Входит в систему
-         * @param {ModelLoginRequest} user Данные для входа
+         * @param {DtoLoginRequest} user Данные для входа
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async publicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async publicAuthLoginPost(user: DtoLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.publicAuthLoginPost(user, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthLoginPost']?.[localVarOperationServerIndex]?.url;
@@ -994,11 +1006,11 @@ export const IdentityApiFp = function(configuration?: Configuration) {
         /**
          * Создает нового пользователя в системе
          * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {DtoRegisterRequest} user Данные для регистрации
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async publicAuthRegisterPost(user: DtoRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.publicAuthRegisterPost(user, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IdentityApi.publicAuthRegisterPost']?.[localVarOperationServerIndex]?.url;
@@ -1021,18 +1033,18 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        identUsersIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ModelTLIdentetyModelUser> {
+        identUsersIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<DtoUserForResponse> {
             return localVarFp.identUsersIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * Обновляет информацию о пользователе по его ID (int или UUID)
          * @summary Обновить данные пользователя
          * @param {string} id ID пользователя (число или UUID)
-         * @param {ModelUserUpdate} user Данные для обновления
+         * @param {DtoUserUpdate} user Данные для обновления
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        identUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        identUsersIdPatch(id: string, user: DtoUserUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.identUsersIdPatch(id, user, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1048,11 +1060,11 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
         /**
          * Входит в систему
          * @summary Входит в систему
-         * @param {ModelLoginRequest} user Данные для входа
+         * @param {DtoLoginRequest} user Данные для входа
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        publicAuthLoginPost(user: DtoLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.publicAuthLoginPost(user, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1067,11 +1079,11 @@ export const IdentityApiFactory = function (configuration?: Configuration, baseP
         /**
          * Создает нового пользователя в системе
          * @summary Зарегистрировать нового пользователя
-         * @param {ModelRegisterRequest} user Данные для регистрации
+         * @param {DtoRegisterRequest} user Данные для регистрации
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        publicAuthRegisterPost(user: DtoRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.publicAuthRegisterPost(user, options).then((request) => request(axios, basePath));
         },
     };
@@ -1100,12 +1112,12 @@ export class IdentityApi extends BaseAPI {
      * Обновляет информацию о пользователе по его ID (int или UUID)
      * @summary Обновить данные пользователя
      * @param {string} id ID пользователя (число или UUID)
-     * @param {ModelUserUpdate} user Данные для обновления
+     * @param {DtoUserUpdate} user Данные для обновления
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IdentityApi
      */
-    public identUsersIdPatch(id: string, user: ModelUserUpdate, options?: RawAxiosRequestConfig) {
+    public identUsersIdPatch(id: string, user: DtoUserUpdate, options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).identUsersIdPatch(id, user, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1124,12 +1136,12 @@ export class IdentityApi extends BaseAPI {
     /**
      * Входит в систему
      * @summary Входит в систему
-     * @param {ModelLoginRequest} user Данные для входа
+     * @param {DtoLoginRequest} user Данные для входа
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IdentityApi
      */
-    public publicAuthLoginPost(user: ModelLoginRequest, options?: RawAxiosRequestConfig) {
+    public publicAuthLoginPost(user: DtoLoginRequest, options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).publicAuthLoginPost(user, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1147,12 +1159,12 @@ export class IdentityApi extends BaseAPI {
     /**
      * Создает нового пользователя в системе
      * @summary Зарегистрировать нового пользователя
-     * @param {ModelRegisterRequest} user Данные для регистрации
+     * @param {DtoRegisterRequest} user Данные для регистрации
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IdentityApi
      */
-    public publicAuthRegisterPost(user: ModelRegisterRequest, options?: RawAxiosRequestConfig) {
+    public publicAuthRegisterPost(user: DtoRegisterRequest, options?: RawAxiosRequestConfig) {
         return IdentityApiFp(this.configuration).publicAuthRegisterPost(user, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1203,11 +1215,11 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Создает новую заявку в системе
          * @summary Создать новую заявку
-         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {DtoOrderCreate} order Данные для создания заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersCreatePost: async (order: ModelOrderCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        ordersCreatePost: async (order: DtoOrderCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'order' is not null or undefined
             assertParamExists('ordersCreatePost', 'order', order)
             const localVarPath = `/orders/create`;
@@ -1376,11 +1388,11 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * Обновляет существующую заявку
          * @summary Обновить заявку
          * @param {number} id ID заявки
-         * @param {ModelOrderUpdate} order Данные для обновления заявки
+         * @param {DtoOrderUpdate} order Данные для обновления заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersIdPatch: async (id: number, order: ModelOrderUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        ordersIdPatch: async (id: number, order: DtoOrderUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('ordersIdPatch', 'id', id)
             // verify required parameter 'order' is not null or undefined
@@ -1606,7 +1618,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrdersResponse>> {
+        async ordersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubComVeresusTlApiInternalModelOrdersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersActualGet(isPrivate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersActualGet']?.[localVarOperationServerIndex]?.url;
@@ -1615,11 +1627,11 @@ export const OrdersApiFp = function(configuration?: Configuration) {
         /**
          * Создает новую заявку в системе
          * @summary Создать новую заявку
-         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {DtoOrderCreate} order Данные для создания заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async ordersCreatePost(order: DtoOrderCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersCreatePost(order, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersCreatePost']?.[localVarOperationServerIndex]?.url;
@@ -1671,7 +1683,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrder>> {
+        async ordersIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DtoOrder>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersIdGet']?.[localVarOperationServerIndex]?.url;
@@ -1681,11 +1693,11 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * Обновляет существующую заявку
          * @summary Обновить заявку
          * @param {number} id ID заявки
-         * @param {ModelOrderUpdate} order Данные для обновления заявки
+         * @param {DtoOrderUpdate} order Данные для обновления заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersIdPatch(id: number, order: ModelOrderUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async ordersIdPatch(id: number, order: DtoOrderUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersIdPatch(id, order, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersIdPatch']?.[localVarOperationServerIndex]?.url;
@@ -1750,7 +1762,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOrderForUpdateResponse>> {
+        async ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DtoOrderForUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ordersUpdateIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersUpdateIdGet']?.[localVarOperationServerIndex]?.url;
@@ -1773,17 +1785,17 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrdersResponse> {
+        ordersActualGet(isPrivate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<GithubComVeresusTlApiInternalModelOrdersResponse> {
             return localVarFp.ordersActualGet(isPrivate, options).then((request) => request(axios, basePath));
         },
         /**
          * Создает новую заявку в системе
          * @summary Создать новую заявку
-         * @param {ModelOrderCreate} order Данные для создания заявки
+         * @param {DtoOrderCreate} order Данные для создания заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        ordersCreatePost(order: DtoOrderCreate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.ordersCreatePost(order, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1823,18 +1835,18 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrder> {
+        ordersIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<DtoOrder> {
             return localVarFp.ordersIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * Обновляет существующую заявку
          * @summary Обновить заявку
          * @param {number} id ID заявки
-         * @param {ModelOrderUpdate} order Данные для обновления заявки
+         * @param {DtoOrderUpdate} order Данные для обновления заявки
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersIdPatch(id: number, order: ModelOrderUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        ordersIdPatch(id: number, order: DtoOrderUpdate, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.ordersIdPatch(id, order, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1884,7 +1896,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<ModelOrderForUpdateResponse> {
+        ordersUpdateIdGet(id: number, options?: RawAxiosRequestConfig): AxiosPromise<DtoOrderForUpdateResponse> {
             return localVarFp.ordersUpdateIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
@@ -1912,12 +1924,12 @@ export class OrdersApi extends BaseAPI {
     /**
      * Создает новую заявку в системе
      * @summary Создать новую заявку
-     * @param {ModelOrderCreate} order Данные для создания заявки
+     * @param {DtoOrderCreate} order Данные для создания заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public ordersCreatePost(order: ModelOrderCreate, options?: RawAxiosRequestConfig) {
+    public ordersCreatePost(order: DtoOrderCreate, options?: RawAxiosRequestConfig) {
         return OrdersApiFp(this.configuration).ordersCreatePost(order, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1973,12 +1985,12 @@ export class OrdersApi extends BaseAPI {
      * Обновляет существующую заявку
      * @summary Обновить заявку
      * @param {number} id ID заявки
-     * @param {ModelOrderUpdate} order Данные для обновления заявки
+     * @param {DtoOrderUpdate} order Данные для обновления заявки
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public ordersIdPatch(id: number, order: ModelOrderUpdate, options?: RawAxiosRequestConfig) {
+    public ordersIdPatch(id: number, order: DtoOrderUpdate, options?: RawAxiosRequestConfig) {
         return OrdersApiFp(this.configuration).ordersIdPatch(id, order, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2097,7 +2109,7 @@ export const ReferencyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refDropdownListInfoGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelDropDownListInfoResponse>> {
+        async refDropdownListInfoGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubComVeresusTlApiInternalModelDropDownListInfoResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.refDropdownListInfoGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferencyApi.refDropdownListInfoGet']?.[localVarOperationServerIndex]?.url;
@@ -2119,7 +2131,7 @@ export const ReferencyApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refDropdownListInfoGet(options?: RawAxiosRequestConfig): AxiosPromise<ModelDropDownListInfoResponse> {
+        refDropdownListInfoGet(options?: RawAxiosRequestConfig): AxiosPromise<GithubComVeresusTlApiInternalModelDropDownListInfoResponse> {
             return localVarFp.refDropdownListInfoGet(options).then((request) => request(axios, basePath));
         },
     };

@@ -1,8 +1,8 @@
-import type { ModelOrderOut } from '../../../api' 
+import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api' 
 import type { OrderCardClickHandler, OrderCardClickInfoHandler } from '../type'
 
 export interface OrderCardProps {
-    order: ModelOrderOut;
+    order: GithubComVeresusTlApiInternalModelOrderOut;
     onClick: OrderCardClickHandler;
     isPrivate: boolean;
     onInfo: OrderCardClickInfoHandler;  

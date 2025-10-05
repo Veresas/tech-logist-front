@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { ModelOrderOut, OrdersApi } from '../../../api';
+import type { GithubComVeresusTlApiInternalModelOrderOut, OrdersApi } from '../../../api';
 
 /**
  * Менеджер для управления фотографиями заказов
  * Инкапсулирует логику загрузки и отображения фотографий
  */
-export const useOrderPhoto = (selectedOrder: ModelOrderOut | null, ordersApi: OrdersApi) => {
+export const useOrderPhoto = (selectedOrder: GithubComVeresusTlApiInternalModelOrderOut | null, ordersApi: OrdersApi) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [isLoadingPhoto, setIsLoadingPhoto] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);

@@ -1,14 +1,14 @@
 import { createContext, useState, type ReactNode } from "react"
 import type { RefCotextTypes } from "./types"
-import type { ModelDropDownListInfoResponse } from '../../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api';
 import { referencyApi } from '../../utils/ApiFactory';
 const DropdownContext = createContext<RefCotextTypes | undefined>(undefined);
 
 export { DropdownContext };
 
 export const DropdownContextProvider = ({children} : {children: ReactNode}) => {
-    const [locs, setLocs] = useState<ModelDropDownListInfoResponse['dep_builds']>({})
-    const [cargoTypes, setCergoTypes] = useState<ModelDropDownListInfoResponse['cargo_types']>({})
+    const [locs, setLocs] = useState<GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds']>({})
+    const [cargoTypes, setCergoTypes] = useState<GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types']>({})
 
 
     const trigerReloadRefs = async () => {

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche, useOrderModals, useOrderActions, useOrderPhoto, useOrderListState } from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
 import { useUtils, useAuth , usePlatform} from "../../../utils/ContextHooks"
-import { type ModelOrderOut, type ModelOrderUpdate, type ModelOrderCreate, ModelRoleEnum } from "../../../api"
+import { type GithubComVeresusTlApiInternalModelOrderOut, type DtoOrderUpdate, type DtoOrderCreate, DtoRoleStatic } from "../../../api"
 import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 
 import styles from './OrderListContainer.module.css'
@@ -40,7 +40,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         setCargoType, } = useSearche(orders)
 
     // Обработчики для модальных окон
-    const handleInfo = useCallback((order: ModelOrderOut) => {
+    const handleInfo = useCallback((order: GithubComVeresusTlApiInternalModelOrderOut) => {
         modals.openDetailsModal(order)
     }, [modals])
 
@@ -53,7 +53,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         }
     }, [actions, modals])
 
-    const handleUpdateOrder = useCallback(async (orderId: number, order: ModelOrderUpdate) => {
+    const handleUpdateOrder = useCallback(async (orderId: number, order: DtoOrderUpdate) => {
         try {
             await actions.handleUpdateOrder(orderId, order)
             modals.closeEditModal()
@@ -98,7 +98,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         }
     }, [actions, modals])
 
-    const handleOrderCreate = useCallback(async (order: ModelOrderCreate, idempotencyKey: string) => {
+    const handleOrderCreate = useCallback(async (order: DtoOrderCreate, idempotencyKey: string) => {
         try {
             await actions.handleCreateOrder(order, idempotencyKey)
             modals.closeCreateModal()
@@ -135,7 +135,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
             />
 
             <div className={styles.orderCreateModalContainer}>
-              { role !==  ModelRoleEnum.DRIVER &&
+              { role !==  DtoRoleStatic.DRIVER &&
               <button
                 className={styles.orderCreateModal}
                 onClick={modals.openCreateModal}

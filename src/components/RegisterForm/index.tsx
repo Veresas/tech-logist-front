@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
-import  { type ModelRegisterRequest,  ModelRoleEnum } from '../../api/api';
+import  { type DtoRegisterRequest,  DtoRoleStatic } from '../../api/api';
 import styles from './RegisterFrom.module.css';
 import type { RegisterFormProps } from './type';
 
@@ -35,7 +35,7 @@ export const RegisterForm = ( {onSubmit, validLoginReq} : RegisterFormProps) => 
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<ModelRegisterRequest >({
+  } = useForm<DtoRegisterRequest >({
     mode: 'onBlur', // Проверка полей при фокусе
   });
 
@@ -50,8 +50,8 @@ export const RegisterForm = ( {onSubmit, validLoginReq} : RegisterFormProps) => 
   const passwordValue = watch('password');
 
   // TODO: Добавить уведомлене об успехе и неудаче и перевод на страницу входа
-  const handleFormSubmit: SubmitHandler<ModelRegisterRequest> = (data) => {
-    data.role = data.role as ModelRoleEnum;
+  const handleFormSubmit: SubmitHandler<DtoRegisterRequest> = (data) => {
+    data.role = data.role as DtoRoleStatic;
     onSubmit(data)
   };
 
@@ -124,9 +124,9 @@ export const RegisterForm = ( {onSubmit, validLoginReq} : RegisterFormProps) => 
           defaultValue=""
         >
           <option value="" disabled>Выберите роль</option>
-          <option value={ModelRoleEnum.DRIVER}>Водитель</option>
-          <option value={ModelRoleEnum.DISP}>Диспетчер</option>
-          <option value={ModelRoleEnum.ADMIN}>Администратор</option>
+          <option value={DtoRoleStatic.DRIVER}>Водитель</option>
+          <option value={DtoRoleStatic.DISP}>Диспетчер</option>
+          <option value={DtoRoleStatic.ADMIN}>Администратор</option>
         </select>
         {errors.role && <div className={styles.error}>{errors.role.message as string}</div>}
       </div>

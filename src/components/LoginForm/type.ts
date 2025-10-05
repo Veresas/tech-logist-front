@@ -1,7 +1,7 @@
-import {type ModelLoginRequest} from '../../api';
+import {type DtoLoginRequest} from '../../api';
 
 
 export interface LoginFormProps {
-    onSubmit: (data: ModelLoginRequest) => void;
+    onSubmit: (data: DtoLoginRequest) => void;
     setIsRegister: (isRegister: boolean) => void;
 }

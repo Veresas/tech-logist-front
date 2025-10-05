@@ -1,10 +1,10 @@
-import type { ModelOrderOut, ModelOrderUpdate } from "../../../api";
+import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../../api";
 
 export interface OrderDetailsModalProps {
-    order: ModelOrderOut;
+    order: GithubComVeresusTlApiInternalModelOrderOut;
     isOpen: boolean;
     onClose: () => void;
-    onEdit: (orderId: number, order: ModelOrderUpdate) => void;
+    onEdit: (orderId: number) => void;
     onDelete: (orderId: number) => void;
     onComplete: (orderId: number) => void;
     onReject: (orderId: number) => void;

@@ -14,8 +14,6 @@ export const MainPage = () => {
     return (
         <div className={styles.body}>
             <OrderListContainer isPrivate={false} ordersApi={ordersApi} locationOptions={locs} cargoTypeOptions={cargoTypes} ></OrderListContainer>
-
-
-            </div>
+        </div>
     )
 }

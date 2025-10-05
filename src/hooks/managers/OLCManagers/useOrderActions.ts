@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { OrdersApi, ModelOrderUpdate, ModelOrderCreate } from '../../../api';
+import type { OrdersApi, DtoOrderUpdate, DtoOrderCreate } from '../../../api';
 
 /**
  * Менеджер для обработки всех действий с заказами
@@ -11,7 +11,7 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   const handleGetOrderForEdit = useCallback(async (orderId: number) => {
     try {
       const res = await ordersApi.ordersUpdateIdGet(orderId);
-      return res.data.order_for_update as ModelOrderCreate;
+      return res.data.order_for_update as DtoOrderCreate;
     } catch (error) {
       console.error('Ошибка получения данных для редактирования:', error);
       throw error;
@@ -19,7 +19,7 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   }, [ordersApi]);
 
   // Обновление заказа
-  const handleUpdateOrder = useCallback(async (orderId: number, order: ModelOrderUpdate) => {
+  const handleUpdateOrder = useCallback(async (orderId: number, order: DtoOrderUpdate) => {
     try {
       await ordersApi.ordersIdPatch(orderId, order);
       onOrdersUpdate();
@@ -74,7 +74,7 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   }, [ordersApi, onOrdersUpdate]);
 
   // Создание заказа
-  const handleCreateOrder = useCallback(async (order: ModelOrderCreate, idempotencyKey: string) => {
+  const handleCreateOrder = useCallback(async (order: DtoOrderCreate, idempotencyKey: string) => {
     try {
       await ordersApi.ordersCreatePost(order, { 
         headers: { 'Idempotency-Key': idempotencyKey } 

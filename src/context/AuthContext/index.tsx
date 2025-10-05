@@ -1,7 +1,7 @@
 import { createContext, useState} from 'react';
 import { checkApi } from '../../utils/ApiFactory';
 import type { AuthContextType, AuthContextProps } from './type';
-import { ModelRoleEnum } from '../../api';
+import { DtoRoleStatic } from '../../api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -10,7 +10,7 @@ export { AuthContext };
 export const AuthProvider = ({children} : AuthContextProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [role, setRole] = useState<ModelRoleEnum>(ModelRoleEnum.DRIVER)
+    const [role, setRole] = useState<DtoRoleStatic>(DtoRoleStatic.DRIVER)
     const [fullName, setFullName] = useState<string>("");
     const verifyAuth = async () => {
         try {
