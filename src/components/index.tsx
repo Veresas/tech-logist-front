@@ -21,3 +21,5 @@ export { SortContainer } from "./SortComps"
 export { MobileMenu } from "./MobileMenu"
 
 export { NotiThemeModule } from "./NotiThemeModul"
+
+export { Dashboard } from "./WidgetManager"

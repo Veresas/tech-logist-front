@@ -101,26 +101,28 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       }
     } else {
       // Для не водителя
-      buttons.push(
-        <button
-          key="delete"
-          className={styles.actionButton}
-          style={{ backgroundColor: '#D10A00', color: 'white', fontSize: '20px' }} 
-          onClick={() => setShowDeleteConfirmation(true)}
-        >
-          Удалить заказ
-        </button>
-      );
-      buttons.push(
-        <button
-          key="edit"
-          className={styles.actionButton}
-          style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }}
-          onClick={() => onEdit(order.id || 0)}
-        >
-          Редактировать
-        </button>
-      );
+      if (order.order_status_name === orderStatus.NEW) {   
+        buttons.push(
+          <button
+            key="delete"
+            className={styles.actionButton}
+            style={{ backgroundColor: '#D10A00', color: 'white', fontSize: '20px' }} 
+            onClick={() => setShowDeleteConfirmation(true)}
+          >
+            Удалить заказ
+          </button>
+        );
+        buttons.push(
+          <button
+            key="edit"
+            className={styles.actionButton}
+            style={{ backgroundColor: '#3049CE', color: 'white', fontSize: '20px' }}
+            onClick={() => onEdit(order.id || 0)}
+          >
+            Редактировать
+          </button>
+        );
+      }
     }
 
     return buttons;
