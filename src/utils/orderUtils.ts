@@ -1,4 +1,4 @@
-import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse, ModelOrder } from '../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../api';
 
 /**
  * Утилиты для работы с заказами
@@ -196,11 +196,11 @@ export const getModalTitle = (isEditing: boolean): string => {
  * 
  * @param order - объект заказа
  * @returns true если заказ срочный
- */
+ 
 export const isOrderUrgent = (order: ModelOrder): boolean => {
   return order?.is_urgent === true;
 };
-
+*/
 /**
  * Форматирование даты для отображения
  * Конвертирует дату в читаемый формат

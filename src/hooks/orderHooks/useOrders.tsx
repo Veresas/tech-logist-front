@@ -1,36 +1,35 @@
 // hooks/useOrders.ts
+import { useQuery } from '@tanstack/react-query'
 import { ordersApi } from '../../utils/ApiFactory'
-import { useCallback, useEffect, useState } from 'react'
 import type { GithubComVeresusTlApiInternalModelOrderOut, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse } from "../../api"
 
 
 export function useOrders(isPrivate: boolean) {
-  const [orders, setOrders] = useState<GithubComVeresusTlApiInternalModelOrderOut[] | undefined>(undefined)
-  const [privateOrders, setPrivateOrders ] = useState<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse | undefined>(undefined)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | undefined>(undefined)
-
-  const fetchOrders = useCallback(async () => {
-    try {
-      setIsLoading(true)
-      setError(undefined)
-      if (isPrivate) {
-        const res = await ordersApi.ordersPersonalCatalogGet()
-        setPrivateOrders(res.data)
-      }
+  const ordersQuery = useQuery<GithubComVeresusTlApiInternalModelOrderOut[]>({
+    queryKey: ['orders', { isPrivate }],
+    queryFn: async () => {
       const res = await ordersApi.ordersActualGet(isPrivate)
-      setOrders(res.data.orders || [])
-    } catch (err) {
-      console.error('Ошибка при запросе заказов:', err)
-      setError("Ошибка загрузки заказов: " + (err as Error).message)
-    } finally {
-      setIsLoading(false)
+      return res.data.orders || []
+    },
+  })
+
+  const personalQuery = useQuery<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse>({
+    enabled: isPrivate,
+    queryKey: ['ordersPersonalCatalog'],
+    queryFn: async () => {
+      const res = await ordersApi.ordersPersonalCatalogGet()
+      return res.data
+    },
+  })
+
+  return {
+    orders: ordersQuery.data,
+    privateOrders: personalQuery.data,
+    isLoading: ordersQuery.isLoading || personalQuery.isLoading,
+    error: (ordersQuery.error || personalQuery.error) as Error | undefined,
+    fetchOrders: () => {
+      void ordersQuery.refetch()
+      if (isPrivate) void personalQuery.refetch()
     }
-  }, [isPrivate])
-
-  useEffect(() => {
-    fetchOrders()
-  }, [fetchOrders])
-
-  return { orders, privateOrders, isLoading, error, fetchOrders }
+  }
 }

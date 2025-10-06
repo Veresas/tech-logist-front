@@ -16,7 +16,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     // Менеджеры для управления состоянием
     const modals = useOrderModals()
     const actions = useOrderActions(ordersApi, fetchOrders)
-    const photo = useOrderPhoto(modals.selectedOrder, ordersApi)
+    const photo = useOrderPhoto(modals.selectedOrder)
     
     // Контекстные хуки
     const { newOrderMarker, triggerNewOrderMarker} = useUtils();
@@ -172,7 +172,7 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
     }, [modals])
     
     if (isLoading) return <div>Загрузка...</div>
-    if (error) return <div>{error}</div>
+    if (error) return <div>{error.message || String(error)}</div>
     return (
       <div className={styles.orderListContainer}>
         <div className={styles.oLCHeaderWrapper}>

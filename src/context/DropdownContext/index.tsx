@@ -1,7 +1,7 @@
-import { createContext, useState, type ReactNode } from "react"
+import { createContext, useState, type ReactNode, useEffect } from "react"
 import type { RefCotextTypes } from "./types"
 import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api';
-import { referencyApi } from '../../utils/ApiFactory';
+import { useDropdownListInfoQuery } from '../../hooks/api/useReferency';
 const DropdownContext = createContext<RefCotextTypes | undefined>(undefined);
 
 export { DropdownContext };
@@ -11,15 +11,16 @@ export const DropdownContextProvider = ({children} : {children: ReactNode}) => {
     const [cargoTypes, setCergoTypes] = useState<GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types']>({})
 
 
-    const trigerReloadRefs = async () => {
-        try {
-          const res = await referencyApi.refDropdownListInfoGet();
-          setLocs(res.data.dep_builds);
-          setCergoTypes(res.data.cargo_types);
-        } catch (error) {
-          console.error('Ошибка получения списка типов грузов и связей подразделений и зданий:', error);
-        }
-    };
+    const { data, refetch } = useDropdownListInfoQuery()
+
+    useEffect(() => {
+      if (data) {
+        setLocs(data.dep_builds)
+        setCergoTypes(data.cargo_types)
+      }
+    }, [data])
+
+    const trigerReloadRefs = async () => { await refetch() };
 
     const value = {
         locs,

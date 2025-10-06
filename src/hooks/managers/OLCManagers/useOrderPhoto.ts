@@ -1,76 +1,53 @@
-import { useState, useEffect, useCallback } from 'react';
-import type { GithubComVeresusTlApiInternalModelOrderOut, OrdersApi } from '../../../api';
+import { useEffect, useCallback } from 'react';
+import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { ordersApi } from '../../../utils/ApiFactory';
 
 /**
  * Менеджер для управления фотографиями заказов
  * Инкапсулирует логику загрузки и отображения фотографий
  */
-export const useOrderPhoto = (selectedOrder: GithubComVeresusTlApiInternalModelOrderOut | null, ordersApi: OrdersApi) => {
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [isLoadingPhoto, setIsLoadingPhoto] = useState(false);
-  const [photoError, setPhotoError] = useState<string | null>(null);
+export const useOrderPhoto = (selectedOrder: GithubComVeresusTlApiInternalModelOrderOut | null) => {
+  const qc = useQueryClient();
 
   // Загрузка фотографии заказа
-  const handleGetPhoto = useCallback(async () => {
-    if (!selectedOrder?.photo_id) {
-      setPhotoUrl(null);
-      return;
-    }
-
-    try {
-      setIsLoadingPhoto(true);
-      setPhotoError(null);
-      
-      const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id, { 
-        responseType: 'blob' 
-      });
-      
-      const photoBlob = URL.createObjectURL(res.data);
-      setPhotoUrl(photoBlob);
-    } catch (error) {
-      console.error('Ошибка получения фотографии:', error);
-      setPhotoError('Не удалось загрузить фотографию');
-      setPhotoUrl(null);
-    } finally {
-      setIsLoadingPhoto(false);
-    }
-  }, [selectedOrder?.photo_id, ordersApi]);
+  const { data: photoBlobUrl, isLoading: isLoadingPhoto, error } = useQuery<string | null>({
+    enabled: Boolean(selectedOrder?.photo_id),
+    queryKey: ['orderPhoto', selectedOrder?.photo_id],
+    queryFn: async () => {
+      if (!selectedOrder?.photo_id) return null;
+      const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id, { responseType: 'blob' });
+      return URL.createObjectURL(res.data);
+    },
+    gcTime: 0,
+  });
 
   // Очистка фотографии
   const clearPhoto = useCallback(() => {
-    if (photoUrl) {
-      URL.revokeObjectURL(photoUrl);
-    }
-    setPhotoUrl(null);
-    setPhotoError(null);
-  }, [photoUrl]);
+    const current = qc.getQueryData<string | null>(['orderPhoto', selectedOrder?.photo_id]);
+    if (current) URL.revokeObjectURL(current);
+    qc.removeQueries({ queryKey: ['orderPhoto', selectedOrder?.photo_id] });
+  }, [qc, selectedOrder?.photo_id]);
 
   // Автоматическая загрузка фотографии при изменении выбранного заказа
   useEffect(() => {
-    if (selectedOrder?.photo_id) {
-      handleGetPhoto();
-    } else {
-      clearPhoto();
-    }
-  }, [selectedOrder, handleGetPhoto, clearPhoto]);
+    if (!selectedOrder?.photo_id) clearPhoto();
+  }, [selectedOrder, clearPhoto]);
 
   // Очистка URL при размонтировании
   useEffect(() => {
     return () => {
-      if (photoUrl) {
-        URL.revokeObjectURL(photoUrl);
-      }
+      const current = qc.getQueryData<string | null>(['orderPhoto', selectedOrder?.photo_id]);
+      if (current) URL.revokeObjectURL(current);
     };
-  }, [photoUrl]);
+  }, [qc, selectedOrder?.photo_id]);
 
   return {
     // Состояние фотографии
-    photoUrl,
+    photoUrl: photoBlobUrl ?? null,
     isLoadingPhoto,
-    photoError,
+    photoError: (error as Error | null) ?? null,
     
-    // Методы управления фотографией
-    handleGetPhoto,
     clearPhoto,
   };
 };

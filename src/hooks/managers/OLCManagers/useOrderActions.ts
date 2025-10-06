@@ -1,11 +1,16 @@
 import { useCallback } from 'react';
 import type { OrdersApi, DtoOrderUpdate, DtoOrderCreate } from '../../../api';
+import { useAcceptOrder, useRejectOrder, useCancelOrder, useCompleteOrder } from '../../orderHooks/useOrderMutations';
 
 /**
  * Менеджер для обработки всех действий с заказами
  * Инкапсулирует API вызовы и бизнес-логику операций с заказами
  */
 export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void) => {
+  const acceptMutation = useAcceptOrder();
+  const rejectMutation = useRejectOrder();
+  const cancelMutation = useCancelOrder();
+  const completeMutation = useCompleteOrder();
   
   // Получение данных заказа для редактирования
   const handleGetOrderForEdit = useCallback(async (orderId: number) => {
@@ -32,46 +37,46 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   // Взятие заказа
   const handleTakeOrder = useCallback(async (orderId: number) => {
     try {
-      await ordersApi.ordersIdAcceptPatch(orderId);
+      await acceptMutation.mutateAsync(orderId);
       onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка взятия заказа:', error);
       throw error;
     }
-  }, [ordersApi, onOrdersUpdate]);
+  }, [acceptMutation, onOrdersUpdate]);
 
   // Удаление заказа
   const handleDeleteOrder = useCallback(async (orderId: number) => {
     try {
-      await ordersApi.ordersIdCancelPatch(orderId);
+      await cancelMutation.mutateAsync(orderId);
       onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка удаления заказа:', error);
       throw error;
     }
-  }, [ordersApi, onOrdersUpdate]);
+  }, [cancelMutation, onOrdersUpdate]);
 
   // Завершение заказа
   const handleCompleteOrder = useCallback(async (orderId: number) => {
     try {
-      await ordersApi.ordersIdCompletePatch(orderId);
+      await completeMutation.mutateAsync(orderId);
       onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка завершения заказа:', error);
       throw error;
     }
-  }, [ordersApi, onOrdersUpdate]);
+  }, [completeMutation, onOrdersUpdate]);
 
   // Отклонение заказа
   const handleRejectOrder = useCallback(async (orderId: number) => {
     try {
-      await ordersApi.ordersIdRejectPatch(orderId);
+      await rejectMutation.mutateAsync(orderId);
       onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка отклонения заказа:', error);
       throw error;
     }
-  }, [ordersApi, onOrdersUpdate]);
+  }, [rejectMutation, onOrdersUpdate]);
 
   // Создание заказа
   const handleCreateOrder = useCallback(async (order: DtoOrderCreate, idempotencyKey: string) => {

@@ -1,7 +1,6 @@
 import type { OrderCardProps } from './type';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
 import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from "../../../api";
-import { OCActionList } from '../type';
 import styles from './OrderCard.module.css';
 import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';
@@ -46,7 +45,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo, isExpand }: Order
                 <button
                     key="take"
                     className={`${styles.cardButton} ${styles.cardButtonPrimary}`}
-                    onClick={() => onClick(order.id || 0, OCActionList.TAKE)}
+                    onClick={() => onClick(order.id || 0, 'TAKE')}
                 >
                     Взять заказ
                 </button>

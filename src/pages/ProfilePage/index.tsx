@@ -1,15 +1,16 @@
-import { identityApi } from "../../utils/ApiFactory"
+import { useLogoutMutation } from '../../hooks/api/useIdentity'
 import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
 import { useNavigate } from 'react-router-dom';
 
 export const ProfilePage = () => {
 
     const { logout } = useAuth()
+    const logoutMutation = useLogoutMutation()
     const navigate = useNavigate();
 
     const handelLogout = async () => {
         try {
-            await identityApi.publicAuthLogoutPost()
+            await logoutMutation.mutateAsync()
             logout()
             navigate('/login'); 
         }

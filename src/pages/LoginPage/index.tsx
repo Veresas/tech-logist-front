@@ -1,10 +1,11 @@
 import {useState} from 'react'
 import { RegisterForm, LoginForm } from '../../components';
-import { identityApi} from '../../utils/ApiFactory'
 import type { DtoLoginRequest, DtoRegisterRequest } from '../../api'
 import { useToast } from '../../hooks/utilsHooks/noti_hooks';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
+import { useLoginMutation, useRegisterMutation } from '../../hooks/api/useIdentity';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const LoginPage = () => {
     const [isRegister, setIsRegister] = useState(false);
@@ -12,9 +13,13 @@ export const LoginPage = () => {
     const { showSuccess, showError } = useToast();
     const { login } = useAuth();
 
+    const loginMutation = useLoginMutation();
+    const registerMutation = useRegisterMutation();
+    const qc = useQueryClient();
+
     const handleLogin = async (data: DtoLoginRequest) => {
         try {
-            await identityApi.publicAuthLoginPost(data);
+            await loginMutation.mutateAsync(data);
             login(); 
             navigate('/');
         } catch (error) {
@@ -25,7 +30,7 @@ export const LoginPage = () => {
 
     const handleRegister = async (data: DtoRegisterRequest) => {
         try {
-            await identityApi.publicAuthRegisterPost(data);
+            await registerMutation.mutateAsync(data);
             showSuccess('Регистрация прошла успешно');
             setIsRegister(false);
         } catch (error) {
@@ -36,8 +41,16 @@ export const LoginPage = () => {
 
     const validLoginReq = async (login: string) => {
         try {
-            const resp = await identityApi.publicAuthCheckLoginLoginGet(login)
-            return resp.data;
+            const data = await qc.fetchQuery({
+              queryKey: ['auth', 'check-login', login],
+              queryFn: async () => {
+                const res = await fetch(`/api/public/auth/check-login/${encodeURIComponent(login)}`, { credentials: 'include' })
+                if (!res.ok) throw new Error('check-login failed')
+                return (await res.json()) as boolean
+              },
+              staleTime: 60_000,
+            })
+            return data
         } catch (error) {
             showError('Ошибка валидации логина. Попробуйте позже');
             console.error(error);
