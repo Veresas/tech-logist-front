@@ -48,6 +48,47 @@
     width: 190px;
 }
 
+/* Секции приватной страницы */
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 16px 24px 16px;
+}
+
+.sectionBlock {
+    background: transparent;
+    color: #1C1C1C;
+}
+
+[data-theme = "dark"] .sectionBlock {
+    color: #F9FAFF;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px 0;
+}
+
+.sectionTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1C1C1C;
+}
+
+[data-theme = "dark"] .sectionTitle {
+    color: #F9FAFF;
+}
+
+.expandBtn {
+    background: transparent;
+    color: #7764FE;
+    border: none;
+    cursor: pointer;
+}
+
 /*
 @media (min-width: 769px) {
     .orderCreateModal{

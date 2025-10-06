@@ -1,11 +1,12 @@
 // hooks/useOrders.ts
 import { ordersApi } from '../../utils/ApiFactory'
 import { useCallback, useEffect, useState } from 'react'
-import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api"
+import type { GithubComVeresusTlApiInternalModelOrderOut, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse } from "../../api"
 
 
 export function useOrders(isPrivate: boolean) {
-  const [orders, setOrders] = useState<GithubComVeresusTlApiInternalModelOrderOut[] | undefined>([])
+  const [orders, setOrders] = useState<GithubComVeresusTlApiInternalModelOrderOut[] | undefined>(undefined)
+  const [privateOrders, setPrivateOrders ] = useState<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
 
@@ -13,6 +14,10 @@ export function useOrders(isPrivate: boolean) {
     try {
       setIsLoading(true)
       setError(undefined)
+      if (isPrivate) {
+        const res = await ordersApi.ordersPersonalCatalogGet()
+        setPrivateOrders(res.data)
+      }
       const res = await ordersApi.ordersActualGet(isPrivate)
       setOrders(res.data.orders || [])
     } catch (err) {
@@ -27,5 +32,5 @@ export function useOrders(isPrivate: boolean) {
     fetchOrders()
   }, [fetchOrders])
 
-  return { orders, isLoading, error, fetchOrders }
+  return { orders, privateOrders, isLoading, error, fetchOrders }
 }

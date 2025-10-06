@@ -442,6 +442,93 @@ export interface DtoUserUpdate {
 /**
  * 
  * @export
+ * @interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+ */
+export interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut {
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'cargo_description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'cargo_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'cargo_type_name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'cargo_weight'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'depart_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'dispatcher_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'driver_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'goal_loc'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'is_urgent'?: boolean;
+    /**
+     * 
+     * @type {GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'order_status_name'?: GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'photo_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut
+     */
+    'time'?: string;
+}
+
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -456,6 +543,56 @@ export const GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus
 export type GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus = typeof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus[keyof typeof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus];
 
 
+/**
+ * 
+ * @export
+ * @interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse
+ */
+export interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse {
+    /**
+     * 
+     * @type {GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse
+     */
+    'completed'?: GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet;
+    /**
+     * 
+     * @type {GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse
+     */
+    'in_work'?: GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet;
+    /**
+     * 
+     * @type {GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse
+     */
+    'new'?: GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet;
+}
+/**
+ * 
+ * @export
+ * @interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet
+ */
+export interface GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet {
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet
+     */
+    'in_response'?: number;
+    /**
+     * 
+     * @type {Array<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut>}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet
+     */
+    'orders'?: Array<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOut>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogSet
+     */
+    'total'?: number;
+}
 /**
  * DTO для передачи роли на фронт
  * @export
@@ -1459,6 +1596,36 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Возвращает сеты заказов (в работе, новые, завершенные)
+         * @summary Личный каталог заказов
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ordersPersonalCatalogGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/orders/personal/catalog`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Удаляет фотографию из системы
          * @summary Удалить фотографию
          * @param {string} id UUID фотографии
@@ -1717,6 +1884,18 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Возвращает сеты заказов (в работе, новые, завершенные)
+         * @summary Личный каталог заказов
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ordersPersonalCatalogGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ordersPersonalCatalogGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrdersApi.ordersPersonalCatalogGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Удаляет фотографию из системы
          * @summary Удалить фотографию
          * @param {string} id UUID фотографии
@@ -1858,6 +2037,15 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          */
         ordersIdRejectPatch(id: number, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.ordersIdRejectPatch(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Возвращает сеты заказов (в работе, новые, завершенные)
+         * @summary Личный каталог заказов
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ordersPersonalCatalogGet(options?: RawAxiosRequestConfig): AxiosPromise<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse> {
+            return localVarFp.ordersPersonalCatalogGet(options).then((request) => request(axios, basePath));
         },
         /**
          * Удаляет фотографию из системы
@@ -2004,6 +2192,17 @@ export class OrdersApi extends BaseAPI {
      */
     public ordersIdRejectPatch(id: number, options?: RawAxiosRequestConfig) {
         return OrdersApiFp(this.configuration).ordersIdRejectPatch(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Возвращает сеты заказов (в работе, новые, завершенные)
+     * @summary Личный каталог заказов
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrdersApi
+     */
+    public ordersPersonalCatalogGet(options?: RawAxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).ordersPersonalCatalogGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

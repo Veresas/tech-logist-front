@@ -10,6 +10,8 @@
   transition: all 0.3s ease;
   border: 1px solid #e9ecef;
   margin: 30px;
+  max-width: 350px;
+  min-width: 240px;
 }
 
 .orderCard:hover {
@@ -264,4 +266,11 @@
     font-size: 12px;
     min-height: 36px;
   }
+}
+
+.orderCard[data-expand="false"] {
+  min-width: 0;
+  max-width: none;
+  padding: 14px;
+  gap: 10px;
 }

@@ -250,6 +250,33 @@
                 }
             }
         },
+        "/orders/personal/catalog": {
+            "get": {
+                "description": "Возвращает сеты заказов (в работе, новые, завершенные)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Личный каталог заказов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка получения каталога",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/orders/photo/upload": {
             "post": {
                 "description": "Загружает фотографию в систему",
@@ -1210,6 +1237,50 @@
                 }
             }
         },
+        "github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOut": {
+            "type": "object",
+            "properties": {
+                "cargo_description": {
+                    "type": "string"
+                },
+                "cargo_name": {
+                    "type": "string"
+                },
+                "cargo_type_name": {
+                    "type": "string"
+                },
+                "cargo_weight": {
+                    "type": "number"
+                },
+                "depart_loc": {
+                    "type": "integer"
+                },
+                "dispatcher_id": {
+                    "type": "integer"
+                },
+                "driver_id": {
+                    "type": "integer"
+                },
+                "goal_loc": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_urgent": {
+                    "type": "boolean"
+                },
+                "order_status_name": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOutStatus"
+                },
+                "photo_id": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOutStatus": {
             "type": "string",
             "enum": [
@@ -1226,6 +1297,37 @@
                 "NEW",
                 "UNKNOWN"
             ]
+        },
+        "github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogResponse": {
+            "type": "object",
+            "properties": {
+                "completed": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogSet"
+                },
+                "in_work": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogSet"
+                },
+                "new": {
+                    "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogSet"
+                }
+            }
+        },
+        "github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoPersonalCatalogSet": {
+            "type": "object",
+            "properties": {
+                "in_response": {
+                    "type": "integer"
+                },
+                "orders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_veresus_tl-api_internal_clients_tl_orders_client.DtoOrderOut"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
         },
         "github_com_veresus_tl-api_internal_model.CargoTypeMap": {
             "description": "Мапа типов грузов",

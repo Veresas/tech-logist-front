@@ -6,7 +6,7 @@ import styles from './OrderCard.module.css';
 import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';
 
-export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps) => {
+export const OrderCard = ({ order, onClick, isPrivate, onInfo, isExpand }: OrderCardProps) => {
     const { role } = useAuth();
     const { isMobile } = usePlatform();
     // Форматирование времени
@@ -57,7 +57,7 @@ export const OrderCard = ({ order, onClick, isPrivate, onInfo }: OrderCardProps)
     };
 
     return (
-        <div className={styles.orderCard}>
+        <div className={styles.orderCard} data-expand={isExpand}>
             {/* Заголовок карточки */}
             <div className={styles.cardHeader}>
                 <span className={styles.orderNumber}>№{order.id?.toString().padStart(4, '0') || '0000'}</span>

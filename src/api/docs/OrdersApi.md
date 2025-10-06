@@ -12,6 +12,7 @@ All URIs are relative to *http://localhost:8400/api*
 |[**ordersIdGet**](#ordersidget) | **GET** /orders/{id} | Получить заявку по ID|
 |[**ordersIdPatch**](#ordersidpatch) | **PATCH** /orders/{id} | Обновить заявку|
 |[**ordersIdRejectPatch**](#ordersidrejectpatch) | **PATCH** /orders/{id}/reject | Отклонить заявку|
+|[**ordersPersonalCatalogGet**](#orderspersonalcatalogget) | **GET** /orders/personal/catalog | Личный каталог заказов|
 |[**ordersPhotoIdDelete**](#ordersphotoiddelete) | **DELETE** /orders/photo/{id} | Удалить фотографию|
 |[**ordersPhotoIdGet**](#ordersphotoidget) | **GET** /orders/photo/{id} | Получить файл фотографии|
 |[**ordersPhotoUploadPost**](#ordersphotouploadpost) | **POST** /orders/photo/upload | Загрузить фотографию|
@@ -447,6 +448,51 @@ No authorization required
 |**400** | Неверный формат ID |  -  |
 |**404** | Заявка не найдена |  -  |
 |**500** | Ошибка отклонения заявки |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ordersPersonalCatalogGet**
+> GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse ordersPersonalCatalogGet()
+
+Возвращает сеты заказов (в работе, новые, завершенные)
+
+### Example
+
+```typescript
+import {
+    OrdersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrdersApi(configuration);
+
+const { status, data } = await apiInstance.ordersPersonalCatalogGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**500** | Ошибка получения каталога |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

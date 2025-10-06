@@ -6,5 +6,7 @@ export interface OrderListProps {
     handleAction: OrderCardClickHandler;
     isPrivate: boolean;
     handleInfo: OrderCardClickInfoHandler;  
+    // Пробрасываем, раскрыта ли секция
+    isExpand?: boolean;
 
 }

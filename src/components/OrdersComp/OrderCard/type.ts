@@ -6,4 +6,6 @@ export interface OrderCardProps {
     onClick: OrderCardClickHandler;
     isPrivate: boolean;
     onInfo: OrderCardClickInfoHandler;  
+    // Флаг раскрытия секции, для стилизации через data-атрибут
+    isExpand?: boolean;
 }

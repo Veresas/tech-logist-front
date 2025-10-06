@@ -2,7 +2,7 @@ import type { OrderListProps } from './type'
 import { OrderCard } from '../OrderCard'
 import styles from './OrderList.module.css'
 
-export const OrderList = ({ orders, handleAction, isPrivate, handleInfo } : OrderListProps) => {
+export const OrderList = ({ orders, handleAction, isPrivate, handleInfo, isExpand } : OrderListProps) => {
     // Сортируем заказы по времени: от ближайшего к самому позднему
     const sortedOrders = [...orders].sort((a, b) => {
         const aTime = a.time ? new Date(a.time).getTime() : Infinity
@@ -11,7 +11,7 @@ export const OrderList = ({ orders, handleAction, isPrivate, handleInfo } : Orde
     })
 
     return (
-        <div className={styles.orderList}>
+        <div className={styles.orderList} data-expand={isExpand}>
             {sortedOrders.map((order) => (
                 <OrderCard 
                     key={order.id} 
@@ -19,6 +19,7 @@ export const OrderList = ({ orders, handleAction, isPrivate, handleInfo } : Orde
                     onClick={handleAction} 
                     isPrivate={isPrivate} 
                     onInfo={handleInfo}
+                    isExpand={isExpand}
                 />
             ))}
         </div>
