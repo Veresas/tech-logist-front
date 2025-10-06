@@ -81,6 +81,7 @@
   }
   
   .formGrid {
+    grid-template-columns: 1fr !important ; 
     gap: 0.75rem;
   }
   

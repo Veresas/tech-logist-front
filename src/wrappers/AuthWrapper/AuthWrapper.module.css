@@ -11,6 +11,9 @@
     overflow: hidden; /* чтобы список прокручивался внутри себя */
 }
   
+[data-theme = "dark"] .mainContent {
+  background-color: #151e29;
+}
   /* Стили для мобильных устройств (по умолчанию) */
 .mainContent {
     padding-bottom: 55px;

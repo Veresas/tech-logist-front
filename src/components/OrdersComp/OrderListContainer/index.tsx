@@ -121,10 +121,12 @@ export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, carg
         try {
             await actions.handleTakeOrder(orderId)
             modals.closeDetailsModal()
+            // После взятия заказа обновляем списки (аналогично созданию заказа)
+            triggerNewOrderMarker()
         } catch (error) {
             console.error('Ошибка взятия заказа:', error)
         }
-    }, [actions, modals])
+    }, [actions, modals, triggerNewOrderMarker])
 
     const handleDelete = useCallback(async (orderId: number) => {
         try {

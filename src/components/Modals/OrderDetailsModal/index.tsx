@@ -353,7 +353,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
         {description}
       </div>
 
-      <div className={styles.mobileContetnCrid}>
+      <div className={styles.mobileContetnGrid}>
           {/* Время */}
           {time}
           {/* Маршрут */}

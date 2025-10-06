@@ -11,15 +11,22 @@
 }
 
 /* Мобильная вёрстка: одна колонка, карточки на всю ширину */
-@media (max-width: 768px) {
-    .orderList {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-}
 
 .orderList[data-expand="false"] {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
+@media (max-width: 768px) {
+    .orderList {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .orderList[data-expand="false"] {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+
 
