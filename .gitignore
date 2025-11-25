@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 swagger.json
+
+# Help documentation
+/help

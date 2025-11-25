@@ -9,6 +9,7 @@ export const AuthWrapper = () => {
     const { isAuthenticated, isLoading, verifyAuth } = useAuth();
     const { isMobile } = usePlatform();
     useEffect(() => {
+        console.log("вызываем рефетч")
         verifyAuth();
     }, [])
     if (isLoading) {
