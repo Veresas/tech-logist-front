@@ -1,7 +1,6 @@
 //import React, { useEffect, useState } from 'react'
 import { useEffect, useState } from 'react';
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer'
-import { ordersApi } from '../../utils/ApiFactory'
 import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api';
 import styles from "./PrivarePage.module.css"
 import { useDropdownListInfoQuery } from '../../hooks/api/useReferency'
@@ -20,7 +19,6 @@ export const PrivatePage = () => {
         <div className={styles.body}>
             <OrderListContainer 
             isPrivate={true} 
-            ordersApi={ordersApi} 
             locationOptions={locationOptions} 
             cargoTypeOptions={cargoTypeOptions} ></OrderListContainer>
 

@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ordersApi } from '../../../utils/ApiFactory';
+import { useQueryClient } from '@tanstack/react-query';
+import { useGetOrdersPhotoId } from '../../../api/orders/orders';
 
 /**
  * Менеджер для управления фотографиями заказов
@@ -11,16 +11,18 @@ export const useOrderPhoto = (selectedOrder: GithubComVeresusTlApiInternalModelO
   const qc = useQueryClient();
 
   // Загрузка фотографии заказа
-  const { data: photoBlobUrl, isLoading: isLoadingPhoto, error } = useQuery<string | null>({
-    enabled: Boolean(selectedOrder?.photo_id),
-    queryKey: ['orderPhoto', selectedOrder?.photo_id],
-    queryFn: async () => {
-      if (!selectedOrder?.photo_id) return null;
-      const res = await ordersApi.ordersPhotoIdGet(selectedOrder.photo_id, { responseType: 'blob' });
-      return URL.createObjectURL(res.data);
-    },
-    gcTime: 0,
-  });
+  const { data: photoResponse, isLoading: isLoadingPhoto, error } = useGetOrdersPhotoId(
+    selectedOrder?.photo_id || '',
+    {
+      query: {
+        enabled: Boolean(selectedOrder?.photo_id),
+        queryKey: ['orderPhoto', selectedOrder?.photo_id],
+        gcTime: 0,
+      }
+    }
+  );
+
+  const photoBlobUrl = photoResponse?.data ? URL.createObjectURL(photoResponse.data) : null;
 
   // Очистка фотографии
   const clearPhoto = useCallback(() => {

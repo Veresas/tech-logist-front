@@ -8,13 +8,15 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:api": "openapi-generator-cli generate -i ./swagger.json -g typescript-axios -o ./src/api"
+    "generate:api": "openapi-generator-cli generate -i ./swagger.json -g typescript-axios -o ./src/api",
+    "gen:api_orval": "orval"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.2",
     "apexcharts": "^5.3.5",
     "axios": "^1.11.0",
     "lucide-react": "^0.542.0",
+    "orval": "^7.17.0",
     "react": "^19.1.0",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.1.0",

@@ -1,12 +1,17 @@
 import { useCallback } from 'react';
-import type { OrdersApi, DtoOrderUpdate, DtoOrderCreate } from '../../../api';
+import type { DtoOrderUpdate, DtoOrderCreate } from '../../../api';
 import { useAcceptOrder, useRejectOrder, useCancelOrder, useCompleteOrder } from '../../orderHooks/useOrderMutations';
+import { 
+  getOrdersUpdateId, 
+  patchOrdersId
+} from '../../../api/orders/orders';
+import { postOrdersCreate } from '../../../api/orders/orders.manual';
 
 /**
  * Менеджер для обработки всех действий с заказами
  * Инкапсулирует API вызовы и бизнес-логику операций с заказами
  */
-export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void) => {
+export const useOrderActions = (onOrdersUpdate: () => void) => {
   const acceptMutation = useAcceptOrder();
   const rejectMutation = useRejectOrder();
   const cancelMutation = useCancelOrder();
@@ -15,24 +20,24 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   // Получение данных заказа для редактирования
   const handleGetOrderForEdit = useCallback(async (orderId: number) => {
     try {
-      const res = await ordersApi.ordersUpdateIdGet(orderId);
+      const res = await getOrdersUpdateId(orderId);
       return res.data.order_for_update as DtoOrderCreate;
     } catch (error) {
       console.error('Ошибка получения данных для редактирования:', error);
       throw error;
     }
-  }, [ordersApi]);
+  }, []);
 
   // Обновление заказа
   const handleUpdateOrder = useCallback(async (orderId: number, order: DtoOrderUpdate) => {
     try {
-      await ordersApi.ordersIdPatch(orderId, order);
+      await patchOrdersId(orderId, order);
       onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка обновления заказа:', error);
       throw error;
     }
-  }, [ordersApi, onOrdersUpdate]);
+  }, [onOrdersUpdate]);
 
   // Взятие заказа
   const handleTakeOrder = useCallback(async (orderId: number) => {
@@ -81,14 +86,13 @@ export const useOrderActions = (ordersApi: OrdersApi, onOrdersUpdate: () => void
   // Создание заказа
   const handleCreateOrder = useCallback(async (order: DtoOrderCreate, idempotencyKey: string) => {
     try {
-      await ordersApi.ordersCreatePost(order, { 
-        headers: { 'Idempotency-Key': idempotencyKey } 
-      });
+      await postOrdersCreate(order, idempotencyKey);
+      onOrdersUpdate();
     } catch (error) {
       console.error('Ошибка создания заказа:', error);
       throw error;
     }
-  }, [ordersApi]);
+  }, [onOrdersUpdate]);
 
   return {
     // Методы для работы с заказами

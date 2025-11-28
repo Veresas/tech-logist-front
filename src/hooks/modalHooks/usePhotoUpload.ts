@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { ordersApi } from '../../utils/ApiFactory';
+import { usePostOrdersPhotoUpload } from '../../api/orders/orders';
 
 /**
  * Хук для загрузки фотографий
@@ -91,6 +91,8 @@ export const usePhotoUpload = () => {
     });
   }, []);
 
+  const uploadMutation = usePostOrdersPhotoUpload();
+
   /**
    * Обработка выбранного файла
    * Основная функция для загрузки фото
@@ -119,15 +121,17 @@ export const usePhotoUpload = () => {
       setPhotoPreview(preview);
 
       // Загружаем файл на сервер
-      const uploadResponse = await ordersApi.ordersPhotoUploadPost(file, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const uploadResponse = await uploadMutation.mutateAsync({ 
+        data: { photo: file } 
       });
 
       // Сохраняем ID загруженного фото
-      const uploadedPhotoId = uploadResponse.data.photo_id;
-      setPhotoId(uploadedPhotoId);
+      // Примечание: photo_id может быть в заголовках ответа или в message
+      // Если API возвращает photo_id в другом формате, нужно будет обновить эту логику
+      const uploadedPhotoId = (uploadResponse.data)?.photo_id || '';
+      if (uploadedPhotoId) {
+        setPhotoId(uploadedPhotoId);
+      }
       
       
     } catch (error) {
@@ -146,7 +150,7 @@ export const usePhotoUpload = () => {
       // Сбрасываем флаг загрузки
       setIsUploading(false);
     }
-  }, [validateFileFormat, validateFileSize, createPreview]);
+  }, [validateFileFormat, validateFileSize, createPreview, uploadMutation]);
 
   /**
    * Обработчик клика по области загрузки

@@ -1,30 +1,24 @@
 // hooks/useOrders.ts
-import { useQuery } from '@tanstack/react-query'
-import { ordersApi } from '../../utils/ApiFactory'
-import type { GithubComVeresusTlApiInternalModelOrderOut, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse } from "../../api"
+import { useGetOrdersActual, useGetOrdersPersonalCatalog } from '../../api/orders/orders'
 
 
 export function useOrders(isPrivate: boolean) {
-  const ordersQuery = useQuery<GithubComVeresusTlApiInternalModelOrderOut[]>({
-    queryKey: ['orders', { isPrivate }],
-    queryFn: async () => {
-      const res = await ordersApi.ordersActualGet(isPrivate)
-      return res.data.orders || []
-    },
+  const ordersQuery = useGetOrdersActual({ isPrivate }, {
+    query: {
+      queryKey: ['orders', { isPrivate }],
+    }
   })
 
-  const personalQuery = useQuery<GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse>({
-    enabled: isPrivate,
-    queryKey: ['ordersPersonalCatalog'],
-    queryFn: async () => {
-      const res = await ordersApi.ordersPersonalCatalogGet()
-      return res.data
-    },
+  const personalQuery = useGetOrdersPersonalCatalog({
+    query: {
+      enabled: isPrivate,
+      queryKey: ['ordersPersonalCatalog'],
+    }
   })
 
   return {
-    orders: ordersQuery.data,
-    privateOrders: personalQuery.data,
+    orders: ordersQuery.data?.data?.orders || [],
+    privateOrders: personalQuery.data?.data,
     isLoading: ordersQuery.isLoading || personalQuery.isLoading,
     error: (ordersQuery.error || personalQuery.error) as Error | undefined,
     fetchOrders: () => {

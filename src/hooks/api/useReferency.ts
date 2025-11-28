@@ -1,16 +1,19 @@
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
-import { referencyApi } from '../../utils/ApiFactory'
-import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api'
+import { type UseQueryOptions } from '@tanstack/react-query'
+import { useGetRefDropdownListInfo } from '../../api/referency/referency'
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api/model'
+import type { AxiosResponse } from 'axios'
 
-export const useDropdownListInfoQuery = (options?: Omit<UseQueryOptions<GithubComVeresusTlApiInternalModelDropDownListInfoResponse>, 'queryKey' | 'queryFn'>) =>
-  useQuery<GithubComVeresusTlApiInternalModelDropDownListInfoResponse>({
-    queryKey: ['ref', 'dropdown-list-info'],
-    queryFn: async () => {
-      const res = await referencyApi.refDropdownListInfoGet()
-      return res.data
-    },
-    staleTime: 5 * 60_000,
-    ...options,
+export const useDropdownListInfoQuery = (options?: Omit<UseQueryOptions<AxiosResponse<GithubComVeresusTlApiInternalModelDropDownListInfoResponse>>, 'queryKey' | 'queryFn'>) => {
+  const query = useGetRefDropdownListInfo({
+    query: {
+      staleTime: 5 * 60_000,
+      ...options,
+    }
   })
+  return {
+    ...query,
+    data: query.data?.data
+  }
+}
 
 

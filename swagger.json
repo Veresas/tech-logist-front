@@ -43,13 +43,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -87,15 +87,13 @@
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Пользователь не найден",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -134,29 +132,25 @@
                     "200": {
                         "description": "Пользователь успешно обновлен",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Пользователь не найден",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка обновления пользователя",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -194,8 +188,7 @@
                     "500": {
                         "description": "Ошибка получения заявок",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -223,28 +216,32 @@
                         "schema": {
                             "$ref": "#/definitions/dto.OrderCreate"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Ключ идемпотентности для предотвращения дублирования запросов",
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Заявка успешно создана",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверные данные заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка создания заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -270,8 +267,7 @@
                     "500": {
                         "description": "Ошибка получения каталога",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -303,22 +299,19 @@
                     "200": {
                         "description": "Фотография успешно загружена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.UploadPhoto"
                         }
                     },
                     "400": {
                         "description": "Неверный формат файла",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка загрузки фотографии",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -356,22 +349,19 @@
                     "400": {
                         "description": "Неверный формат UUID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Фотография не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка получения файла",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -401,22 +391,19 @@
                     "200": {
                         "description": "Фотография успешно удалена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат UUID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка удаления фотографии",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -454,15 +441,13 @@
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка получения заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -500,22 +485,19 @@
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Заявка не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка получения заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -554,22 +536,19 @@
                     "200": {
                         "description": "Заявка успешно обновлена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверные данные заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка обновления заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -601,29 +580,25 @@
                     "200": {
                         "description": "Заявка успешно принята",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Заявка не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка принятия заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -655,29 +630,25 @@
                     "200": {
                         "description": "Заявка успешно отменена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Заявка не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка отмены заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -709,29 +680,25 @@
                     "200": {
                         "description": "Заявка успешно завершена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Заявка не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка завершения заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -763,29 +730,25 @@
                     "200": {
                         "description": "Заявка успешно отклонена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверный формат ID",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Заявка не найдена",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка отклонения заявки",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -869,22 +832,19 @@
                     "201": {
                         "description": "Пользователь успешно введен",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверные данные пользователя",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка входа в систему",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -907,8 +867,7 @@
                     "201": {
                         "description": "Пользователь успешно вышел",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     }
                 }
@@ -942,22 +901,19 @@
                     "201": {
                         "description": "Пользователь успешно создан",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.MessageResponse"
                         }
                     },
                     "400": {
                         "description": "Неверные данные пользователя",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Ошибка создания пользователя",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -981,6 +937,12 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.DropDownListInfoResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.ErrorResponse"
                         }
                     }
                 }
@@ -1377,6 +1339,27 @@
                 }
             }
         },
+        "github_com_veresus_tl-api_internal_model.ErrorResponse": {
+            "description": "DTO для передачи ошибки в ответе",
+            "type": "object",
+            "properties": {
+                "details": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_veresus_tl-api_internal_model.MessageResponse": {
+            "description": "DTO для передачи простого сообщения в ответе",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_veresus_tl-api_internal_model.OrderOut": {
             "description": "DTO для передачи информации о заявке",
             "type": "object",
@@ -1434,6 +1417,18 @@
                     "items": {
                         "$ref": "#/definitions/github_com_veresus_tl-api_internal_model.OrderOut"
                     }
+                }
+            }
+        },
+        "github_com_veresus_tl-api_internal_model.UploadPhoto": {
+            "description": "DTO для передачи photo_id загруженного фото",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "photo_id": {
+                    "type": "string"
                 }
             }
         }

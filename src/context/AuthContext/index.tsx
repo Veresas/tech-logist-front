@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import type { AuthContextType, AuthContextProps } from './type';
 import { DtoRoleStatic } from '../../api';
-import { checkApi } from '../../utils/ApiFactory';
+import { getCheck } from '../../api/check/check';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({children} : AuthContextProps) => {
             if (fullName === "") {
                 isGetName = true;
             }
-            const response = await checkApi.checkGet(isGetName);
+            const response = await getCheck({ is_name: isGetName });
             if (response.status === 200) { // Предполагаем, что 200 OK означает успешную проверку
                 setIsAuthenticated(true);
                 if (response.data.role) {

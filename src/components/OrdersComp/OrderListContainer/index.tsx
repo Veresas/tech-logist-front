@@ -8,14 +8,14 @@ import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 
 import styles from './OrderListContainer.module.css'
 
-export const OrderListContainer = ({ isPrivate, ordersApi, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
+export const OrderListContainer = ({ isPrivate, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
     // Основные хуки для работы с заказами
     const { orders, privateOrders, isLoading, error, fetchOrders } = useOrders(isPrivate)
     const { handleSendRequest } = useOrderCardHandlers()
     
     // Менеджеры для управления состоянием
     const modals = useOrderModals()
-    const actions = useOrderActions(ordersApi, fetchOrders)
+    const actions = useOrderActions(fetchOrders)
     const photo = useOrderPhoto(modals.selectedOrder)
     
     // Контекстные хуки

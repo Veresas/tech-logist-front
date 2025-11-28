@@ -1,40 +1,55 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { identityApi } from '../../utils/ApiFactory'
-import type { DtoLoginRequest, DtoRegisterRequest } from '../../api'
+import { 
+  usePostPublicAuthLogin, 
+  usePostPublicAuthRegister, 
+  usePostPublicAuthLogout,
+  useGetPublicAuthCheckLoginLogin
+} from '../../api/identity/identity'
+import type { DtoLoginRequest, DtoRegisterRequest } from '../../api/model'
 
-export const useLoginMutation = () =>
-  useMutation({
-    mutationFn: async (payload: DtoLoginRequest) => {
-      const res = await identityApi.publicAuthLoginPost(payload)
+export const useLoginMutation = () => {
+  const mutation = usePostPublicAuthLogin()
+  return {
+    ...mutation,
+    mutate: (payload: DtoLoginRequest) => mutation.mutate({ data: payload }),
+    mutateAsync: async (payload: DtoLoginRequest) => {
+      const res = await mutation.mutateAsync({ data: payload })
       return res.data
-    },
-  })
+    }
+  }
+}
 
-export const useRegisterMutation = () =>
-  useMutation({
-    mutationFn: async (payload: DtoRegisterRequest) => {
-      const res = await identityApi.publicAuthRegisterPost(payload)
+export const useRegisterMutation = () => {
+  const mutation = usePostPublicAuthRegister()
+  return {
+    ...mutation,
+    mutate: (payload: DtoRegisterRequest) => mutation.mutate({ data: payload }),
+    mutateAsync: async (payload: DtoRegisterRequest) => {
+      const res = await mutation.mutateAsync({ data: payload })
       return res.data
-    },
-  })
+    }
+  }
+}
 
-export const useLogoutMutation = () =>
-  useMutation({
-    mutationFn: async () => {
-      const res = await identityApi.publicAuthLogoutPost()
+export const useLogoutMutation = () => {
+  const mutation = usePostPublicAuthLogout()
+  return {
+    ...mutation,
+    mutate: () => mutation.mutate(undefined),
+    mutateAsync: async () => {
+      const res = await mutation.mutateAsync(undefined)
       return res.data
-    },
-  })
+    }
+  }
+}
 
-export const useCheckLoginQuery = (login: string, enabled: boolean) =>
-  useQuery({
-    enabled,
-    queryKey: ['auth', 'check-login', login],
-    queryFn: async () => {
-      const res = await identityApi.publicAuthCheckLoginLoginGet(login)
-      return res.data
-    },
-    staleTime: 60_000,
+export const useCheckLoginQuery = (login: string, enabled: boolean) => {
+  const query = useGetPublicAuthCheckLoginLogin(login, {
+    query: { enabled, staleTime: 60_000 }
   })
+  return {
+    ...query,
+    data: query.data?.data
+  }
+}
 
 

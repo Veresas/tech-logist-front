@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
-import  { type DtoRegisterRequest,  DtoRoleStatic } from '../../api/api';
+import  { type DtoRegisterRequest,  DtoRoleStatic } from '../../api';
 import styles from './RegisterFrom.module.css';
 import type { RegisterFormProps } from './type';
 

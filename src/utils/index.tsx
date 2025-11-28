@@ -1,1 +1,0 @@
-export { customAxiosInstance } from './CustomAxios';
