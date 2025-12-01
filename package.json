@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:api": "openapi-generator-cli generate -i ./swagger.json -g typescript-axios -o ./src/api",
-    "gen:api_orval": "orval"
+    "gen:api": "orval"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.2",

@@ -11,7 +11,8 @@ export const useAcceptOrder = () => {
   const mutation = usePatchOrdersIdAccept({
     mutation: {
       onSuccess: async () => {
-        await qc.invalidateQueries({ queryKey: ['orders'] })
+        // Инвалидируем все запросы orders/actual (независимо от params)
+        await qc.invalidateQueries({ queryKey: ['/orders/actual'] })
         await qc.invalidateQueries({ queryKey: ['ordersPersonalCatalog'] })
       },
     }
@@ -31,7 +32,8 @@ export const useRejectOrder = () => {
   const mutation = usePatchOrdersIdReject({
     mutation: {
       onSuccess: async () => {
-        await qc.invalidateQueries({ queryKey: ['orders'] })
+        // Инвалидируем все запросы orders/actual (независимо от params)
+        await qc.invalidateQueries({ queryKey: ['/orders/actual'] })
         await qc.invalidateQueries({ queryKey: ['ordersPersonalCatalog'] })
       },
     }
@@ -51,7 +53,8 @@ export const useCancelOrder = () => {
   const mutation = usePatchOrdersIdCancel({
     mutation: {
       onSuccess: async () => {
-        await qc.invalidateQueries({ queryKey: ['orders'] })
+        // Инвалидируем все запросы orders/actual (независимо от params)
+        await qc.invalidateQueries({ queryKey: ['/orders/actual'] })
         await qc.invalidateQueries({ queryKey: ['ordersPersonalCatalog'] })
       },
     }
@@ -71,7 +74,8 @@ export const useCompleteOrder = () => {
   const mutation = usePatchOrdersIdComplete({
     mutation: {
       onSuccess: async () => {
-        await qc.invalidateQueries({ queryKey: ['orders'] })
+        // Инвалидируем все запросы orders/actual (независимо от params)
+        await qc.invalidateQueries({ queryKey: ['/orders/actual'] })
         await qc.invalidateQueries({ queryKey: ['ordersPersonalCatalog'] })
       },
     }

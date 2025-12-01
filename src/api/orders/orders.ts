@@ -26,9 +26,9 @@ import type {
 
 import type {
   DtoOrder,
+  DtoOrderCreate,
   DtoOrderForUpdateResponse,
   DtoOrderUpdate,
-  GetOrdersActualParams,
   GithubComVeresusTlApiInternalClientsTlOrdersClientDtoPersonalCatalogResponse,
   GithubComVeresusTlApiInternalModelErrorResponse,
   GithubComVeresusTlApiInternalModelMessageResponse,
@@ -47,14 +47,13 @@ import { apiClient } from '../../utils/customAxios';
  * @summary Получить все актуальные заявки
  */
 export const getOrdersActual = (
-    params?: GetOrdersActualParams,
+    
  signal?: AbortSignal
 ) => {
       
       
       return apiClient<GithubComVeresusTlApiInternalModelOrdersResponse>(
-      {url: `/orders/actual`, method: 'GET',
-        params, signal
+      {url: `/orders/actual`, method: 'GET', signal
     },
       );
     }
@@ -62,23 +61,23 @@ export const getOrdersActual = (
 
 
 
-export const getGetOrdersActualQueryKey = (params?: GetOrdersActualParams,) => {
+export const getGetOrdersActualQueryKey = () => {
     return [
-    `/orders/actual`, ...(params ? [params]: [])
+    `/orders/actual`
     ] as const;
     }
 
     
-export const getGetOrdersActualQueryOptions = <TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>(params?: GetOrdersActualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
+export const getGetOrdersActualQueryOptions = <TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetOrdersActualQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getGetOrdersActualQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getOrdersActual>>> = ({ signal }) => getOrdersActual(params, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getOrdersActual>>> = ({ signal }) => getOrdersActual(signal);
 
       
 
@@ -92,7 +91,7 @@ export type GetOrdersActualQueryError = GithubComVeresusTlApiInternalModelErrorR
 
 
 export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>(
- params: undefined |  GetOrdersActualParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>> & Pick<
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getOrdersActual>>,
           TError,
@@ -102,7 +101,7 @@ export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersAc
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>(
- params?: GetOrdersActualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>> & Pick<
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getOrdersActual>>,
           TError,
@@ -112,7 +111,7 @@ export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersAc
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>(
- params?: GetOrdersActualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -120,11 +119,11 @@ export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersAc
  */
 
 export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersActual>>, TError = GithubComVeresusTlApiInternalModelErrorResponse>(
- params?: GetOrdersActualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrdersActual>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetOrdersActualQueryOptions(params,options)
+  const queryOptions = getGetOrdersActualQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -136,7 +135,71 @@ export function useGetOrdersActual<TData = Awaited<ReturnType<typeof getOrdersAc
 
 
 
-    // postOrdersCreate перенесен в orders.manual.ts для ручной настройки заголовков
+/**
+ * Создает новую заявку в системе
+ * @summary Создать новую заявку
+ */
+export const postOrdersCreate = (
+    dtoOrderCreate: DtoOrderCreate,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClient<GithubComVeresusTlApiInternalModelMessageResponse>(
+      {url: `/orders/create`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: dtoOrderCreate, signal
+    },
+      );
+    }
+  
+
+
+export const getPostOrdersCreateMutationOptions = <TError = GithubComVeresusTlApiInternalModelErrorResponse,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postOrdersCreate>>, TError,{data: DtoOrderCreate}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof postOrdersCreate>>, TError,{data: DtoOrderCreate}, TContext> => {
+
+const mutationKey = ['postOrdersCreate'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postOrdersCreate>>, {data: DtoOrderCreate}> = (props) => {
+          const {data} = props ?? {};
+
+          return  postOrdersCreate(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PostOrdersCreateMutationResult = NonNullable<Awaited<ReturnType<typeof postOrdersCreate>>>
+    export type PostOrdersCreateMutationBody = DtoOrderCreate
+    export type PostOrdersCreateMutationError = GithubComVeresusTlApiInternalModelErrorResponse
+
+    /**
+ * @summary Создать новую заявку
+ */
+export const usePostOrdersCreate = <TError = GithubComVeresusTlApiInternalModelErrorResponse,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postOrdersCreate>>, TError,{data: DtoOrderCreate}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof postOrdersCreate>>,
+        TError,
+        {data: DtoOrderCreate},
+        TContext
+      > => {
+
+      const mutationOptions = getPostOrdersCreateMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
     /**
  * Возвращает сеты заказов (в работе, новые, завершенные)
  * @summary Личный каталог заказов

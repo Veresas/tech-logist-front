@@ -14,12 +14,12 @@ export const useOrderListState = (newOrderMarker: number, fetchOrders: () => voi
       return;
     }
     fetchOrders();
-  }, [newOrderMarker, fetchOrders]);
+  }, [newOrderMarker]);
 
   // Принудительное обновление списка
   const handleRefreshOrders = useCallback(() => {
     fetchOrders();
-  }, [fetchOrders]);
+  }, []);
 
   // Сброс флага первого рендера (на случай спец-сценариев)
   const resetFirstRender = useCallback(() => {

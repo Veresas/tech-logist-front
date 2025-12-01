@@ -169,15 +169,6 @@
                     "Orders"
                 ],
                 "summary": "Получить все актуальные заявки",
-                "parameters": [
-                    {
-                        "type": "boolean",
-                        "default": false,
-                        "description": "Приватные заявки",
-                        "name": "isPrivate",
-                        "in": "query"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Список актуальных заявок",
@@ -209,6 +200,13 @@
                 "summary": "Создать новую заявку",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Ключ идемпотентности для предотвращения дублирования запросов",
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Данные для создания заявки",
                         "name": "order",
                         "in": "body",
@@ -216,13 +214,6 @@
                         "schema": {
                             "$ref": "#/definitions/dto.OrderCreate"
                         }
-                    },
-                    {
-                        "type": "string",
-                        "description": "Ключ идемпотентности для предотвращения дублирования запросов",
-                        "name": "Idempotency-Key",
-                        "in": "header",
-                        "required": true
                     }
                 ],
                 "responses": {

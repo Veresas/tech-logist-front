@@ -3,15 +3,23 @@ import { useGetOrdersActual, useGetOrdersPersonalCatalog } from '../../api/order
 
 
 export function useOrders(isPrivate: boolean) {
-  const ordersQuery = useGetOrdersActual({ isPrivate }, {
+  // Запрос актуальных заказов - только для публичной страницы
+  const ordersQuery = useGetOrdersActual({
     query: {
-      queryKey: ['orders', { isPrivate }],
+      enabled: !isPrivate, // Выполняется только если isPrivate === false
+      refetchOnMount: false, // Не перезапрашивать при монтировании
+      refetchOnWindowFocus: false, // Не перезапрашивать при фокусе окна
+      refetchOnReconnect: false, // Не перезапрашивать при восстановлении соединения
     }
   })
 
+  // Запрос личного каталога - только для приватной страницы
   const personalQuery = useGetOrdersPersonalCatalog({
     query: {
-      enabled: isPrivate,
+      enabled: isPrivate, // Выполняется только если isPrivate === true
+      refetchOnMount: false, // Не перезапрашивать при монтировании
+      refetchOnWindowFocus: false, // Не перезапрашивать при фокусе окна
+      refetchOnReconnect: false, // Не перезапрашивать при восстановлении соединения
       queryKey: ['ordersPersonalCatalog'],
     }
   })
@@ -22,8 +30,13 @@ export function useOrders(isPrivate: boolean) {
     isLoading: ordersQuery.isLoading || personalQuery.isLoading,
     error: (ordersQuery.error || personalQuery.error) as Error | undefined,
     fetchOrders: () => {
-      void ordersQuery.refetch()
-      if (isPrivate) void personalQuery.refetch()
+      // Вызываем refetch только для активного запроса
+      if (!isPrivate) {
+        void ordersQuery.refetch()
+      }
+      if (isPrivate) {
+        void personalQuery.refetch()
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import type {OrderListContainerProps} from "./type"
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche, useOrderModals, useOrderActions, useOrderPhoto, useOrderListState } from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
 import { useUtils, useAuth , usePlatform} from "../../../utils/ContextHooks"
@@ -10,6 +10,10 @@ import styles from './OrderListContainer.module.css'
 
 export const OrderListContainer = ({ isPrivate, locationOptions, cargoTypeOptions }: OrderListContainerProps) => {
     // Основные хуки для работы с заказами
+    useEffect(() => {
+      console.log("Монтирование компонента")
+    }, []); 
+    
     const { orders, privateOrders, isLoading, error, fetchOrders } = useOrders(isPrivate)
     const { handleSendRequest } = useOrderCardHandlers()
     
