@@ -1,12 +1,12 @@
 // src/components/DonutChartWidget.tsx
-import React from 'react';
 import Chart from 'react-apexcharts';
+import diagram_styles from "../Diagrams.module.css"
 
 type Props = {
   title: string;
 };
 
-export const DonutChartWidget: React.FC<Props> = ({ title }) => {
+export const DonutChartWidget = ({ title }: Props) => {
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
       id: 'donut-chart',
@@ -51,12 +51,12 @@ export const DonutChartWidget: React.FC<Props> = ({ title }) => {
   const chartSeries = [44, 55, 13, 43]; // Данные для сегментов (в процентах или относительных значениях)
 
   return (
-    <div className="chart-container">
+    <div className={diagram_styles.chartContainer}>
       <Chart
         options={chartOptions}
         series={chartSeries}
         type="donut" // Тип диаграммы
-        height="350" // Высота диаграммы
+        height="100%" // Высота диаграммы
       />
     </div>
   );

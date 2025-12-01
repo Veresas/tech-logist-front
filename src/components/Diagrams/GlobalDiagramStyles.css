@@ -1,0 +1,65 @@
+/* Стили для tooltip ApexCharts */
+.apexcharts-tooltip {
+    background: #fff !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    color: #333 !important;
+    font-family: 'Manrope', sans-serif !important;
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
+  
+  .apexcharts-tooltip-title {
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
+    color: #3B60AA !important;
+  }
+  
+  .apexcharts-tooltip-series-group {
+    padding: 4px 0 !important;
+  }
+  
+  [data-theme="dark"] .apexcharts-tooltip {
+    background: #1e293b !important;
+    border-color: #454D77 !important;
+    color: #E6EAFF !important;
+  }
+  
+  [data-theme="dark"] .apexcharts-tooltip-title {
+    color: #786ADA !important;
+  }
+
+/* Глобальные стили для dragHandle (для react-grid-layout) */
+.dragHandle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move !important;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  transition: background-color 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto;
+}
+
+.dragHandle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .dragHandle {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .dragHandle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

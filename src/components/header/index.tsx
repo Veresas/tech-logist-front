@@ -61,8 +61,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = () => {
   }
   
   const onStatsClick = () => {
-    alert('Статистика не доступна');
-    //navigate('/s/statistics');
+    navigate('/s/test');
   }
 
   const onSettingsClick = () => {

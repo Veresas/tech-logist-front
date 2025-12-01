@@ -1,16 +1,19 @@
 // src/components/BarChartWidget.tsx
-import React from 'react';
 import Chart from 'react-apexcharts';
+import diagram_styles from "../Diagrams.module.css"
 
 type Props = {
   title: string;
 };
 
-export const BarChartWidget: React.FC<Props> = ({ title }) => {
+export const BarChartWidget = ({ title }: Props) => {
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
       id: 'bar-chart',
       type: 'bar', // Указываем тип диаграммы
+      toolbar: {
+        show: false, // Скрываем тулбар
+      },
     },
     title: {
       text: title, // Заголовок диаграммы
@@ -19,8 +22,11 @@ export const BarChartWidget: React.FC<Props> = ({ title }) => {
       categories: ['Категория A', 'Категория B', 'Категория C', 'Категория D'], // Подписи по оси X
     },
     legend: {
-      position: 'bottom', // Позиция легенды
+      show: true, // Явно включаем легенду
+      position: 'bottom', // Позиция легенды внизу
       horizontalAlign: 'center',
+      offsetY: 0,
+      offsetX: 0,
     },
     tooltip: {
       y: {
@@ -45,12 +51,12 @@ export const BarChartWidget: React.FC<Props> = ({ title }) => {
   ];
 
   return (
-    <div className="chart-container">
+    <div className={diagram_styles.chartContainer}>
       <Chart
         options={chartOptions}
         series={chartSeries}
         type="bar" // Тип диаграммы
-        height="350" // Высота диаграммы
+        height="100%" // Высота диаграммы
       />
     </div>
   );

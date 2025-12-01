@@ -1,0 +1,152 @@
+.widget {
+  display: flex;
+  gap: 24px;
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+[data-theme="dark"] .widget {
+  background: #1e293b;
+}
+
+/* Стили для dragHandle теперь в глобальном CSS */
+
+.dragIcon {
+  font-size: 16px;
+  color: #6b7280;
+  line-height: 1;
+  user-select: none;
+}
+
+[data-theme="dark"] .dragIcon {
+  color: #9ca3af;
+}
+
+.chartSection {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.controlsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 200px;
+  width: 240px;
+}
+
+.periodSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.controlsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+[data-theme="dark"] .controlsTitle {
+  color: #E6EAFF;
+}
+
+.periodButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.periodButton {
+  padding: 10px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  text-align: left;
+  font-family: 'Manrope', sans-serif;
+}
+
+.periodButton:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.periodButton.active {
+  background-color: #3B60AA;
+  color: white;
+  border-color: #3B60AA;
+}
+
+[data-theme="dark"] .periodButton {
+  border-color: #4b5563;
+  background-color: #374151;
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .periodButton:hover {
+  background-color: #4b5563;
+  border-color: #6b7280;
+  color: #E6EAFF;
+}
+
+[data-theme="dark"] .periodButton.active {
+  background-color: #786ADA;
+  color: white;
+  border-color: #786ADA;
+}
+
+.exportSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.exportButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Manrope', sans-serif;
+}
+
+.exportButton:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+[data-theme="dark"] .exportButton {
+  border-color: #4b5563;
+  background-color: #374151;
+  color: #E6EAFF;
+}
+
+[data-theme="dark"] .exportButton:hover {
+  background-color: #4b5563;
+  border-color: #6b7280;
+}
+
+.exportIcon {
+  font-size: 16px;
+  line-height: 1;
+}
+
