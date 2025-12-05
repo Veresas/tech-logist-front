@@ -1,4 +1,6 @@
 .widget {
+  width: 95%;
+  height: 95%;
   display: flex;
   gap: 24px;
   background: white;
@@ -6,6 +8,8 @@
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
+  z-index: 1; /* Низкий z-index для виджетов, чтобы меню и календари были поверх */
+  overflow: visible; /* Разрешаем popup выходить за границы виджета */
 }
 
 [data-theme="dark"] .widget {
@@ -43,14 +47,24 @@
 .periodSelector {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  border: 2px solid #786ADA;
+  border-radius: 8px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f3f0ff 0%, #e9e5ff 100%);
+}
+
+[data-theme="dark"] .periodSelector {
+  background: linear-gradient(135deg, #2d1f4a 0%, #1a0f2e 100%);
+  border-color: #786ADA;
 }
 
 .controlsTitle {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
-  color: #374151;
+  color: #1e293b;
   margin: 0;
+  text-align: center;
 }
 
 [data-theme="dark"] .controlsTitle {
@@ -60,50 +74,106 @@
 .periodButtons {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+}
+
+.periodRow {
+  display: flex;
+  gap: 12px;
 }
 
 .periodButton {
-  padding: 10px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background-color: #f9fafb;
-  color: #6b7280;
+  flex: 1 !important;
+  padding: 10px 16px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background-color: #e9e5ff !important;
+  color: #1e293b !important;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
-  text-align: left;
-  font-family: 'Manrope', sans-serif;
-}
-
-.periodButton:hover {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
-  color: #374151;
-}
-
-.periodButton.active {
-  background-color: #3B60AA;
-  color: white;
-  border-color: #3B60AA;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  font-family: 'Manrope', sans-serif !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: none !important;
 }
 
 [data-theme="dark"] .periodButton {
-  border-color: #4b5563;
-  background-color: #374151;
-  color: #9ca3af;
+  background-color: #3d2f5a !important;
+  color: #E6EAFF !important;
 }
 
-[data-theme="dark"] .periodButton:hover {
-  background-color: #4b5563;
-  border-color: #6b7280;
-  color: #E6EAFF;
+.periodButton:hover,
+.periodButton:focus {
+  background-color: #d4cfff !important;
+  color: #1e293b !important;
+  border: none !important;
 }
 
-[data-theme="dark"] .periodButton.active {
-  background-color: #786ADA;
-  color: white;
+[data-theme="dark"] .periodButton:hover,
+[data-theme="dark"] .periodButton:focus {
+  background-color: #4d3f6a !important;
+  color: #E6EAFF !important;
+  border: none !important;
+}
+
+.periodButton.active,
+.periodButton.active:hover,
+.periodButton.active:focus {
+  background-color: #786ADA !important;
+  color: white !important;
+  border: none !important;
+}
+
+.customPeriodWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.customPeriod {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rotatedIcon {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+.calendarContainer {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.dateRangePicker {
+  width: 100% !important;
+}
+
+.dateRangePicker .ant-picker-input > input {
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.dateRangePicker .ant-picker {
+  border-radius: 8px;
+  border: 1px solid #786ADA;
+  background-color: #e9e5ff;
+}
+
+[data-theme="dark"] .dateRangePicker .ant-picker {
+  background-color: #3d2f5a;
   border-color: #786ADA;
+}
+
+.dateRangePicker .ant-picker:hover,
+.dateRangePicker .ant-picker-focused {
+  border-color: #786ADA;
+  box-shadow: 0 0 0 2px rgba(120, 106, 218, 0.2);
 }
 
 .exportSection {

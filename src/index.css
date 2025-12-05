@@ -88,3 +88,46 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Глобальные стили для popup элементов Ant Design - должны быть поверх виджетов */
+.ant-picker-dropdown {
+  z-index: 9999 !important; /* Очень высокий z-index для календаря */
+  position: fixed !important; /* Фиксированное позиционирование для правильного отображения */
+}
+
+.ant-picker-panel-container {
+  z-index: 9999 !important;
+}
+
+.ant-picker-panel {
+  z-index: 9999 !important;
+}
+
+/* Убеждаемся, что все popup элементы Ant Design поверх виджетов */
+.ant-picker-dropdown-hidden {
+  display: none;
+}
+
+/* Все dropdown и popover элементы Ant Design должны быть поверх виджетов */
+.ant-dropdown,
+.ant-popover,
+.ant-tooltip,
+.ant-select-dropdown {
+  z-index: 9999 !important;
+}
+
+/* Низкий z-index для виджетов - они должны быть на нижнем слое */
+.react-grid-item {
+  z-index: 1 !important;
+  overflow: visible !important; /* Разрешаем popup выходить за границы виджетов */
+}
+
+/* Убеждаемся, что react-grid-layout не перекрывает popup */
+.react-grid-layout {
+  z-index: 1 !important;
+}
+
+.react-grid-layout > .react-grid-item {
+  z-index: 1 !important;
+  overflow: visible !important;
+}

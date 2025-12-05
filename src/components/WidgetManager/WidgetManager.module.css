@@ -1,10 +1,44 @@
 .app {
   width: 100%;
   height: 100%;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 1; /* Низкий z-index для контейнера виджетов */
 }
 
 .layout {
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 1; /* Низкий z-index для grid layout */
+}
+
+/* Убеждаемся, что элементы grid не обрезают popup */
+.layout :global(.react-grid-item) {
+  z-index: 1 !important;
+  overflow: visible !important; /* Разрешаем popup выходить за границы */
+}
+
+/* Скрываем скроллбар кроссбраузерно */
+.layout::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.layout {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.layout :global(.react-grid-item.react-grid-placeholder) {
+  z-index: 0 !important;
+}
+
+.layout :global(.react-resizable-handle) {
+  z-index: 2 !important;
 }
