@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { OrderDetailsModalProps } from './types';
-import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from '../../../api';
+import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from '../../../api/main';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
 import { Modal } from '../ModalComp/Modal';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal';

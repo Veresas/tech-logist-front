@@ -37,7 +37,7 @@ import type {
   PostOrdersPhotoUploadBody
 } from '.././model';
 
-import { apiClient } from '../../utils/customAxios';
+import { apiClient } from '../../../utils/customAxios';
 
 
 

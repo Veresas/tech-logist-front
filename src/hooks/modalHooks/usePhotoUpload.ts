@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { usePostOrdersPhotoUpload } from '../../api/orders/orders';
+import { usePostOrdersPhotoUpload } from '../../api/main/orders/orders';
 
 /**
  * Хук для загрузки фотографий

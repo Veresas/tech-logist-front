@@ -1,4 +1,4 @@
-import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api";
+import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api/main";
 
 // Определяем набор действий для карточки без прямых вызовов API
 export type OrderCardAction = 'TAKE' | 'REJECT' | 'COMPLITE' | 'CANCEL';

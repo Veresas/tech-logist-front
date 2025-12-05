@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { GithubComVeresusTlApiInternalModelOrderOut, DtoOrderCreate } from '../../../api';
+import type { GithubComVeresusTlApiInternalModelOrderOut, DtoOrderCreate } from '../../../api/main';
 
 /**
  * Менеджер для управления всеми модальными окнами в OrderListContainer

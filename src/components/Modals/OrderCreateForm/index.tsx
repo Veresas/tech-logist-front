@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import Select from 'react-select';
-import type { DtoOrderCreate, DtoOrderUpdate } from '../../../api';
+import type { DtoOrderCreate, DtoOrderUpdate } from '../../../api/main';
 import styles from './OrderCreateForm.module.css';
 import "../ModalComp/ModalCops.css"
 import type { OrderCreateFormProps } from './types';

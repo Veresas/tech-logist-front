@@ -1,9 +1,9 @@
 //import React, { useEffect, useState } from 'react'
 import { useEffect, useState } from 'react';
 import { OrderListContainer } from '../../components/OrdersComp/OrderListContainer'
-import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api/main';
 import styles from "./PrivarePage.module.css"
-import { useDropdownListInfoQuery } from '../../hooks/api/useReferency'
+import { useDropdownListInfoQuery } from '../../hooks/api/useReference'
 export const PrivatePage = () => {
     const [locationOptions, setLocationOptions] = useState<GithubComVeresusTlApiInternalModelDropDownListInfoResponse['dep_builds']>({});
     const [cargoTypeOptions, setCargoTypeOptions] = useState<GithubComVeresusTlApiInternalModelDropDownListInfoResponse['cargo_types']>({});

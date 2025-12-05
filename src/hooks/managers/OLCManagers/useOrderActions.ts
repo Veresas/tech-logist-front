@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import type { DtoOrderUpdate, DtoOrderCreate } from '../../../api';
+import type { DtoOrderUpdate, DtoOrderCreate } from '../../../api/main';
 import { useAcceptOrder, useRejectOrder, useCancelOrder, useCompleteOrder } from '../../orderHooks/useOrderMutations';
 import { 
   getOrdersUpdateId, 
   patchOrdersId
-} from '../../../api/orders/orders';
-import { postOrdersCreate } from '../../../api/orders/orders.manual';
+} from '../../../api/main/orders/orders';
+import { postOrdersCreate } from '../../../api/main/orders/orders.manual';
 
 /**
  * Менеджер для обработки всех действий с заказами

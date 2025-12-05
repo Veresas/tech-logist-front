@@ -1,4 +1,4 @@
-import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../api';
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../api/main';
 
 /**
  * Утилиты для работы с заказами

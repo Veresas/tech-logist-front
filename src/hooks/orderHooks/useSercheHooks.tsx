@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api";
+import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../api/main";
 
 export function useSearche(orders: GithubComVeresusTlApiInternalModelOrderOut[] | undefined){
     const [name, setName] = useState<string | undefined>(undefined);

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useOrders, useOrderCardHandlers, useSearche, useOrderModals, useOrderActions, useOrderPhoto, useOrderListState } from '../../../hooks'
 import { OrderList, OrderDetailsModal, OrderCreateForm, SortContainer, NotiThemeModule } from "../../../components"
 import { useUtils, useAuth , usePlatform} from "../../../utils/ContextHooks"
-import { type GithubComVeresusTlApiInternalModelOrderOut, type DtoOrderUpdate, type DtoOrderCreate, DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as OrderStatus } from "../../../api"
+import { type GithubComVeresusTlApiInternalModelOrderOut, type DtoOrderUpdate, type DtoOrderCreate, DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as OrderStatus } from "../../../api/main"
 import { useOrderDraft } from '../../../hooks/modalHooks/useOrderDraft';
 
 import styles from './OrderListContainer.module.css'

@@ -1,5 +1,5 @@
 // hooks/useOrders.ts
-import { useGetOrdersActual, useGetOrdersPersonalCatalog } from '../../api/orders/orders'
+import { useGetOrdersActual, useGetOrdersPersonalCatalog } from '../../api/main/orders/orders'
 
 
 export function useOrders(isPrivate: boolean) {

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { DtoRoleStatic } from "../../api"
+import { DtoRoleStatic } from "../../api/main"
 
 export interface AuthContextType {
     isAuthenticated: boolean;

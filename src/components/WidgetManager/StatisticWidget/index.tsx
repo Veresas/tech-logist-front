@@ -1,52 +1,102 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, DatePicker, ConfigProvider } from 'antd';
 import type { Dayjs } from 'dayjs';
 import { DownOutlined } from '@ant-design/icons';
-import { BarChartWidget, DonutChartWidget } from '../../Diagrams';
+import { BarChartWidget, DonutChartWidget, StackedBarChartWidget } from '../../Diagrams';
 import styles from './StatisticWidget.module.css';
 import ruRU from 'antd/locale/ru_RU';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import type { ModelDepartIncomingResponse } from '../../../api/analytics/model';
 
 dayjs.locale('ru');
 
 const { RangePicker } = DatePicker;
 
 type PeriodType = 'day' | 'week' | 'month' | 'year' | 'custom';
-type ChartType = 'bar' | 'donut';
+type ChartType = 'bar' | 'donut' | 'stackedBar';
 
 type StatisticWidgetProps = {
   chartType?: ChartType;
   title?: string;
+  subtitle?: string;
+  stackedBarData?: ModelDepartIncomingResponse[];
+  xAxisLabel?: string;
+  yAxisLabel?: string;
+  selectedPeriod?: PeriodType;
+  customDateRange?: [Dayjs | null, Dayjs | null] | null;
+  onPeriodChange?: (period: PeriodType) => void;
+  onDateRangeChange?: (dates: [Dayjs | null, Dayjs | null] | null) => void;
+  isLoading?: boolean;
 };
 
-export const StatisticWidget = ({ chartType = 'bar', title = 'Заказы по водителям' }: StatisticWidgetProps) => {
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('week');
+export const StatisticWidget = ({ 
+  chartType = 'bar', 
+  title = 'Заказы по водителям',
+  subtitle,
+  stackedBarData,
+  xAxisLabel,
+  yAxisLabel,
+  selectedPeriod: externalSelectedPeriod,
+  customDateRange: externalCustomDateRange,
+  onPeriodChange: externalOnPeriodChange,
+  onDateRangeChange: externalOnDateRangeChange,
+  isLoading = false,
+}: StatisticWidgetProps) => {
+  const [internalSelectedPeriod, setInternalSelectedPeriod] = useState<PeriodType>('week');
   const [showCustomCalendar, setShowCustomCalendar] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [customDateRange, setCustomDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+  const [internalCustomDateRange, setInternalCustomDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+
+  const selectedPeriod = externalSelectedPeriod ?? internalSelectedPeriod;
+  const customDateRange = externalCustomDateRange ?? internalCustomDateRange;
+
+  useEffect(() => {
+    if (selectedPeriod === 'custom') {
+      setShowCustomCalendar(true);
+    } else {
+      setShowCustomCalendar(false);
+      setCalendarOpen(false);
+    }
+  }, [selectedPeriod]);
 
   const handlePeriodChange = (period: PeriodType) => {
+    if (externalOnPeriodChange) {
+      externalOnPeriodChange(period);
+      if (period === 'custom') {
+        setShowCustomCalendar(true);
+        setTimeout(() => {
+          setCalendarOpen(true);
+        }, 0);
+      } else {
+        setShowCustomCalendar(false);
+        setCalendarOpen(false);
+      }
+      return;
+    }
+
     if (period === 'custom') {
-      setSelectedPeriod(period);
+      setInternalSelectedPeriod(period);
       setShowCustomCalendar(true);
-      // Открываем календарь после рендера
       setTimeout(() => {
         setCalendarOpen(true);
       }, 0);
     } else {
       setShowCustomCalendar(false);
       setCalendarOpen(false);
-      setSelectedPeriod(period);
-      // Здесь будет обновление данных диаграммы
+      setInternalSelectedPeriod(period);
       console.log('Период изменен на:', period);
     }
   };
 
   const handleDateRangeChange = (dates: [Dayjs | null, Dayjs | null] | null) => {
-    setCustomDateRange(dates);
+    if (externalOnDateRangeChange) {
+      externalOnDateRangeChange(dates);
+      return;
+    }
+
+    setInternalCustomDateRange(dates);
     if (dates && dates[0] && dates[1]) {
-      // Здесь будет обновление данных диаграммы
       console.log('Выбран период:', dates[0].format('DD.MM.YYYY'), '-', dates[1].format('DD.MM.YYYY'));
     }
   };
@@ -54,6 +104,17 @@ export const StatisticWidget = ({ chartType = 'bar', title = 'Заказы по 
   const renderChart = () => {
     if (chartType === 'donut') {
       return <DonutChartWidget title={title} />;
+    }
+    if (chartType === 'stackedBar' && stackedBarData) {
+      return (
+        <StackedBarChartWidget 
+          title={title}
+          subtitle={subtitle}
+          data={stackedBarData}
+          xAxisLabel={xAxisLabel}
+          yAxisLabel={yAxisLabel}
+        />
+      );
     }
     return <BarChartWidget title={title} />;
   };
@@ -64,7 +125,13 @@ export const StatisticWidget = ({ chartType = 'bar', title = 'Заказы по 
         <span className={styles.dragIcon}>⋮⋮</span>
       </div>
       <div className={styles.chartSection}>
-        {renderChart()}
+        {isLoading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <p>Загрузка данных...</p>
+          </div>
+        ) : (
+          renderChart()
+        )}
       </div>
       <div className={styles.controlsSection}>
         <div className={styles.periodSelector}>

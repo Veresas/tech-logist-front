@@ -35,7 +35,7 @@ import type {
   GithubComVeresusTlApiInternalModelMessageResponse
 } from '.././model';
 
-import { apiClient } from '../../utils/customAxios';
+import { apiClient } from '../../../utils/customAxios';
 
 
 

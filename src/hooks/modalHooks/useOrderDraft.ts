@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { DtoOrderCreate } from '../../api';
+import type { DtoOrderCreate } from '../../api/main';
 
 /**
  * Ключ для сохранения черновика в localStorage

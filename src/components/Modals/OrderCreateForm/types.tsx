@@ -1,4 +1,4 @@
-import type{ GithubComVeresusTlApiInternalModelDropDownListInfoResponse, DtoOrderCreate, DtoOrderUpdate } from '../../../api';
+import type{ GithubComVeresusTlApiInternalModelDropDownListInfoResponse, DtoOrderCreate, DtoOrderUpdate } from '../../../api/main';
 
 export interface OrderCreateFormProps {
   onSubmitCreateOrder: ((data: DtoOrderCreate, idempotencyKey: string) => void) | undefined;

@@ -3,8 +3,8 @@ import {
   usePostPublicAuthRegister, 
   usePostPublicAuthLogout,
   useGetPublicAuthCheckLoginLogin
-} from '../../api/identity/identity'
-import type { DtoLoginRequest, DtoRegisterRequest } from '../../api/model'
+} from '../../api/main/identity/identity'
+import type { DtoLoginRequest, DtoRegisterRequest } from '../../api/main/model'
 
 export const useLoginMutation = () => {
   const mutation = usePostPublicAuthLogin()

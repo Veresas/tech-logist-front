@@ -1,4 +1,4 @@
-import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../../api";
+import type { GithubComVeresusTlApiInternalModelOrderOut } from "../../../api/main";
 
 export interface OrderDetailsModalProps {
     order: GithubComVeresusTlApiInternalModelOrderOut;

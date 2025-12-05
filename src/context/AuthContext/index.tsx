@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import type { AuthContextType, AuthContextProps } from './type';
-import { DtoRoleStatic } from '../../api';
-import { getCheck } from '../../api/check/check';
+import { DtoRoleStatic } from '../../api/main';
+import { getCheck } from '../../api/main/check/check';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

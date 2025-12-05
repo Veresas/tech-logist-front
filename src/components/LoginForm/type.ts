@@ -1,4 +1,4 @@
-import {type DtoLoginRequest} from '../../api';
+import {type DtoLoginRequest} from '../../api/main';
 
 
 export interface LoginFormProps {

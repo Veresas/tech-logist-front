@@ -1,6 +1,6 @@
 import type { OrderCardProps } from './type';
 import { useAuth } from '../../../utils/ContextHooks/AuthContextHooks';
-import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from "../../../api";
+import { DtoRoleStatic, GithubComVeresusTlApiInternalClientsTlOrdersClientDtoOrderOutStatus as orderStatus } from "../../../api/main";
 import styles from './OrderCard.module.css';
 import { ICON_FINAL_POINT, ICON_START_POINT, ICON_TIMER} from "../../../assets"
 import { usePlatform } from '../../../utils/ContextHooks';

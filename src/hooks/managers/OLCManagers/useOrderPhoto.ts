@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
-import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api';
+import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api/main';
 import { useQueryClient } from '@tanstack/react-query';
-import { useGetOrdersPhotoId } from '../../../api/orders/orders';
+import { useGetOrdersPhotoId } from '../../../api/main/orders/orders';
 
 /**
  * Менеджер для управления фотографиями заказов

@@ -1,6 +1,6 @@
 import { type UseQueryOptions } from '@tanstack/react-query'
-import { useGetRefDropdownListInfo } from '../../api/referency/referency'
-import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api/model'
+import { useGetRefDropdownListInfo } from '../../api/main/reference/reference'
+import type { GithubComVeresusTlApiInternalModelDropDownListInfoResponse } from '../../api/main/model'
 import type { AxiosResponse } from 'axios'
 
 export const useDropdownListInfoQuery = (options?: Omit<UseQueryOptions<AxiosResponse<GithubComVeresusTlApiInternalModelDropDownListInfoResponse>>, 'queryKey' | 'queryFn'>) => {

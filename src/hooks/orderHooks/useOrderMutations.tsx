@@ -4,7 +4,7 @@ import {
   usePatchOrdersIdReject, 
   usePatchOrdersIdCancel, 
   usePatchOrdersIdComplete 
-} from '../../api/orders/orders'
+} from '../../api/main/orders/orders'
 
 export const useAcceptOrder = () => {
   const qc = useQueryClient()

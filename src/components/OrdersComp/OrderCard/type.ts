@@ -1,4 +1,4 @@
-import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api' 
+import type { GithubComVeresusTlApiInternalModelOrderOut } from '../../../api/main' 
 import type { OrderCardClickHandler, OrderCardClickInfoHandler } from '../type'
 
 export interface OrderCardProps {

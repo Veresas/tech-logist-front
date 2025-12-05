@@ -1,5 +1,5 @@
 // type.ts
-import { type DtoRegisterRequest } from '../../api';
+import { type DtoRegisterRequest } from '../../api/main';
 
 export interface RegisterFormProps {
     onSubmit: (data: DtoRegisterRequest) => void;

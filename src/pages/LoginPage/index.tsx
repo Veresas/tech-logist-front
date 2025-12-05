@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { RegisterForm, LoginForm } from '../../components';
-import type { DtoLoginRequest, DtoRegisterRequest } from '../../api'
+import type { DtoLoginRequest, DtoRegisterRequest } from '../../api/main'
 import { useToast } from '../../hooks/utilsHooks/noti_hooks';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/ContextHooks/AuthContextHooks';
