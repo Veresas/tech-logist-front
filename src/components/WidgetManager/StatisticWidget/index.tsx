@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button, DatePicker, ConfigProvider } from 'antd';
 import type { Dayjs } from 'dayjs';
 import { DownOutlined } from '@ant-design/icons';
@@ -7,7 +7,8 @@ import styles from './StatisticWidget.module.css';
 import ruRU from 'antd/locale/ru_RU';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import type { ModelDepartIncomingResponse } from '../../../api/analytics/model';
+import type { BarDiagramValue } from './types';
+import type { period } from '../types';
 
 dayjs.locale('ru');
 
@@ -17,30 +18,22 @@ type PeriodType = 'day' | 'week' | 'month' | 'year' | 'custom';
 type ChartType = 'bar' | 'donut' | 'stackedBar';
 
 type StatisticWidgetProps = {
-  chartType?: ChartType;
-  title?: string;
-  subtitle?: string;
-  stackedBarData?: ModelDepartIncomingResponse[];
-  xAxisLabel?: string;
-  yAxisLabel?: string;
-  selectedPeriod?: PeriodType;
-  customDateRange?: [Dayjs | null, Dayjs | null] | null;
-  onPeriodChange?: (period: PeriodType) => void;
-  onDateRangeChange?: (dates: [Dayjs | null, Dayjs | null] | null) => void;
-  isLoading?: boolean;
+  chartType: ChartType;
+  setPeriod: React.Dispatch<React.SetStateAction<period>>
+  title: string;
+  stackedBarData: BarDiagramValue[];
+  xAxisLabel: string;
+  yAxisLabel: string;
+  isLoading: boolean;
 };
 
 export const StatisticWidget = ({ 
   chartType = 'bar', 
   title = 'Заказы по водителям',
-  subtitle,
+  setPeriod,
   stackedBarData,
   xAxisLabel,
   yAxisLabel,
-  selectedPeriod: externalSelectedPeriod,
-  customDateRange: externalCustomDateRange,
-  onPeriodChange: externalOnPeriodChange,
-  onDateRangeChange: externalOnDateRangeChange,
   isLoading = false,
 }: StatisticWidgetProps) => {
   const [internalSelectedPeriod, setInternalSelectedPeriod] = useState<PeriodType>('week');
@@ -48,8 +41,44 @@ export const StatisticWidget = ({
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [internalCustomDateRange, setInternalCustomDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
 
-  const selectedPeriod = externalSelectedPeriod ?? internalSelectedPeriod;
-  const customDateRange = externalCustomDateRange ?? internalCustomDateRange;
+  const selectedPeriod =  internalSelectedPeriod;
+  const customDateRange = internalCustomDateRange; 
+
+  const getPeriodDates = (period: PeriodType, customRange?: [Dayjs | null, Dayjs | null] | null): period => {
+    const now = dayjs();
+    let dateFrom: Dayjs;
+    let dateTo: Dayjs = now.endOf('day');
+  
+    if (period === 'custom' && customRange && customRange[0] && customRange[1]) {
+      dateFrom = customRange[0].startOf('day');
+      dateTo = customRange[1].endOf('day');
+    } else if (period === 'day') {
+      dateFrom = now.startOf('day');
+    } else if (period === 'week') {
+      dateFrom = now.subtract(7, 'day').startOf('day');
+    } else if (period === 'month') {
+      dateFrom = now.subtract(1, 'month').startOf('day');
+    } else if (period === 'year') {
+      dateFrom = now.subtract(1, 'year').startOf('day');
+    } else {
+      dateFrom = now.subtract(7, 'day').startOf('day');
+    }
+    
+    setPeriod({dateFrom: dateFrom.toISOString(), dateTo: dateTo.toISOString()})
+    return {
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
+    };
+  };
+
+  const subtitle = useMemo(() => {
+    if (selectedPeriod === 'custom' && customDateRange && customDateRange[0] && customDateRange[1]) {
+      setPeriod({dateFrom: customDateRange[0].format('DD.MM.YYYY'), dateTo: customDateRange[1].format('DD.MM.YYYY')})
+      return `Период: ${customDateRange[0].format('DD.MM.YYYY')} — ${customDateRange[1].format('DD.MM.YYYY')}`;
+    }
+    const { dateFrom: from, dateTo: to } = getPeriodDates(selectedPeriod);
+    return `Период: ${dayjs(from).format('DD.MM.YYYY')} — ${dayjs(to).format('DD.MM.YYYY')}`;
+  }, [selectedPeriod, customDateRange]);
 
   useEffect(() => {
     if (selectedPeriod === 'custom') {
@@ -61,19 +90,6 @@ export const StatisticWidget = ({
   }, [selectedPeriod]);
 
   const handlePeriodChange = (period: PeriodType) => {
-    if (externalOnPeriodChange) {
-      externalOnPeriodChange(period);
-      if (period === 'custom') {
-        setShowCustomCalendar(true);
-        setTimeout(() => {
-          setCalendarOpen(true);
-        }, 0);
-      } else {
-        setShowCustomCalendar(false);
-        setCalendarOpen(false);
-      }
-      return;
-    }
 
     if (period === 'custom') {
       setInternalSelectedPeriod(period);
@@ -90,10 +106,6 @@ export const StatisticWidget = ({
   };
 
   const handleDateRangeChange = (dates: [Dayjs | null, Dayjs | null] | null) => {
-    if (externalOnDateRangeChange) {
-      externalOnDateRangeChange(dates);
-      return;
-    }
 
     setInternalCustomDateRange(dates);
     if (dates && dates[0] && dates[1]) {

@@ -1,11 +1,11 @@
 import Chart from 'react-apexcharts';
 import diagram_styles from "../Diagrams.module.css"
-import type { ModelDepartIncomingResponse } from '../../../api/analytics/model';
+import type { BarDiagramValue } from '../../WidgetManager/StatisticWidget/types';
 
 type Props = {
   title: string;
   subtitle?: string;
-  data: ModelDepartIncomingResponse[];
+  data: BarDiagramValue[];
   colors?: string[]; // Опциональные цвета для типов груза
   xAxisLabel?: string; // Подпись оси X (например, "Цех (откуда)")
   yAxisLabel?: string; // Подпись оси Y (например, "Количество")
@@ -35,26 +35,26 @@ export const StackedBarChartWidget = ({
   yAxisLabel = 'Количество'
 }: Props) => {
   // Преобразуем данные в формат для ApexCharts
-  const categories = data.map(item => item.departName || '');
+  const categories = data.map(item => item.BarName || '');
   
   // Собираем все уникальные типы груза
-  const allCargoTypes = new Set<string>();
+  const allBarValue = new Set<string>();
   data.forEach(item => {
-    if (item.cargoTypes) {
-      Object.keys(item.cargoTypes).forEach(type => allCargoTypes.add(type));
+    if (item.BarValue) {
+      Object.keys(item.BarValue).forEach(type => allBarValue.add(type));
     }
   });
-  const cargoTypesArray = Array.from(allCargoTypes);
+  const BarValueArray = Array.from(allBarValue);
 
   // Формируем series: для каждого типа груза создаем массив значений по цехам
-  const series = cargoTypesArray.map((cargoType) => ({
+  const series = BarValueArray.map((cargoType) => ({
     name: cargoType,
-    data: data.map(item => (item.cargoTypes?.[cargoType] || 0) as number),
+    data: data.map(item => (item.BarValue?.[cargoType] || 0) as number),
   }));
 
   // Вычисляем суммы для каждого столбца (для отображения над столбцами)
   const totals = data.map(item => 
-    item.cargoTypes ? Object.values(item.cargoTypes).reduce((sum, val) => sum + (val || 0), 0) : 0
+    item.BarValue ? Object.values(item.BarValue).reduce((sum, val) => sum + (val || 0), 0) : 0
   );
 
   // Вычисляем минимальную ширину диаграммы на основе количества категорий

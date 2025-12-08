@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import type { Layout } from 'react-grid-layout';
-import { DriverOrdersByTypesWidget } from './DriverOrdersByTypesWidget';
-import { DriverAverageTimeWidget } from './DriverAverageTimeWidget';
-import { WorkshopIncomingWidget } from './WorkshopIncomingWidget';
-import { WorkshopOutgoingWidget } from './WorkshopOutgoingWidget';
 //import type { WorkshopData } from '../Diagrams';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import styles from "./WidgetManager.module.css"
 import '../Diagrams/GlobalDiagramStyles.css'; 
+import type { period } from './types';
+import { useDiagramValues } from './hooks/useDiagramValue';
+import { StatisticWidget } from './StatisticWidget';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -19,6 +18,32 @@ export const Dashboard = () => {
   const widgetWidth = 6;
   const widgetHeight = 5; 
   
+  const [ driverAverageTimePeriod, setDriverAverageTimePeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ driverTypesPeriod, setDriverTypesPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ driverTypesWithWeightPeriod, setDriverTypesWithWeightPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ workShopTypesOutPeriod, setWorkShopTypesOutPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ workShopTypesWithBuildOutPeriod, setWorkShopTypesWithBuildOutPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ workShopTypesInPeriod, setWorkShopTypesInPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+  const [ workShopTypesWithBuildInPeriod, setWorkShopTypesWithBuildInPeriod] = useState<period>({dateFrom: "", dateTo: ""})
+
+  const { 
+    driverAverageTime,
+    driverTypes,
+    driverTypesWithWeight,
+    workShopTypesOut,
+    workShopTypesWithBuildOut,
+    workShopTypesIn,
+    workShopTypesWithBuildIn
+  } = useDiagramValues({
+    driverAverageTimePeriod,
+    driverTypesPeriod,
+    driverTypesWithWeightPeriod,
+    workShopTypesOutPeriod,
+    workShopTypesWithBuildOutPeriod,
+    workShopTypesInPeriod,
+    workShopTypesWithBuildInPeriod
+  })
+
   const [layout] = useState<Layout[]>([
     { i: 'widget1', x: 0, y: 0, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
     { i: 'widget2', x: 0, y: widgetHeight, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
@@ -48,58 +73,80 @@ export const Dashboard = () => {
       <h1>Панель управления</h1>
       <ResponsiveGridLayout {...layoutConfig}>
         <div key="widget1">
-          <DriverOrdersByTypesWidget 
+          <StatisticWidget
             title="Статистика заказов по водителям и типам груза (количество)"
+            chartType="stackedBar"
             xAxisLabel="Водитель"
             yAxisLabel="Количество заказов"
-            isWithWeight={false}
+            setPeriod={setDriverTypesPeriod}
+            stackedBarData={driverTypes.data}
+            isLoading={driverTypes.isLoading}
           />
         </div>
         <div key="widget2">
-          <DriverOrdersByTypesWidget 
+          <StatisticWidget 
             title="Статистика заказов по водителям и типам груза (вес)"
+            chartType="stackedBar"
             xAxisLabel="Водитель"
             yAxisLabel="Вес груза (кг)"
-            isWithWeight={true}
+            setPeriod={setDriverTypesWithWeightPeriod}
+            stackedBarData={driverTypesWithWeight.data}
+            isLoading={driverTypesWithWeight.isLoading}
           />
         </div>
         <div key="widget3">
-          <DriverAverageTimeWidget 
+          <StatisticWidget 
             title="Среднее время выполнения заказов водителями"
+            chartType="stackedBar"
             xAxisLabel="Водитель"
             yAxisLabel="Время (минуты)"
+            setPeriod={setDriverAverageTimePeriod}
+            stackedBarData={driverAverageTime.data}
+            isLoading={driverAverageTime.isLoading}
           />
         </div>
         <div key="widget4">
-          <WorkshopIncomingWidget 
+          <StatisticWidget 
             title="Поступление заказов из цехов по типам"
+            chartType="stackedBar"
             xAxisLabel="Цех (откуда)"
             yAxisLabel="Количество"
-            isWithBuildings={false}
+            setPeriod={setWorkShopTypesOutPeriod}
+            stackedBarData={workShopTypesOut.data}
+            isLoading={workShopTypesOut.isLoading}
           />
         </div>
         <div key="widget5">
-          <WorkshopIncomingWidget 
+          <StatisticWidget 
             title="Поступление заказов из цехов по типам и корпусам"
+            chartType="stackedBar"
             xAxisLabel="Корпус-Цех (откуда)"
             yAxisLabel="Количество"
-            isWithBuildings={true}
+            setPeriod={setWorkShopTypesWithBuildOutPeriod}
+            stackedBarData={workShopTypesWithBuildOut.data}
+            isLoading={workShopTypesWithBuildOut.isLoading}
           />
         </div>
         <div key="widget6">
-          <WorkshopOutgoingWidget 
+          <StatisticWidget 
             title="Поступление заказов в цеха по типам"
+            chartType="stackedBar"
             xAxisLabel="Цех (куда)"
             yAxisLabel="Количество"
-            isWithBuildings={false}
+            setPeriod={setWorkShopTypesInPeriod}
+            stackedBarData={workShopTypesIn.data}
+            isLoading={workShopTypesIn.isLoading}
           />
         </div>
         <div key="widget7">
-          <WorkshopOutgoingWidget 
+          <StatisticWidget 
             title="Поступление заказов в цеха по типам и корпусам"
+            chartType="stackedBar"
             xAxisLabel="Корпус-Цех (куда)"
             yAxisLabel="Количество"
-            isWithBuildings={true}
+            setPeriod={setWorkShopTypesWithBuildInPeriod}
+            stackedBarData={workShopTypesWithBuildIn.data}
+            isLoading={workShopTypesWithBuildIn.isLoading}
           />
         </div>
       </ResponsiveGridLayout>
