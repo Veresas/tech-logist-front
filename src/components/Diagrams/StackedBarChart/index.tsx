@@ -9,6 +9,7 @@ type Props = {
   colors?: string[]; // Опциональные цвета для типов груза
   xAxisLabel?: string; // Подпись оси X (например, "Цех (откуда)")
   yAxisLabel?: string; // Подпись оси Y (например, "Количество")
+  isFullscreen?: boolean; // Флаг полноэкранного режима
 };
 
 // Цвета по умолчанию для типов груза
@@ -32,7 +33,8 @@ export const StackedBarChartWidget = ({
   data,
   colors = DEFAULT_COLORS,
   xAxisLabel = 'Цех',
-  yAxisLabel = 'Количество'
+  yAxisLabel = 'Количество',
+  isFullscreen = false
 }: Props) => {
   // Преобразуем данные в формат для ApexCharts
   const categories = data.map(item => item.BarName || '');
@@ -57,10 +59,6 @@ export const StackedBarChartWidget = ({
     item.BarValue ? Object.values(item.BarValue).reduce((sum, val) => sum + (val || 0), 0) : 0
   );
 
-  // Вычисляем минимальную ширину диаграммы на основе количества категорий
-  // Минимум 70px на категорию для комфортного отображения
-  const minChartWidth = Math.max(600, categories.length * 70);
-
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
       id: 'stacked-bar-chart',
@@ -82,6 +80,7 @@ export const StackedBarChartWidget = ({
       style: {
         fontSize: '12px',
       },
+      offsetY: isFullscreen ? 0 : 50, // Сдвигаем subtitle вниз, чтобы не накладывался на кнопку расширения
     },
     xaxis: {
       categories: categories,
@@ -97,8 +96,15 @@ export const StackedBarChartWidget = ({
     legend: {
       show: true,
       position: 'top',
-      horizontalAlign: 'right',
+      horizontalAlign: 'left',
       offsetY: -10,
+      offsetX: 0,
+      floating: false,
+      fontSize: '12px',
+      itemMargin: {
+        horizontal: 10,
+        vertical: 5,
+      },
     },
     tooltip: {
       y: {
@@ -153,13 +159,13 @@ export const StackedBarChartWidget = ({
 
   return (
     <div className={diagram_styles.chartWrapper}>
-      <div className={diagram_styles.chartContainer} style={{ width: `${minChartWidth}px` }}>
+      <div className={diagram_styles.chartContainer} style={{ minWidth: `${Math.max(600, categories.length * 70)}px` }}>
         <Chart
           options={chartOptions}
           series={series}
           type="bar"
           height="100%"
-          width={minChartWidth}
+          width="100%"
         />
       </div>
     </div>

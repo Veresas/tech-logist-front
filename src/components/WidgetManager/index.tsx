@@ -14,7 +14,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const MIN_WIDTH_PERCENT = 3;
 
-export const Dashboard = () => {
+export const WidgetManager = () => {
   const widgetWidth = 6;
   const widgetHeight = 5; 
   
@@ -70,7 +70,6 @@ export const Dashboard = () => {
 
   return (
     <div className={styles.app}>
-      <h1>Панель управления</h1>
       <ResponsiveGridLayout {...layoutConfig}>
         <div key="widget1">
           <StatisticWidget

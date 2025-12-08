@@ -12,9 +12,48 @@
   overflow: visible; /* Разрешаем popup выходить за границы виджета */
 }
 
-[data-theme="dark"] .widget {
-  background: #1e293b;
+.expandButton {
+  position: absolute !important;
+  bottom: 8px !important;
+  right: 8px !important;
+  z-index: 10 !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e5e7eb !important;
 }
+
+.expandButton:hover {
+  background-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.fullscreenModal :global(.ant-modal-content) {
+  height: 100vh;
+  border-radius: 0;
+}
+
+.fullscreenModal :global(.ant-modal-body) {
+  height: calc(100vh - 55px);
+  padding: 24px;
+}
+
+.fullscreenWidget {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 24px;
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+}
+
 
 /* Стили для dragHandle теперь в глобальном CSS */
 
@@ -25,9 +64,6 @@
   user-select: none;
 }
 
-[data-theme="dark"] .dragIcon {
-  color: #9ca3af;
-}
 
 .chartSection {
   flex: 1;
@@ -54,10 +90,6 @@
   background: linear-gradient(135deg, #f3f0ff 0%, #e9e5ff 100%);
 }
 
-[data-theme="dark"] .periodSelector {
-  background: linear-gradient(135deg, #2d1f4a 0%, #1a0f2e 100%);
-  border-color: #786ADA;
-}
 
 .controlsTitle {
   font-size: 16px;
@@ -67,9 +99,7 @@
   text-align: center;
 }
 
-[data-theme="dark"] .controlsTitle {
-  color: #E6EAFF;
-}
+
 
 .periodButtons {
   display: flex;
@@ -101,10 +131,7 @@
   box-shadow: none !important;
 }
 
-[data-theme="dark"] .periodButton {
-  background-color: #3d2f5a !important;
-  color: #E6EAFF !important;
-}
+
 
 .periodButton:hover,
 .periodButton:focus {
@@ -113,12 +140,7 @@
   border: none !important;
 }
 
-[data-theme="dark"] .periodButton:hover,
-[data-theme="dark"] .periodButton:focus {
-  background-color: #4d3f6a !important;
-  color: #E6EAFF !important;
-  border: none !important;
-}
+
 
 .periodButton.active,
 .periodButton.active:hover,
@@ -165,10 +187,7 @@
   background-color: #e9e5ff;
 }
 
-[data-theme="dark"] .dateRangePicker .ant-picker {
-  background-color: #3d2f5a;
-  border-color: #786ADA;
-}
+
 
 .dateRangePicker .ant-picker:hover,
 .dateRangePicker .ant-picker-focused {
@@ -204,6 +223,43 @@
   border-color: #d1d5db;
 }
 
+
+
+.exportIcon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/*
+[data-theme="dark"] .dragIcon {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .periodSelector {
+  background: linear-gradient(135deg, #2d1f4a 0%, #1a0f2e 100%);
+  border-color: #786ADA;
+}
+
+[data-theme="dark"] .controlsTitle {
+  color: #E6EAFF;
+}
+
+[data-theme="dark"] .periodButton {
+  background-color: #3d2f5a !important;
+  color: #E6EAFF !important;
+}
+
+[data-theme="dark"] .periodButton:hover,
+[data-theme="dark"] .periodButton:focus {
+  background-color: #4d3f6a !important;
+  color: #E6EAFF !important;
+  border: none !important;
+}
+
+[data-theme="dark"] .widget {
+  background: #1e293b;
+}
+
 [data-theme="dark"] .exportButton {
   border-color: #4b5563;
   background-color: #374151;
@@ -215,8 +271,7 @@
   border-color: #6b7280;
 }
 
-.exportIcon {
-  font-size: 16px;
-  line-height: 1;
-}
-
+[data-theme="dark"] .dateRangePicker .ant-picker {
+  background-color: #3d2f5a;
+  border-color: #786ADA;
+}*/

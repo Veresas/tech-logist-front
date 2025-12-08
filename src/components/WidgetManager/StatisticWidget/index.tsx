@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Button, DatePicker, ConfigProvider } from 'antd';
+import { Button, DatePicker, ConfigProvider, Modal } from 'antd';
 import type { Dayjs } from 'dayjs';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, ExpandOutlined } from '@ant-design/icons';
 import { BarChartWidget, DonutChartWidget, StackedBarChartWidget } from '../../Diagrams';
 import styles from './StatisticWidget.module.css';
 import ruRU from 'antd/locale/ru_RU';
@@ -36,10 +36,11 @@ export const StatisticWidget = ({
   yAxisLabel,
   isLoading = false,
 }: StatisticWidgetProps) => {
-  const [internalSelectedPeriod, setInternalSelectedPeriod] = useState<PeriodType>('week');
+  const [internalSelectedPeriod, setInternalSelectedPeriod] = useState<PeriodType>('day');
   const [showCustomCalendar, setShowCustomCalendar] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [internalCustomDateRange, setInternalCustomDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const selectedPeriod =  internalSelectedPeriod;
   const customDateRange = internalCustomDateRange; 
@@ -64,7 +65,6 @@ export const StatisticWidget = ({
       dateFrom = now.subtract(7, 'day').startOf('day');
     }
     
-    setPeriod({dateFrom: dateFrom.toISOString(), dateTo: dateTo.toISOString()})
     return {
       dateFrom: dateFrom.toISOString(),
       dateTo: dateTo.toISOString(),
@@ -73,11 +73,22 @@ export const StatisticWidget = ({
 
   const subtitle = useMemo(() => {
     if (selectedPeriod === 'custom' && customDateRange && customDateRange[0] && customDateRange[1]) {
-      setPeriod({dateFrom: customDateRange[0].format('DD.MM.YYYY'), dateTo: customDateRange[1].format('DD.MM.YYYY')})
       return `Период: ${customDateRange[0].format('DD.MM.YYYY')} — ${customDateRange[1].format('DD.MM.YYYY')}`;
     }
-    const { dateFrom: from, dateTo: to } = getPeriodDates(selectedPeriod);
+    const { dateFrom: from, dateTo: to } = getPeriodDates(selectedPeriod, customDateRange);
     return `Период: ${dayjs(from).format('DD.MM.YYYY')} — ${dayjs(to).format('DD.MM.YYYY')}`;
+  }, [selectedPeriod, customDateRange]);
+
+  useEffect(() => {
+    if (selectedPeriod === 'custom' && customDateRange && customDateRange[0] && customDateRange[1]) {
+      setPeriod({
+        dateFrom: customDateRange[0].startOf('day').toISOString(),
+        dateTo: customDateRange[1].endOf('day').toISOString()
+      });
+    } else {
+      const periodDates = getPeriodDates(selectedPeriod);
+      setPeriod(periodDates);
+    }
   }, [selectedPeriod, customDateRange]);
 
   useEffect(() => {
@@ -101,19 +112,15 @@ export const StatisticWidget = ({
       setShowCustomCalendar(false);
       setCalendarOpen(false);
       setInternalSelectedPeriod(period);
-      console.log('Период изменен на:', period);
     }
   };
 
   const handleDateRangeChange = (dates: [Dayjs | null, Dayjs | null] | null) => {
 
     setInternalCustomDateRange(dates);
-    if (dates && dates[0] && dates[1]) {
-      console.log('Выбран период:', dates[0].format('DD.MM.YYYY'), '-', dates[1].format('DD.MM.YYYY'));
-    }
   };
 
-  const renderChart = () => {
+  const renderChart = (isFullscreen = false) => {
     if (chartType === 'donut') {
       return <DonutChartWidget title={title} />;
     }
@@ -125,24 +132,31 @@ export const StatisticWidget = ({
           data={stackedBarData}
           xAxisLabel={xAxisLabel}
           yAxisLabel={yAxisLabel}
+          isFullscreen={isFullscreen}
         />
       );
     }
     return <BarChartWidget title={title} />;
   };
 
-  return (
-    <div className={styles.widget}>
-      <div className="dragHandle" title="Перетащить виджет">
-        <span className={styles.dragIcon}></span>
-      </div>
+  const renderWidgetContent = (isFullscreen = false) => (
+    <>
+      {!isFullscreen && (
+        <Button
+          className={styles.expandButton}
+          type="text"
+          icon={<ExpandOutlined />}
+          onClick={() => setIsModalOpen(true)}
+          title="Развернуть виджет"
+        />
+      )}
       <div className={styles.chartSection}>
         {isLoading ? (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <p>Загрузка данных...</p>
           </div>
         ) : (
-          renderChart()
+          renderChart(isFullscreen)
         )}
       </div>
       <div className={styles.controlsSection}>
@@ -216,7 +230,33 @@ export const StatisticWidget = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className={styles.widget}>
+        <div className="dragHandle" title="Перетащить виджет">
+          <span className={styles.dragIcon}></span>
+        </div>
+        {renderWidgetContent(false)}
+      </div>
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        width="100%"
+        style={{ top: 0, paddingBottom: 0 }}
+        className={styles.fullscreenModal}
+        styles={{
+          body: { height: '100vh', padding: '24px' }
+        }}
+      >
+        <div className={styles.fullscreenWidget}>
+          {renderWidgetContent(true)}
+        </div>
+      </Modal>
+    </>
   );
 };
 

@@ -1,11 +1,11 @@
-import styles from '../MainPage/MainPage.module.css';
-import { Dashboard } from "../../components"
+import styles from '../StatisticPage/StatisticPage.module.css';
+import { WidgetManager } from "../../components"
 export const StatisticPage = () => {
 
     
     return (
         <div className={styles.body}>
-            <Dashboard></Dashboard>
+            <WidgetManager/>
         </div>
     )
 }
