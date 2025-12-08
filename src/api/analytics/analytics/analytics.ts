@@ -21,13 +21,205 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  GetAnalyticsDriversAverageTimeParams,
+  GetAnalyticsDriversOrdersByTypesParams,
   GetAnalyticsWorkshopsIncomingByBuildingsParams,
   GetAnalyticsWorkshopsIncomingParams,
   ModelDepartIncomingResponse,
+  ModelDriverAverageTimeResponse,
+  ModelDriverOrdersResponse,
   ModelErrorResponse
 } from '.././model';
 
 import { apiClient } from '../../../utils/customAxiosAnalytic';
+
+
+
+
+/**
+ * Возвращает среднее время выполнения заказов для каждого водителя в минутах
+ * @summary Получить среднее время выполнения заказов водителями
+ */
+export const getAnalyticsDriversAverageTime = (
+    params: GetAnalyticsDriversAverageTimeParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClient<ModelDriverAverageTimeResponse[]>(
+      {url: `/analytics/drivers/average-time`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+
+
+export const getGetAnalyticsDriversAverageTimeQueryKey = (params?: GetAnalyticsDriversAverageTimeParams,) => {
+    return [
+    `/analytics/drivers/average-time`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetAnalyticsDriversAverageTimeQueryOptions = <TData = Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError = ModelErrorResponse>(params: GetAnalyticsDriversAverageTimeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAnalyticsDriversAverageTimeQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>> = ({ signal }) => getAnalyticsDriversAverageTime(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAnalyticsDriversAverageTimeQueryResult = NonNullable<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>>
+export type GetAnalyticsDriversAverageTimeQueryError = ModelErrorResponse
+
+
+export function useGetAnalyticsDriversAverageTime<TData = Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversAverageTimeParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsDriversAverageTime<TData = Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversAverageTimeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsDriversAverageTime<TData = Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversAverageTimeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Получить среднее время выполнения заказов водителями
+ */
+
+export function useGetAnalyticsDriversAverageTime<TData = Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversAverageTimeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversAverageTime>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAnalyticsDriversAverageTimeQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * Возвращает агрегированные данные о заказах по водителям и типам груза. Может возвращать количество заказов или вес груза в зависимости от параметра isWithWeight
+ * @summary Получить статистику заказов по водителям и типам груза
+ */
+export const getAnalyticsDriversOrdersByTypes = (
+    params: GetAnalyticsDriversOrdersByTypesParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClient<ModelDriverOrdersResponse[]>(
+      {url: `/analytics/drivers/orders-by-types`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+
+
+export const getGetAnalyticsDriversOrdersByTypesQueryKey = (params?: GetAnalyticsDriversOrdersByTypesParams,) => {
+    return [
+    `/analytics/drivers/orders-by-types`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetAnalyticsDriversOrdersByTypesQueryOptions = <TData = Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError = ModelErrorResponse>(params: GetAnalyticsDriversOrdersByTypesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAnalyticsDriversOrdersByTypesQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>> = ({ signal }) => getAnalyticsDriversOrdersByTypes(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAnalyticsDriversOrdersByTypesQueryResult = NonNullable<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>>
+export type GetAnalyticsDriversOrdersByTypesQueryError = ModelErrorResponse
+
+
+export function useGetAnalyticsDriversOrdersByTypes<TData = Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversOrdersByTypesParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsDriversOrdersByTypes<TData = Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversOrdersByTypesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsDriversOrdersByTypes<TData = Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversOrdersByTypesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Получить статистику заказов по водителям и типам груза
+ */
+
+export function useGetAnalyticsDriversOrdersByTypes<TData = Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsDriversOrdersByTypesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsDriversOrdersByTypes>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAnalyticsDriversOrdersByTypesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
 
 
 

@@ -29,7 +29,6 @@ export const DropdownContextProvider = ({children} : {children: ReactNode}) => {
         if (isAuthenticated) {
             refetch();
         }
-        console.log("isAuthenticated = ", isAuthenticated, "Делаем refetch")
     }, [isAuthenticated])
 
     const trigerReloadRefs = async () => { await refetch() };

@@ -175,7 +175,7 @@ export const StatisticWidget = ({
                 onClick={() => handlePeriodChange('custom')}
                 type="text"
                 icon={<DownOutlined className={showCustomCalendar ? styles.rotatedIcon : ''} />}
-                iconPosition="end"
+                iconPlacement="end"
               >
                 Свой период
               </Button>

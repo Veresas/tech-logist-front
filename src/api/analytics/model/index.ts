@@ -6,8 +6,13 @@
  * OpenAPI spec version: 1.0
  */
 
+export * from './getAnalyticsDriversAverageTimeParams';
+export * from './getAnalyticsDriversOrdersByTypesParams';
 export * from './getAnalyticsWorkshopsIncomingByBuildingsParams';
 export * from './getAnalyticsWorkshopsIncomingParams';
 export * from './modelDepartIncomingResponse';
 export * from './modelDepartIncomingResponseCargoTypes';
+export * from './modelDriverAverageTimeResponse';
+export * from './modelDriverOrdersResponse';
+export * from './modelDriverOrdersResponseCargoTypes';
 export * from './modelErrorResponse';
