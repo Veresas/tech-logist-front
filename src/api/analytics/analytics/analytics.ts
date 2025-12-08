@@ -21,6 +21,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  GetAnalyticsWorkshopsIncomingByBuildingsParams,
   GetAnalyticsWorkshopsIncomingParams,
   ModelDepartIncomingResponse,
   ModelErrorResponse
@@ -32,7 +33,7 @@ import { apiClient } from '../../../utils/customAxiosAnalytic';
 
 
 /**
- * Возвращает агрегированные данные о поступлении заказов из цехов по типам грузов
+ * Возвращает агрегированные данные о поступлении заказов из цехов по типам грузов. Если isIn=false - заказы отправленные ИЗ цехов, если isIn=true - заказы отправленные В цеха
  * @summary Получить данные для диаграммы "Поступления из цехов"
  */
 export const getAnalyticsWorkshopsIncoming = (
@@ -114,6 +115,100 @@ export function useGetAnalyticsWorkshopsIncoming<TData = Awaited<ReturnType<type
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetAnalyticsWorkshopsIncomingQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * Возвращает агрегированные данные о поступлении заказов из цехов по типам грузов с привязкой к корпусам. Название формируется как "название_корпуса-название_цеха". Если isIn=false - заказы отправленные ИЗ цехов, если isIn=true - заказы отправленные В цеха
+ * @summary Получить данные для диаграммы "Поступления из цехов" с привязкой к корпусам
+ */
+export const getAnalyticsWorkshopsIncomingByBuildings = (
+    params: GetAnalyticsWorkshopsIncomingByBuildingsParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return apiClient<ModelDepartIncomingResponse[]>(
+      {url: `/analytics/workshops/incoming-by-buildings`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+
+
+export const getGetAnalyticsWorkshopsIncomingByBuildingsQueryKey = (params?: GetAnalyticsWorkshopsIncomingByBuildingsParams,) => {
+    return [
+    `/analytics/workshops/incoming-by-buildings`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetAnalyticsWorkshopsIncomingByBuildingsQueryOptions = <TData = Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError = ModelErrorResponse>(params: GetAnalyticsWorkshopsIncomingByBuildingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAnalyticsWorkshopsIncomingByBuildingsQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>> = ({ signal }) => getAnalyticsWorkshopsIncomingByBuildings(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAnalyticsWorkshopsIncomingByBuildingsQueryResult = NonNullable<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>>
+export type GetAnalyticsWorkshopsIncomingByBuildingsQueryError = ModelErrorResponse
+
+
+export function useGetAnalyticsWorkshopsIncomingByBuildings<TData = Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsWorkshopsIncomingByBuildingsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsWorkshopsIncomingByBuildings<TData = Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsWorkshopsIncomingByBuildingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>,
+          TError,
+          Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAnalyticsWorkshopsIncomingByBuildings<TData = Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsWorkshopsIncomingByBuildingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Получить данные для диаграммы "Поступления из цехов" с привязкой к корпусам
+ */
+
+export function useGetAnalyticsWorkshopsIncomingByBuildings<TData = Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError = ModelErrorResponse>(
+ params: GetAnalyticsWorkshopsIncomingByBuildingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAnalyticsWorkshopsIncomingByBuildings>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAnalyticsWorkshopsIncomingByBuildingsQueryOptions(params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

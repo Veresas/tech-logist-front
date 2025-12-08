@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { StatisticWidget } from '../StatisticWidget';
-import { useGetAnalyticsWorkshopsIncoming } from '../../../api/analytics/analytics/analytics';
+import { useGetAnalyticsWorkshopsIncoming, useGetAnalyticsWorkshopsIncomingByBuildings } from '../../../api/analytics/analytics/analytics';
 import type { ModelDepartIncomingResponse } from '../../../api/analytics/model';
 
 type PeriodType = 'day' | 'week' | 'month' | 'year' | 'custom';
@@ -37,12 +37,16 @@ type WorkshopIncomingWidgetProps = {
   title?: string;
   xAxisLabel?: string;
   yAxisLabel?: string;
+  isWithBuildings: boolean;
+  isIn?: boolean; // false - заказы ИЗ цехов, true - заказы В цеха
 };
 
 export const WorkshopIncomingWidget = ({
   title = 'Поступление заказов из цехов по типам',
   xAxisLabel = 'Цех (откуда)',
   yAxisLabel = 'Количество',
+  isWithBuildings = false,
+  isIn = false,
 }: WorkshopIncomingWidgetProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('week');
   const [customDateRange, setCustomDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
@@ -52,20 +56,29 @@ export const WorkshopIncomingWidget = ({
     [selectedPeriod, customDateRange]
   );
 
-  const { data: apiData, isLoading, error } = useGetAnalyticsWorkshopsIncoming(
-    { date_from: dateFrom, date_to: dateTo },
+  const { data: apiDataD, isLoading: isLoadingD, error: errorD } = useGetAnalyticsWorkshopsIncoming(
+    { date_from: dateFrom, date_to: dateTo, isIn },
     {
       query: {
-        enabled: !!dateFrom && !!dateTo,
+        enabled: !!dateFrom && !!dateTo && !isWithBuildings,
         select: (response) => (response?.data ?? response) as ModelDepartIncomingResponse[],
       },
     }
   );
 
+  const { data: apiDataDB, isLoading: isLoadingDB, error: errorDB } = useGetAnalyticsWorkshopsIncomingByBuildings(
+    { date_from: dateFrom, date_to: dateTo, isIn },
+    {
+      query: {
+        enabled: !!dateFrom && !!dateTo && isWithBuildings,
+        select: (response) => (response?.data ?? response) as ModelDepartIncomingResponse[],
+      },
+    }
+  )
   const workshopData: ModelDepartIncomingResponse[] = useMemo(() => {
-    if (!apiData) return [];
-    return (apiData);
-  }, [apiData]);
+    if (!apiDataD && !apiDataDB) return [];
+    return (isWithBuildings ? apiDataDB! : apiDataD!);
+  }, [apiDataDB, apiDataD, isWithBuildings]);
 
   const subtitle = useMemo(() => {
     if (selectedPeriod === 'custom' && customDateRange && customDateRange[0] && customDateRange[1]) {
@@ -86,10 +99,10 @@ export const WorkshopIncomingWidget = ({
     }
   };
 
-  if (error) {
+  if (errorD || errorDB) {
     return (
       <div style={{ padding: '20px', textAlign: 'center' }}>
-        <p>Ошибка загрузки данных: {error.error || 'Неизвестная ошибка'}</p>
+        <p>Ошибка загрузки данных: {(isWithBuildings ? errorDB! : errorD!).error || 'Неизвестная ошибка'}</p>
       </div>
     );
   }
@@ -106,7 +119,7 @@ export const WorkshopIncomingWidget = ({
       customDateRange={customDateRange}
       onPeriodChange={handlePeriodChange}
       onDateRangeChange={handleDateRangeChange}
-      isLoading={isLoading}
+      isLoading={isWithBuildings ? isLoadingDB : isLoadingD}
     />
   );
 };

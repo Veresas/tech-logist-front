@@ -57,6 +57,10 @@ export const StackedBarChartWidget = ({
     item.cargoTypes ? Object.values(item.cargoTypes).reduce((sum, val) => sum + (val || 0), 0) : 0
   );
 
+  // Вычисляем минимальную ширину диаграммы на основе количества категорий
+  // Минимум 70px на категорию для комфортного отображения
+  const minChartWidth = Math.max(600, categories.length * 70);
+
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
       id: 'stacked-bar-chart',
@@ -148,13 +152,16 @@ export const StackedBarChartWidget = ({
   };
 
   return (
-    <div className={diagram_styles.chartContainer}>
-      <Chart
-        options={chartOptions}
-        series={series}
-        type="bar"
-        height="100%"
-      />
+    <div className={diagram_styles.chartWrapper}>
+      <div className={diagram_styles.chartContainer} style={{ width: `${minChartWidth}px` }}>
+        <Chart
+          options={chartOptions}
+          series={series}
+          type="bar"
+          height="100%"
+          width={minChartWidth}
+        />
+      </div>
     </div>
   );
 };

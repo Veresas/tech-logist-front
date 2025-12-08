@@ -122,7 +122,7 @@ export const StatisticWidget = ({
   return (
     <div className={styles.widget}>
       <div className="dragHandle" title="Перетащить виджет">
-        <span className={styles.dragIcon}>⋮⋮</span>
+        <span className={styles.dragIcon}></span>
       </div>
       <div className={styles.chartSection}>
         {isLoading ? (

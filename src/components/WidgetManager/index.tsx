@@ -3,7 +3,8 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import type { Layout } from 'react-grid-layout';
 import { StatisticWidget } from './StatisticWidget';
 import { WorkshopIncomingWidget } from './WorkshopIncomingWidget';
-import type { WorkshopData } from '../Diagrams';
+import { WorkshopOutgoingWidget } from './WorkshopOutgoingWidget';
+//import type { WorkshopData } from '../Diagrams';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import styles from "./WidgetManager.module.css"
@@ -118,7 +119,7 @@ const mockWorkshopDataFrom: WorkshopData[] = [
       "Прочее": 3,
     }
   },
-];*/
+];
 
 // Моковые данные для сегментированной диаграммы "Поступление заказов в цеха по типам"
 const mockWorkshopDataTo: WorkshopData[] = [
@@ -228,7 +229,7 @@ const mockWorkshopDataTo: WorkshopData[] = [
     }
   },
 ];
-
+*/
 export const Dashboard = () => {
   const widgetWidth = 6;
   const widgetHeight = 5; 
@@ -240,6 +241,8 @@ export const Dashboard = () => {
     { i: 'widget4', x: widgetWidth, y: widgetHeight, w: widgetWidth, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
     { i: 'widget5', x: 0, y: widgetHeight * 2, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
     { i: 'widget6', x: 0, y: widgetHeight * 3, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
+    { i: 'widget7', x: 0, y: widgetHeight * 4, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
+    { i: 'widget8', x: 0, y: widgetHeight * 5, w: widgetWidth * 2, h: widgetHeight, minW: MIN_WIDTH_PERCENT, minH: 4 },
   ]);
 
   const layoutConfig = {
@@ -277,16 +280,31 @@ export const Dashboard = () => {
             title="Поступление заказов из цехов по типам"
             xAxisLabel="Цех (откуда)"
             yAxisLabel="Количество"
+            isWithBuildings={false}
           />
         </div>
         <div key="widget6">
-          <StatisticWidget 
-            chartType="stackedBar" 
+          <WorkshopIncomingWidget 
+            title="Поступление заказов из цехов по типам и корпусам"
+            xAxisLabel="Корпус-Цех (откуда)"
+            yAxisLabel="Количество"
+            isWithBuildings={true}
+          />
+        </div>
+        <div key="widget7">
+          <WorkshopOutgoingWidget 
             title="Поступление заказов в цеха по типам"
-            subtitle="Период: 28.11.2025 — 05.12.2025"
-            stackedBarData={mockWorkshopDataTo}
             xAxisLabel="Цех (куда)"
             yAxisLabel="Количество"
+            isWithBuildings={false}
+          />
+        </div>
+        <div key="widget8">
+          <WorkshopOutgoingWidget 
+            title="Поступление заказов в цеха по типам и корпусам"
+            xAxisLabel="Корпус-Цех (куда)"
+            yAxisLabel="Количество"
+            isWithBuildings={true}
           />
         </div>
       </ResponsiveGridLayout>

@@ -6,6 +6,7 @@
  * OpenAPI spec version: 1.0
  */
 
+export * from './getAnalyticsWorkshopsIncomingByBuildingsParams';
 export * from './getAnalyticsWorkshopsIncomingParams';
 export * from './modelDepartIncomingResponse';
 export * from './modelDepartIncomingResponseCargoTypes';
