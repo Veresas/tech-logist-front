@@ -1,9 +1,11 @@
 // ./src/utils/customAxios.ts (обёрнутая функция)
 import axios, { type AxiosRequestConfig, type AxiosInstance, type AxiosResponse } from 'axios';
+import { mockAdapter } from '../mocks';
 
 const instance: AxiosInstance = axios.create({
   baseURL: "http://localhost:8440/api",
   withCredentials: true, // Включаем отправку cookies (включая httpOnly)
+  adapter: mockAdapter('main'),
 });
 
 // Interceptor для установки withCredentials на каждый запрос
